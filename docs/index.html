@@ -1,584 +1,1019 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Homebrew Packages</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; color: #1f2328; background: #fff; padding: 24px; max-width: 1200px; margin: 0 auto; line-height: 1.5; }
-  h1 { font-size: 24px; margin-bottom: 4px; }
-  .subtitle { color: #656d76; font-size: 14px; margin-bottom: 20px; }
-  .subtitle a { color: #0969da; text-decoration: none; }
-  .subtitle a:hover { text-decoration: underline; }
-
-  /* Stats bar */
-  .stats { display: flex; gap: 16px; margin-bottom: 16px; font-size: 13px; color: #656d76; }
-  .stats span { background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px; padding: 4px 10px; }
-
-  /* Search */
-  .search-bar { margin-bottom: 16px; }
-  .search-bar input { width: 100%; max-width: 400px; padding: 8px 12px; border: 1px solid #d0d7de; border-radius: 6px; font-size: 14px; outline: none; }
-  .search-bar input:focus { border-color: #0969da; box-shadow: 0 0 0 3px rgba(9,105,218,0.15); }
-
-  /* Table */
-  .table-wrap { border: 1px solid #d0d7de; border-radius: 6px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  table { border-collapse: collapse; width: 100%; min-width: 680px; font-size: 14px; }
-  th, td { padding: 8px 16px; text-align: left; border-bottom: 1px solid #d0d7de; }
-  th { background: #f6f8fa; position: sticky; top: 0; z-index: 2; white-space: nowrap; font-weight: 600; }
-  tr:last-child td { border-bottom: none; }
-  tbody tr:hover { background: #f6f8fa; }
-  tr.hidden { display: none; }
-  code { background: #eff1f3; padding: 2px 6px; border-radius: 4px; font-size: 13px; font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace; }
-
-  /* Sortable column headers */
-  th.sortable { cursor: pointer; user-select: none; }
-  th.sortable:hover { background: #e8ecf0; }
-  th.sortable::after { content: " \2195"; font-size: 11px; color: #656d76; }
-  th.sortable.asc::after { content: " \2191"; color: #0969da; }
-  th.sortable.desc::after { content: " \2193"; color: #0969da; }
-
-  /* Row count in filter options */
-  .filter-count { color: #656d76; font-size: 12px; margin-left: auto; padding-right: 4px; }
-
-  /* Filter buttons in header */
-  .filter-wrap { position: relative; display: inline-block; }
-  .filter-btn { cursor: pointer; background: none; border: 1px solid transparent; font-weight: 600; font-size: 14px; font-family: inherit; padding: 2px 6px; color: inherit; border-radius: 4px; }
-  .filter-btn:hover { background: #e8ecf0; }
-  .filter-btn::after { content: " \25BE"; font-size: 11px; color: #656d76; }
-  .filter-btn.active { background: #ddf4ff; border-color: #54aeff; }
-
-  /* Badge */
-  .filter-badge { background: #0969da; color: #fff; border-radius: 10px; font-size: 11px; padding: 1px 7px; margin-left: 4px; font-weight: normal; vertical-align: middle; }
-
-  /* Dropdown panel */
-  .filter-dropdown { display: none; position: absolute; top: calc(100% + 4px); left: 0; background: #fff; border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); min-width: 240px; max-height: 360px; z-index: 20; }
-  .filter-dropdown.show { display: block; }
-  .filter-search { width: calc(100% - 16px); margin: 8px; padding: 6px 10px; border: 1px solid #d0d7de; border-radius: 6px; font-size: 13px; outline: none; }
-  .filter-search:focus { border-color: #0969da; box-shadow: 0 0 0 3px rgba(9,105,218,0.15); }
-  .filter-options { max-height: 240px; overflow-y: auto; padding: 0 4px 4px; }
-  .filter-options .filter-row { display: flex; align-items: center; padding: 2px 4px; border-radius: 4px; gap: 4px; }
-  .filter-options .filter-row:hover { background: #f0f4ff; }
-  .filter-options label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px; flex: 1; padding: 2px 4px; }
-  .filter-options input[type="checkbox"] { accent-color: #0969da; }
-  .filter-options .only-btn { font-size: 11px; color: #0969da; background: none; border: none; cursor: pointer; padding: 2px 6px; border-radius: 3px; font-family: inherit; opacity: 0; transition: opacity 0.1s; }
-  .filter-options .filter-row:hover .only-btn { opacity: 1; }
-  .filter-options .only-btn:hover { background: #ddf4ff; }
-  .filter-actions { display: flex; justify-content: space-between; padding: 8px 10px; border-top: 1px solid #d0d7de; }
-  .filter-actions button { font-size: 12px; cursor: pointer; background: none; border: none; color: #0969da; padding: 2px 4px; font-family: inherit; }
-  .filter-actions button:hover { text-decoration: underline; }
-
-  /* No results */
-  .no-results { display: none; padding: 40px; text-align: center; color: #656d76; font-size: 14px; }
-  .no-results.show { display: block; }
-
-  /* Dark mode */
-  @media (prefers-color-scheme: dark) {
-    body { background: #0d1117; color: #e6edf3; }
-    th { background: #161b22; }
-    td { border-color: #30363d; }
-    th { border-color: #30363d; }
-    .table-wrap { border-color: #30363d; }
-    tbody tr:hover { background: #161b22; }
-    code { background: #343942; }
-    .search-bar input { background: #0d1117; color: #e6edf3; border-color: #30363d; }
-    .search-bar input:focus { border-color: #58a6ff; box-shadow: 0 0 0 3px rgba(88,166,255,0.15); }
-    .stats span { background: #161b22; border-color: #30363d; color: #8b949e; }
-    .subtitle { color: #8b949e; }
-    .subtitle a { color: #58a6ff; }
-    th.sortable:hover { background: #1c2128; }
-    th.sortable::after { color: #8b949e; }
-    th.sortable.asc::after, th.sortable.desc::after { color: #58a6ff; }
-    .filter-count { color: #8b949e; }
-    .filter-btn:hover { background: #30363d; }
-    .filter-btn.active { background: #122d42; border-color: #58a6ff; }
-    .filter-btn::after { color: #8b949e; }
-    .filter-dropdown { background: #161b22; border-color: #30363d; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
-    .filter-search { background: #0d1117; color: #e6edf3; border-color: #30363d; }
-    .filter-search:focus { border-color: #58a6ff; box-shadow: 0 0 0 3px rgba(88,166,255,0.15); }
-    .filter-options .filter-row:hover { background: #1c2128; }
-    .filter-options .only-btn { color: #58a6ff; }
-    .filter-options .only-btn:hover { background: #122d42; }
-    .filter-actions { border-color: #30363d; }
-    .filter-actions button { color: #58a6ff; }
-    .filter-badge { background: #58a6ff; color: #0d1117; }
-    .no-results { color: #8b949e; }
-  }
-</style>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homebrew Packages</title>
 </head>
+
 <body>
 
-<h1>Homebrew Packages</h1>
-<p class="subtitle">Interactive package list from <a href="../Brewfile">Brewfile</a></p>
+    <h1>Homebrew Packages</h1>
+    <p class="subtitle">Interactive package list from <a href="../Brewfile">Brewfile</a></p>
 
-<div class="stats">
-  <span id="statTotal"></span>
-  <span id="statFormula"></span>
-  <span id="statCask"></span>
-  <span id="statShowing"></span>
-</div>
+    <div class="stats">
+        <span id="statTotal"></span>
+        <span id="statFormula"></span>
+        <span id="statCask"></span>
+        <span id="statShowing"></span>
+    </div>
 
-<div class="search-bar">
-  <input type="text" id="nameSearch" placeholder="Search by name or description...">
-</div>
+    <div class="search-bar">
+        <input type="text" id="nameSearch" placeholder="Search by name or description...">
+    </div>
 
-<div class="table-wrap">
-<table id="pkgTable">
-<thead>
-<tr>
-  <th class="sortable" data-col="0">Name</th>
-  <th>
-    <span class="filter-wrap">
-      <button class="filter-btn" id="typeBtnEl">Formula/Cask</button><span id="typeBadge"></span>
-      <div class="filter-dropdown" id="typeFilter">
-        <input class="filter-search" type="text" placeholder="Search...">
-        <div class="filter-options"></div>
-        <div class="filter-actions"><button class="sel-all">Show All</button><button class="clr-all">Clear All</button></div>
-      </div>
-    </span>
-  </th>
-  <th class="sortable" data-col="2">Description</th>
-  <th class="sortable" data-col="3">Alternatives</th>
-  <th>
-    <span class="filter-wrap">
-      <button class="filter-btn" id="catBtnEl">Category</button><span id="catBadge"></span>
-      <div class="filter-dropdown" id="catFilter">
-        <input class="filter-search" type="text" placeholder="Search...">
-        <div class="filter-options"></div>
-        <div class="filter-actions"><button class="sel-all">Show All</button><button class="clr-all">Clear All</button></div>
-      </div>
-    </span>
-  </th>
-</tr>
-</thead>
-<tbody>
-<tr><td><code>bash</code></td><td>Formula</td><td>Bourne-Again SHell</td><td><code>fish</code>, <code>nushell</code></td><td>Shells &amp; Terminal</td></tr>
-<tr><td><code>bat</code></td><td>Formula</td><td>Cat clone with syntax highlighting</td><td></td><td>Shells &amp; Terminal</td></tr>
-<tr><td><code>btop</code></td><td>Formula</td><td>Resource monitor</td><td></td><td>Shells &amp; Terminal</td></tr>
-<tr><td><code>coreutils</code></td><td>Formula</td><td>GNU core utilities</td><td><code>uutils-coreutils</code></td><td>Shells &amp; Terminal</td></tr>
-<tr><td><code>eza</code></td><td>Formula</td><td>Modern replacement for ls</td><td></td><td>Shells &amp; Terminal</td></tr>
-<tr><td><code>fd</code></td><td>Formula</td><td>Simple, fast alternative to find</td><td></td><td>Shells &amp; Terminal</td></tr>
-<tr><td><code>fzf</code></td><td>Formula</td><td>Fuzzy finder</td><td><code>skim</code></td><td>Shells &amp; Terminal</td></tr>
-<tr><td><code>tmux</code></td><td>Formula</td><td>Terminal multiplexer</td><td><code>zellij</code></td><td>Shells &amp; Terminal</td></tr>
-<tr><td><code>tree</code></td><td>Formula</td><td>Directory listing as a tree</td><td><code>broot</code></td><td>Shells &amp; Terminal</td></tr>
-<tr><td><code>zoxide</code></td><td>Formula</td><td>Smarter cd command</td><td></td><td>Shells &amp; Terminal</td></tr>
-<tr><td><code>gh</code></td><td>Formula</td><td>GitHub CLI</td><td></td><td>Version Control</td></tr>
-<tr><td><code>git</code></td><td>Formula</td><td>Distributed version control</td><td><code>jj</code></td><td>Version Control</td></tr>
-<tr><td><code>git-filter-repo</code></td><td>Formula</td><td>Rewrite git history</td><td></td><td>Version Control</td></tr>
-<tr><td><code>git-lfs</code></td><td>Formula</td><td>Git Large File Storage</td><td></td><td>Version Control</td></tr>
-<tr><td><code>git-svn</code></td><td>Formula</td><td>Bidirectional Git/SVN bridge</td><td></td><td>Version Control</td></tr>
-<tr><td><code>gitea</code></td><td>Formula</td><td>Self-hosted Git service</td><td><code>forgejo</code></td><td>Version Control</td></tr>
-<tr><td><code>gitea-mcp-server</code></td><td>Formula</td><td>MCP server for Gitea</td><td></td><td>Version Control</td></tr>
-<tr><td><code>chapel</code></td><td>Formula</td><td>Parallel programming language</td><td></td><td>Programming Languages &amp; Runtimes</td></tr>
-<tr><td><code>fennel</code></td><td>Formula</td><td>Lisp dialect for Lua</td><td></td><td>Programming Languages &amp; Runtimes</td></tr>
-<tr><td><code>lua</code></td><td>Formula</td><td>Scripting language</td><td><code>luajit</code></td><td>Programming Languages &amp; Runtimes</td></tr>
-<tr><td><code>node</code></td><td>Formula</td><td>JavaScript runtime</td><td><code>deno</code></td><td>Programming Languages &amp; Runtimes</td></tr>
-<tr><td><code>oven-sh/bun/bun</code></td><td>Formula</td><td>Fast JavaScript runtime</td><td></td><td>Programming Languages &amp; Runtimes</td></tr>
-<tr><td><code>perl</code></td><td>Formula</td><td>Practical extraction and report language</td><td></td><td>Programming Languages &amp; Runtimes</td></tr>
-<tr><td><code>basedpyright</code></td><td>Formula</td><td>Python type checker</td><td></td><td>Language Servers &amp; IDE Support</td></tr>
-<tr><td><code>bash-language-server</code></td><td>Formula</td><td>LSP for Bash</td><td></td><td>Language Servers &amp; IDE Support</td></tr>
-<tr><td><code>fennel-ls</code></td><td>Formula</td><td>LSP for Fennel</td><td></td><td>Language Servers &amp; IDE Support</td></tr>
-<tr><td><code>gopls</code></td><td>Formula</td><td>LSP for Go</td><td></td><td>Language Servers &amp; IDE Support</td></tr>
-<tr><td><code>jdtls</code></td><td>Formula</td><td>LSP for Java</td><td></td><td>Language Servers &amp; IDE Support</td></tr>
-<tr><td><code>lua-language-server</code></td><td>Formula</td><td>LSP for Lua</td><td></td><td>Language Servers &amp; IDE Support</td></tr>
-<tr><td><code>sql-language-server</code></td><td>Formula</td><td>LSP for SQL</td><td></td><td>Language Servers &amp; IDE Support</td></tr>
-<tr><td><code>typescript-language-server</code></td><td>Formula</td><td>LSP for TypeScript/JavaScript</td><td></td><td>Language Servers &amp; IDE Support</td></tr>
-<tr><td><code>vscode-langservers-extracted</code></td><td>Formula</td><td>HTML/CSS/JSON/ESLint LSPs</td><td></td><td>Language Servers &amp; IDE Support</td></tr>
-<tr><td><code>yaml-language-server</code></td><td>Formula</td><td>LSP for YAML</td><td></td><td>Language Servers &amp; IDE Support</td></tr>
-<tr><td><code>cmake</code></td><td>Formula</td><td>Cross-platform build system</td><td><code>meson</code></td><td>Build Systems &amp; Compilers</td></tr>
-<tr><td><code>cmake-docs</code></td><td>Formula</td><td>CMake documentation</td><td></td><td>Build Systems &amp; Compilers</td></tr>
-<tr><td><code>gradle</code></td><td>Formula</td><td>Build automation for Java</td><td></td><td>Build Systems &amp; Compilers</td></tr>
-<tr><td><code>llvm</code></td><td>Formula</td><td>Compiler infrastructure</td><td></td><td>Build Systems &amp; Compilers</td></tr>
-<tr><td><code>make</code></td><td>Formula</td><td>GNU make</td><td><code>just</code></td><td>Build Systems &amp; Compilers</td></tr>
-<tr><td><code>ninja</code></td><td>Formula</td><td>Small build system</td><td></td><td>Build Systems &amp; Compilers</td></tr>
-<tr><td><code>pkgconf</code></td><td>Formula</td><td>Package compiler and linker metadata</td><td></td><td>Build Systems &amp; Compilers</td></tr>
-<tr><td><code>ruff</code></td><td>Formula</td><td>Fast Python linter/formatter</td><td></td><td>Code Quality &amp; Linting</td></tr>
-<tr><td><code>shellcheck</code></td><td>Formula</td><td>Shell script analysis tool</td><td></td><td>Code Quality &amp; Linting</td></tr>
-<tr><td><code>shfmt</code></td><td>Formula</td><td>Shell script formatter</td><td></td><td>Code Quality &amp; Linting</td></tr>
-<tr><td><code>swiftlint</code></td><td>Formula</td><td>Swift style and conventions</td><td></td><td>Code Quality &amp; Linting</td></tr>
-<tr><td><code>chafa</code></td><td>Formula</td><td>Image to terminal graphics</td><td></td><td>Media Processing</td></tr>
-<tr><td><code>ffmpeg</code></td><td>Formula</td><td>Audio/video transcoding</td><td></td><td>Media Processing</td></tr>
-<tr><td><code>fluid-synth</code></td><td>Formula</td><td>Software MIDI synthesizer</td><td></td><td>Media Processing</td></tr>
-<tr><td><code>gmic</code></td><td>Formula</td><td>Image processing framework</td><td></td><td>Media Processing</td></tr>
-<tr><td><code>graphicsmagick</code></td><td>Formula</td><td>Image processing tools</td><td><code>vips</code></td><td>Media Processing</td></tr>
-<tr><td><code>imagemagick</code></td><td>Formula</td><td>Image manipulation tools</td><td><code>vips</code></td><td>Media Processing</td></tr>
-<tr><td><code>libcaca</code></td><td>Formula</td><td>ASCII art graphics library</td><td></td><td>Media Processing</td></tr>
-<tr><td><code>libheif</code></td><td>Formula</td><td>HEIF/HEIC image format</td><td></td><td>Media Processing</td></tr>
-<tr><td><code>little-cms2</code></td><td>Formula</td><td>Color management system</td><td></td><td>Media Processing</td></tr>
-<tr><td><code>mpv</code></td><td>Formula</td><td>Media player</td><td></td><td>Media Processing</td></tr>
-<tr><td><code>openjpeg</code></td><td>Formula</td><td>JPEG 2000 codec</td><td></td><td>Media Processing</td></tr>
-<tr><td><code>portmidi</code></td><td>Formula</td><td>MIDI I/O library</td><td></td><td>Media Processing</td></tr>
-<tr><td><code>sdl2</code></td><td>Formula</td><td>Multimedia library</td><td><code>sdl3</code></td><td>Media Processing</td></tr>
-<tr><td><code>sox</code></td><td>Formula</td><td>Sound processing tool</td><td></td><td>Media Processing</td></tr>
-<tr><td><code>yt-dlp</code></td><td>Formula</td><td>Video downloader</td><td></td><td>Media Processing</td></tr>
-<tr><td><code>djvulibre</code></td><td>Formula</td><td>DjVu document format</td><td></td><td>Document &amp; Text Processing</td></tr>
-<tr><td><code>epubcheck</code></td><td>Formula</td><td>EPUB validator</td><td></td><td>Document &amp; Text Processing</td></tr>
-<tr><td><code>pandoc</code></td><td>Formula</td><td>Universal document converter</td><td><code>typst</code></td><td>Document &amp; Text Processing</td></tr>
-<tr><td><code>qpdf</code></td><td>Formula</td><td>PDF transformation tool</td><td></td><td>Document &amp; Text Processing</td></tr>
-<tr><td><code>texinfo</code></td><td>Formula</td><td>GNU documentation system</td><td></td><td>Document &amp; Text Processing</td></tr>
-<tr><td><code>utftex</code></td><td>Formula</td><td>Unicode TeX rendering</td><td></td><td>Document &amp; Text Processing</td></tr>
-<tr><td><code>cjson</code></td><td>Formula</td><td>JSON parser in C</td><td></td><td>Data Processing &amp; Analysis</td></tr>
-<tr><td><code>duckdb</code></td><td>Formula</td><td>Analytical SQL database</td><td></td><td>Data Processing &amp; Analysis</td></tr>
-<tr><td><code>jq</code></td><td>Formula</td><td>JSON processor</td><td><code>jaq</code></td><td>Data Processing &amp; Analysis</td></tr>
-<tr><td><code>json-glib</code></td><td>Formula</td><td>JSON parser for GLib</td><td></td><td>Data Processing &amp; Analysis</td></tr>
-<tr><td><code>qsv</code></td><td>Formula</td><td>CSV data wrangling toolkit</td><td></td><td>Data Processing &amp; Analysis</td></tr>
-<tr><td><code>tidy-viewer</code></td><td>Formula</td><td>CSV pretty printer</td><td><code>csvlens</code></td><td>Data Processing &amp; Analysis</td></tr>
-<tr><td><code>visidata</code></td><td>Formula</td><td>Terminal data exploration</td><td></td><td>Data Processing &amp; Analysis</td></tr>
-<tr><td><code>xan</code></td><td>Formula</td><td>CSV toolkit</td><td></td><td>Data Processing &amp; Analysis</td></tr>
-<tr><td><code>atool</code></td><td>Formula</td><td>Archive file manager</td><td></td><td>File &amp; Archive Tools</td></tr>
-<tr><td><code>cabextract</code></td><td>Formula</td><td>Microsoft cabinet extractor</td><td></td><td>File &amp; Archive Tools</td></tr>
-<tr><td><code>cdrtools</code></td><td>Formula</td><td>CD/DVD/Blu-ray tools</td><td></td><td>File &amp; Archive Tools</td></tr>
-<tr><td><code>libdvdcss</code></td><td>Formula</td><td>DVD decryption library</td><td></td><td>File &amp; Archive Tools</td></tr>
-<tr><td><code>librsync</code></td><td>Formula</td><td>Remote delta algorithm library</td><td></td><td>File &amp; Archive Tools</td></tr>
-<tr><td><code>p7zip</code></td><td>Formula</td><td>7-Zip file archiver</td><td><code>sevenzip</code></td><td>File &amp; Archive Tools</td></tr>
-<tr><td><code>rsync</code></td><td>Formula</td><td>Fast file synchronization</td><td></td><td>File &amp; Archive Tools</td></tr>
-<tr><td><code>exiftool</code></td><td>Formula</td><td>Read/write file metadata</td><td></td><td>Metadata &amp; File Information</td></tr>
-<tr><td><code>exiv2</code></td><td>Formula</td><td>Image metadata library</td><td></td><td>Metadata &amp; File Information</td></tr>
-<tr><td><code>media-info</code></td><td>Formula</td><td>Media file information</td><td></td><td>Metadata &amp; File Information</td></tr>
-<tr><td><code>curl</code></td><td>Formula</td><td>Data transfer tool</td><td></td><td>Network Tools</td></tr>
-<tr><td><code>sniffnet</code></td><td>Formula</td><td>Network traffic monitor</td><td></td><td>Network Tools</td></tr>
-<tr><td><code>wget</code></td><td>Formula</td><td>File retrieval tool</td><td><code>aria2</code></td><td>Network Tools</td></tr>
-<tr><td><code>gawk</code></td><td>Formula</td><td>GNU awk</td><td></td><td>Search &amp; Text Processing</td></tr>
-<tr><td><code>gnu-sed</code></td><td>Formula</td><td>GNU stream editor</td><td><code>sd</code></td><td>Search &amp; Text Processing</td></tr>
-<tr><td><code>mawk</code></td><td>Formula</td><td>Fast awk implementation</td><td></td><td>Search &amp; Text Processing</td></tr>
-<tr><td><code>ripgrep</code></td><td>Formula</td><td>Fast recursive grep</td><td></td><td>Search &amp; Text Processing</td></tr>
-<tr><td><code>gperftools</code></td><td>Formula</td><td>Performance analysis tools</td><td></td><td>System Utilities</td></tr>
-<tr><td><code>hyperfine</code></td><td>Formula</td><td>Command-line benchmarking</td><td></td><td>System Utilities</td></tr>
-<tr><td><code>mac-cleanup-go</code></td><td>Formula</td><td>macOS cleanup utility</td><td></td><td>System Utilities</td></tr>
-<tr><td><code>mactop</code></td><td>Formula</td><td>macOS system monitor</td><td></td><td>System Utilities</td></tr>
-<tr><td><code>parallel</code></td><td>Formula</td><td>Execute jobs in parallel</td><td></td><td>System Utilities</td></tr>
-<tr><td><code>smartmontools</code></td><td>Formula</td><td>Disk health monitoring</td><td></td><td>System Utilities</td></tr>
-<tr><td><code>tldr</code></td><td>Formula</td><td>Simplified man pages</td><td><code>tealdeer</code></td><td>System Utilities</td></tr>
-<tr><td><code>ipython</code></td><td>Formula</td><td>Interactive Python shell</td><td><code>ptpython</code></td><td>Python Tools</td></tr>
-<tr><td><code>pygments</code></td><td>Formula</td><td>Syntax highlighting</td><td></td><td>Python Tools</td></tr>
-<tr><td><code>uv</code></td><td>Formula</td><td>Fast Python package installer</td><td></td><td>Python Tools</td></tr>
-<tr><td><code>luarocks</code></td><td>Formula</td><td>Lua package manager</td><td></td><td>Lua Ecosystem</td></tr>
-<tr><td><code>gettext</code></td><td>Formula</td><td>Internationalization library</td><td></td><td>Development Libraries</td></tr>
-<tr><td><code>graphviz</code></td><td>Formula</td><td>Graph visualization</td><td></td><td>Development Libraries</td></tr>
-<tr><td><code>gsl</code></td><td>Formula</td><td>GNU Scientific Library</td><td></td><td>Development Libraries</td></tr>
-<tr><td><code>libcerf</code></td><td>Formula</td><td>Complex error functions</td><td></td><td>Development Libraries</td></tr>
-<tr><td><code>libomp</code></td><td>Formula</td><td>OpenMP runtime</td><td></td><td>Development Libraries</td></tr>
-<tr><td><code>qt@5</code></td><td>Formula</td><td>Cross-platform UI framework</td><td><code>qt</code></td><td>Development Libraries</td></tr>
-<tr><td><code>tree-sitter-cli</code></td><td>Formula</td><td>Parser generator tool</td><td></td><td>Development Libraries</td></tr>
-<tr><td><code>rizin</code></td><td>Formula</td><td>Reverse engineering framework</td><td><code>radare2</code></td><td>Reverse Engineering</td></tr>
-<tr><td><code>arduino-cli</code></td><td>Formula</td><td>Arduino command-line tool</td><td></td><td>Hardware &amp; Embedded</td></tr>
-<tr><td><code>iso-codes</code></td><td>Formula</td><td>ISO language/country codes</td><td></td><td>Miscellaneous</td></tr>
-<tr><td><code>pastel</code></td><td>Formula</td><td>Color manipulation CLI</td><td></td><td>Miscellaneous</td></tr>
-<tr><td><code>audacity</code></td><td>Cask</td><td>Audio editor</td><td><code>ocenaudio</code></td><td>Media Players &amp; Editors</td></tr>
-<tr><td><code>blender</code></td><td>Cask</td><td>3D creation suite</td><td></td><td>Media Players &amp; Editors</td></tr>
-<tr><td><code>iina</code></td><td>Cask</td><td>Modern media player</td><td></td><td>Media Players &amp; Editors</td></tr>
-<tr><td><code>makemkv</code></td><td>Cask</td><td>DVD/Blu-ray ripper</td><td><code>handbrake</code></td><td>Media Players &amp; Editors</td></tr>
-<tr><td><code>calibre</code></td><td>Cask</td><td>E-book manager</td><td></td><td>E-book &amp; Media Management</td></tr>
-<tr><td><code>kid3</code></td><td>Cask</td><td>Audio file tag editor</td><td></td><td>E-book &amp; Media Management</td></tr>
-<tr><td><code>blackhole-16ch</code></td><td>Cask</td><td>Virtual audio driver (16 channel)</td><td></td><td>Audio Utilities</td></tr>
-<tr><td><code>blackhole-2ch</code></td><td>Cask</td><td>Virtual audio driver (2 channel)</td><td></td><td>Audio Utilities</td></tr>
-<tr><td><code>basictex</code></td><td>Cask</td><td>Minimal TeX distribution</td><td></td><td>Development Tools</td></tr>
-<tr><td><code>dbeaver-community</code></td><td>Cask</td><td>Database management tool</td><td><code>tableplus</code></td><td>Development Tools</td></tr>
-<tr><td><code>gitup-app</code></td><td>Cask</td><td>Git GUI client</td><td><code>fork</code></td><td>Development Tools</td></tr>
-<tr><td><code>jdk-mission-control</code></td><td>Cask</td><td>JVM monitoring and profiling</td><td></td><td>Development Tools</td></tr>
-<tr><td><code>kitty</code></td><td>Cask</td><td>GPU-accelerated terminal</td><td><code>ghostty</code>, <code>wezterm</code></td><td>Development Tools</td></tr>
-<tr><td><code>appcleaner</code></td><td>Cask</td><td>Application uninstaller</td><td><code>pearcleaner</code></td><td>System Utilities</td></tr>
-<tr><td><code>disk-inventory-x</code></td><td>Cask</td><td>Disk usage visualizer</td><td><code>grandperspective</code></td><td>System Utilities</td></tr>
-<tr><td><code>grandperspective</code></td><td>Cask</td><td>Disk usage analyzer</td><td></td><td>System Utilities</td></tr>
-<tr><td><code>keka</code></td><td>Cask</td><td>File archiver</td><td></td><td>System Utilities</td></tr>
-<tr><td><code>stats</code></td><td>Cask</td><td>System monitor in menu bar</td><td></td><td>System Utilities</td></tr>
-<tr><td><code>suspicious-package</code></td><td>Cask</td><td>Package inspector</td><td></td><td>System Utilities</td></tr>
-<tr><td><code>qlmarkdown</code></td><td>Cask</td><td>Preview Markdown files</td><td></td><td>Quick Look Plugins</td></tr>
-<tr><td><code>syntax-highlight</code></td><td>Cask</td><td>Preview source code files</td><td></td><td>Quick Look Plugins</td></tr>
-<tr><td><code>font-fira-mono-nerd-font</code></td><td>Cask</td><td>Fira Mono with Nerd Font icons</td><td></td><td>Fonts</td></tr>
-<tr><td><code>font-symbols-only-nerd-font</code></td><td>Cask</td><td>Nerd Font symbols only</td><td></td><td>Fonts</td></tr>
-<tr><td><code>utm</code></td><td>Cask</td><td>Virtual machines for macOS</td><td></td><td>Virtualization</td></tr>
-</tbody>
-</table>
-</div>
+    <div class="table-wrap">
+        <table id="pkgTable">
+            <thead>
+                <tr>
+                    <th class="sortable" data-col="0">Name</th>
+                    <th>
+                        <span class="filter-wrap">
+                            <button class="filter-btn" id="typeBtnEl">Formula/Cask</button><span id="typeBadge"></span>
+                            <div class="filter-dropdown" id="typeFilter">
+                                <input class="filter-search" type="text" placeholder="Search...">
+                                <div class="filter-options"></div>
+                                <div class="filter-actions"><button class="sel-all">Show All</button><button
+                                        class="clr-all">Clear All</button></div>
+                            </div>
+                        </span>
+                    </th>
+                    <th class="sortable" data-col="2">Description</th>
+                    <th class="sortable" data-col="3">Alternatives</th>
+                    <th>
+                        <span class="filter-wrap">
+                            <button class="filter-btn" id="catBtnEl">Category</button><span id="catBadge"></span>
+                            <div class="filter-dropdown" id="catFilter">
+                                <input class="filter-search" type="text" placeholder="Search...">
+                                <div class="filter-options"></div>
+                                <div class="filter-actions"><button class="sel-all">Show All</button><button
+                                        class="clr-all">Clear All</button></div>
+                            </div>
+                        </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>bash</code></td>
+                    <td>Formula</td>
+                    <td>Bourne-Again SHell</td>
+                    <td><code>fish</code>, <code>nushell</code></td>
+                    <td>Shells &amp; Terminal</td>
+                </tr>
+                <tr>
+                    <td><code>bat</code></td>
+                    <td>Formula</td>
+                    <td>Cat clone with syntax highlighting</td>
+                    <td></td>
+                    <td>Shells &amp; Terminal</td>
+                </tr>
+                <tr>
+                    <td><code>btop</code></td>
+                    <td>Formula</td>
+                    <td>Resource monitor</td>
+                    <td></td>
+                    <td>Shells &amp; Terminal</td>
+                </tr>
+                <tr>
+                    <td><code>coreutils</code></td>
+                    <td>Formula</td>
+                    <td>GNU core utilities</td>
+                    <td><code>uutils-coreutils</code></td>
+                    <td>Shells &amp; Terminal</td>
+                </tr>
+                <tr>
+                    <td><code>eza</code></td>
+                    <td>Formula</td>
+                    <td>Modern replacement for ls</td>
+                    <td></td>
+                    <td>Shells &amp; Terminal</td>
+                </tr>
+                <tr>
+                    <td><code>fd</code></td>
+                    <td>Formula</td>
+                    <td>Simple, fast alternative to find</td>
+                    <td></td>
+                    <td>Shells &amp; Terminal</td>
+                </tr>
+                <tr>
+                    <td><code>fzf</code></td>
+                    <td>Formula</td>
+                    <td>Fuzzy finder</td>
+                    <td><code>skim</code></td>
+                    <td>Shells &amp; Terminal</td>
+                </tr>
+                <tr>
+                    <td><code>tmux</code></td>
+                    <td>Formula</td>
+                    <td>Terminal multiplexer</td>
+                    <td><code>zellij</code></td>
+                    <td>Shells &amp; Terminal</td>
+                </tr>
+                <tr>
+                    <td><code>tree</code></td>
+                    <td>Formula</td>
+                    <td>Directory listing as a tree</td>
+                    <td><code>broot</code></td>
+                    <td>Shells &amp; Terminal</td>
+                </tr>
+                <tr>
+                    <td><code>zoxide</code></td>
+                    <td>Formula</td>
+                    <td>Smarter cd command</td>
+                    <td></td>
+                    <td>Shells &amp; Terminal</td>
+                </tr>
+                <tr>
+                    <td><code>gh</code></td>
+                    <td>Formula</td>
+                    <td>GitHub CLI</td>
+                    <td></td>
+                    <td>Version Control</td>
+                </tr>
+                <tr>
+                    <td><code>git</code></td>
+                    <td>Formula</td>
+                    <td>Distributed version control</td>
+                    <td><code>jj</code></td>
+                    <td>Version Control</td>
+                </tr>
+                <tr>
+                    <td><code>git-filter-repo</code></td>
+                    <td>Formula</td>
+                    <td>Rewrite git history</td>
+                    <td></td>
+                    <td>Version Control</td>
+                </tr>
+                <tr>
+                    <td><code>git-lfs</code></td>
+                    <td>Formula</td>
+                    <td>Git Large File Storage</td>
+                    <td></td>
+                    <td>Version Control</td>
+                </tr>
+                <tr>
+                    <td><code>git-svn</code></td>
+                    <td>Formula</td>
+                    <td>Bidirectional Git/SVN bridge</td>
+                    <td></td>
+                    <td>Version Control</td>
+                </tr>
+                <tr>
+                    <td><code>gitea</code></td>
+                    <td>Formula</td>
+                    <td>Self-hosted Git service</td>
+                    <td><code>forgejo</code></td>
+                    <td>Version Control</td>
+                </tr>
+                <tr>
+                    <td><code>gitea-mcp-server</code></td>
+                    <td>Formula</td>
+                    <td>MCP server for Gitea</td>
+                    <td></td>
+                    <td>Version Control</td>
+                </tr>
+                <tr>
+                    <td><code>chapel</code></td>
+                    <td>Formula</td>
+                    <td>Parallel programming language</td>
+                    <td></td>
+                    <td>Programming Languages &amp; Runtimes</td>
+                </tr>
+                <tr>
+                    <td><code>fennel</code></td>
+                    <td>Formula</td>
+                    <td>Lisp dialect for Lua</td>
+                    <td></td>
+                    <td>Programming Languages &amp; Runtimes</td>
+                </tr>
+                <tr>
+                    <td><code>lua</code></td>
+                    <td>Formula</td>
+                    <td>Scripting language</td>
+                    <td><code>luajit</code></td>
+                    <td>Programming Languages &amp; Runtimes</td>
+                </tr>
+                <tr>
+                    <td><code>node</code></td>
+                    <td>Formula</td>
+                    <td>JavaScript runtime</td>
+                    <td><code>deno</code></td>
+                    <td>Programming Languages &amp; Runtimes</td>
+                </tr>
+                <tr>
+                    <td><code>oven-sh/bun/bun</code></td>
+                    <td>Formula</td>
+                    <td>Fast JavaScript runtime</td>
+                    <td></td>
+                    <td>Programming Languages &amp; Runtimes</td>
+                </tr>
+                <tr>
+                    <td><code>perl</code></td>
+                    <td>Formula</td>
+                    <td>Practical extraction and report language</td>
+                    <td></td>
+                    <td>Programming Languages &amp; Runtimes</td>
+                </tr>
+                <tr>
+                    <td><code>basedpyright</code></td>
+                    <td>Formula</td>
+                    <td>Python type checker</td>
+                    <td></td>
+                    <td>Language Servers &amp; IDE Support</td>
+                </tr>
+                <tr>
+                    <td><code>bash-language-server</code></td>
+                    <td>Formula</td>
+                    <td>LSP for Bash</td>
+                    <td></td>
+                    <td>Language Servers &amp; IDE Support</td>
+                </tr>
+                <tr>
+                    <td><code>fennel-ls</code></td>
+                    <td>Formula</td>
+                    <td>LSP for Fennel</td>
+                    <td></td>
+                    <td>Language Servers &amp; IDE Support</td>
+                </tr>
+                <tr>
+                    <td><code>gopls</code></td>
+                    <td>Formula</td>
+                    <td>LSP for Go</td>
+                    <td></td>
+                    <td>Language Servers &amp; IDE Support</td>
+                </tr>
+                <tr>
+                    <td><code>jdtls</code></td>
+                    <td>Formula</td>
+                    <td>LSP for Java</td>
+                    <td></td>
+                    <td>Language Servers &amp; IDE Support</td>
+                </tr>
+                <tr>
+                    <td><code>lua-language-server</code></td>
+                    <td>Formula</td>
+                    <td>LSP for Lua</td>
+                    <td></td>
+                    <td>Language Servers &amp; IDE Support</td>
+                </tr>
+                <tr>
+                    <td><code>sql-language-server</code></td>
+                    <td>Formula</td>
+                    <td>LSP for SQL</td>
+                    <td></td>
+                    <td>Language Servers &amp; IDE Support</td>
+                </tr>
+                <tr>
+                    <td><code>typescript-language-server</code></td>
+                    <td>Formula</td>
+                    <td>LSP for TypeScript/JavaScript</td>
+                    <td></td>
+                    <td>Language Servers &amp; IDE Support</td>
+                </tr>
+                <tr>
+                    <td><code>vscode-langservers-extracted</code></td>
+                    <td>Formula</td>
+                    <td>HTML/CSS/JSON/ESLint LSPs</td>
+                    <td></td>
+                    <td>Language Servers &amp; IDE Support</td>
+                </tr>
+                <tr>
+                    <td><code>yaml-language-server</code></td>
+                    <td>Formula</td>
+                    <td>LSP for YAML</td>
+                    <td></td>
+                    <td>Language Servers &amp; IDE Support</td>
+                </tr>
+                <tr>
+                    <td><code>cmake</code></td>
+                    <td>Formula</td>
+                    <td>Cross-platform build system</td>
+                    <td><code>meson</code></td>
+                    <td>Build Systems &amp; Compilers</td>
+                </tr>
+                <tr>
+                    <td><code>cmake-docs</code></td>
+                    <td>Formula</td>
+                    <td>CMake documentation</td>
+                    <td></td>
+                    <td>Build Systems &amp; Compilers</td>
+                </tr>
+                <tr>
+                    <td><code>gradle</code></td>
+                    <td>Formula</td>
+                    <td>Build automation for Java</td>
+                    <td></td>
+                    <td>Build Systems &amp; Compilers</td>
+                </tr>
+                <tr>
+                    <td><code>llvm</code></td>
+                    <td>Formula</td>
+                    <td>Compiler infrastructure</td>
+                    <td></td>
+                    <td>Build Systems &amp; Compilers</td>
+                </tr>
+                <tr>
+                    <td><code>make</code></td>
+                    <td>Formula</td>
+                    <td>GNU make</td>
+                    <td><code>just</code></td>
+                    <td>Build Systems &amp; Compilers</td>
+                </tr>
+                <tr>
+                    <td><code>ninja</code></td>
+                    <td>Formula</td>
+                    <td>Small build system</td>
+                    <td></td>
+                    <td>Build Systems &amp; Compilers</td>
+                </tr>
+                <tr>
+                    <td><code>pkgconf</code></td>
+                    <td>Formula</td>
+                    <td>Package compiler and linker metadata</td>
+                    <td></td>
+                    <td>Build Systems &amp; Compilers</td>
+                </tr>
+                <tr>
+                    <td><code>ruff</code></td>
+                    <td>Formula</td>
+                    <td>Fast Python linter/formatter</td>
+                    <td></td>
+                    <td>Code Quality &amp; Linting</td>
+                </tr>
+                <tr>
+                    <td><code>shellcheck</code></td>
+                    <td>Formula</td>
+                    <td>Shell script analysis tool</td>
+                    <td></td>
+                    <td>Code Quality &amp; Linting</td>
+                </tr>
+                <tr>
+                    <td><code>shfmt</code></td>
+                    <td>Formula</td>
+                    <td>Shell script formatter</td>
+                    <td></td>
+                    <td>Code Quality &amp; Linting</td>
+                </tr>
+                <tr>
+                    <td><code>swiftlint</code></td>
+                    <td>Formula</td>
+                    <td>Swift style and conventions</td>
+                    <td></td>
+                    <td>Code Quality &amp; Linting</td>
+                </tr>
+                <tr>
+                    <td><code>chafa</code></td>
+                    <td>Formula</td>
+                    <td>Image to terminal graphics</td>
+                    <td></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>ffmpeg</code></td>
+                    <td>Formula</td>
+                    <td>Audio/video transcoding</td>
+                    <td></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>fluid-synth</code></td>
+                    <td>Formula</td>
+                    <td>Software MIDI synthesizer</td>
+                    <td></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>gmic</code></td>
+                    <td>Formula</td>
+                    <td>Image processing framework</td>
+                    <td></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>graphicsmagick</code></td>
+                    <td>Formula</td>
+                    <td>Image processing tools</td>
+                    <td><code>vips</code></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>imagemagick</code></td>
+                    <td>Formula</td>
+                    <td>Image manipulation tools</td>
+                    <td><code>vips</code></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>libcaca</code></td>
+                    <td>Formula</td>
+                    <td>ASCII art graphics library</td>
+                    <td></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>libheif</code></td>
+                    <td>Formula</td>
+                    <td>HEIF/HEIC image format</td>
+                    <td></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>little-cms2</code></td>
+                    <td>Formula</td>
+                    <td>Color management system</td>
+                    <td></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>mpv</code></td>
+                    <td>Formula</td>
+                    <td>Media player</td>
+                    <td></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>openjpeg</code></td>
+                    <td>Formula</td>
+                    <td>JPEG 2000 codec</td>
+                    <td></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>portmidi</code></td>
+                    <td>Formula</td>
+                    <td>MIDI I/O library</td>
+                    <td></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>sdl2</code></td>
+                    <td>Formula</td>
+                    <td>Multimedia library</td>
+                    <td><code>sdl3</code></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>sox</code></td>
+                    <td>Formula</td>
+                    <td>Sound processing tool</td>
+                    <td></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>yt-dlp</code></td>
+                    <td>Formula</td>
+                    <td>Video downloader</td>
+                    <td></td>
+                    <td>Media Processing</td>
+                </tr>
+                <tr>
+                    <td><code>djvulibre</code></td>
+                    <td>Formula</td>
+                    <td>DjVu document format</td>
+                    <td></td>
+                    <td>Document &amp; Text Processing</td>
+                </tr>
+                <tr>
+                    <td><code>epubcheck</code></td>
+                    <td>Formula</td>
+                    <td>EPUB validator</td>
+                    <td></td>
+                    <td>Document &amp; Text Processing</td>
+                </tr>
+                <tr>
+                    <td><code>pandoc</code></td>
+                    <td>Formula</td>
+                    <td>Universal document converter</td>
+                    <td><code>typst</code></td>
+                    <td>Document &amp; Text Processing</td>
+                </tr>
+                <tr>
+                    <td><code>qpdf</code></td>
+                    <td>Formula</td>
+                    <td>PDF transformation tool</td>
+                    <td></td>
+                    <td>Document &amp; Text Processing</td>
+                </tr>
+                <tr>
+                    <td><code>texinfo</code></td>
+                    <td>Formula</td>
+                    <td>GNU documentation system</td>
+                    <td></td>
+                    <td>Document &amp; Text Processing</td>
+                </tr>
+                <tr>
+                    <td><code>utftex</code></td>
+                    <td>Formula</td>
+                    <td>Unicode TeX rendering</td>
+                    <td></td>
+                    <td>Document &amp; Text Processing</td>
+                </tr>
+                <tr>
+                    <td><code>cjson</code></td>
+                    <td>Formula</td>
+                    <td>JSON parser in C</td>
+                    <td></td>
+                    <td>Data Processing &amp; Analysis</td>
+                </tr>
+                <tr>
+                    <td><code>duckdb</code></td>
+                    <td>Formula</td>
+                    <td>Analytical SQL database</td>
+                    <td></td>
+                    <td>Data Processing &amp; Analysis</td>
+                </tr>
+                <tr>
+                    <td><code>jq</code></td>
+                    <td>Formula</td>
+                    <td>JSON processor</td>
+                    <td><code>jaq</code></td>
+                    <td>Data Processing &amp; Analysis</td>
+                </tr>
+                <tr>
+                    <td><code>json-glib</code></td>
+                    <td>Formula</td>
+                    <td>JSON parser for GLib</td>
+                    <td></td>
+                    <td>Data Processing &amp; Analysis</td>
+                </tr>
+                <tr>
+                    <td><code>qsv</code></td>
+                    <td>Formula</td>
+                    <td>CSV data wrangling toolkit</td>
+                    <td></td>
+                    <td>Data Processing &amp; Analysis</td>
+                </tr>
+                <tr>
+                    <td><code>tidy-viewer</code></td>
+                    <td>Formula</td>
+                    <td>CSV pretty printer</td>
+                    <td><code>csvlens</code></td>
+                    <td>Data Processing &amp; Analysis</td>
+                </tr>
+                <tr>
+                    <td><code>visidata</code></td>
+                    <td>Formula</td>
+                    <td>Terminal data exploration</td>
+                    <td></td>
+                    <td>Data Processing &amp; Analysis</td>
+                </tr>
+                <tr>
+                    <td><code>xan</code></td>
+                    <td>Formula</td>
+                    <td>CSV toolkit</td>
+                    <td></td>
+                    <td>Data Processing &amp; Analysis</td>
+                </tr>
+                <tr>
+                    <td><code>atool</code></td>
+                    <td>Formula</td>
+                    <td>Archive file manager</td>
+                    <td></td>
+                    <td>File &amp; Archive Tools</td>
+                </tr>
+                <tr>
+                    <td><code>cabextract</code></td>
+                    <td>Formula</td>
+                    <td>Microsoft cabinet extractor</td>
+                    <td></td>
+                    <td>File &amp; Archive Tools</td>
+                </tr>
+                <tr>
+                    <td><code>cdrtools</code></td>
+                    <td>Formula</td>
+                    <td>CD/DVD/Blu-ray tools</td>
+                    <td></td>
+                    <td>File &amp; Archive Tools</td>
+                </tr>
+                <tr>
+                    <td><code>libdvdcss</code></td>
+                    <td>Formula</td>
+                    <td>DVD decryption library</td>
+                    <td></td>
+                    <td>File &amp; Archive Tools</td>
+                </tr>
+                <tr>
+                    <td><code>librsync</code></td>
+                    <td>Formula</td>
+                    <td>Remote delta algorithm library</td>
+                    <td></td>
+                    <td>File &amp; Archive Tools</td>
+                </tr>
+                <tr>
+                    <td><code>p7zip</code></td>
+                    <td>Formula</td>
+                    <td>7-Zip file archiver</td>
+                    <td><code>sevenzip</code></td>
+                    <td>File &amp; Archive Tools</td>
+                </tr>
+                <tr>
+                    <td><code>rsync</code></td>
+                    <td>Formula</td>
+                    <td>Fast file synchronization</td>
+                    <td></td>
+                    <td>File &amp; Archive Tools</td>
+                </tr>
+                <tr>
+                    <td><code>exiftool</code></td>
+                    <td>Formula</td>
+                    <td>Read/write file metadata</td>
+                    <td></td>
+                    <td>Metadata &amp; File Information</td>
+                </tr>
+                <tr>
+                    <td><code>exiv2</code></td>
+                    <td>Formula</td>
+                    <td>Image metadata library</td>
+                    <td></td>
+                    <td>Metadata &amp; File Information</td>
+                </tr>
+                <tr>
+                    <td><code>media-info</code></td>
+                    <td>Formula</td>
+                    <td>Media file information</td>
+                    <td></td>
+                    <td>Metadata &amp; File Information</td>
+                </tr>
+                <tr>
+                    <td><code>curl</code></td>
+                    <td>Formula</td>
+                    <td>Data transfer tool</td>
+                    <td></td>
+                    <td>Network Tools</td>
+                </tr>
+                <tr>
+                    <td><code>sniffnet</code></td>
+                    <td>Formula</td>
+                    <td>Network traffic monitor</td>
+                    <td></td>
+                    <td>Network Tools</td>
+                </tr>
+                <tr>
+                    <td><code>wget</code></td>
+                    <td>Formula</td>
+                    <td>File retrieval tool</td>
+                    <td><code>aria2</code></td>
+                    <td>Network Tools</td>
+                </tr>
+                <tr>
+                    <td><code>gawk</code></td>
+                    <td>Formula</td>
+                    <td>GNU awk</td>
+                    <td></td>
+                    <td>Search &amp; Text Processing</td>
+                </tr>
+                <tr>
+                    <td><code>gnu-sed</code></td>
+                    <td>Formula</td>
+                    <td>GNU stream editor</td>
+                    <td><code>sd</code></td>
+                    <td>Search &amp; Text Processing</td>
+                </tr>
+                <tr>
+                    <td><code>mawk</code></td>
+                    <td>Formula</td>
+                    <td>Fast awk implementation</td>
+                    <td></td>
+                    <td>Search &amp; Text Processing</td>
+                </tr>
+                <tr>
+                    <td><code>ripgrep</code></td>
+                    <td>Formula</td>
+                    <td>Fast recursive grep</td>
+                    <td></td>
+                    <td>Search &amp; Text Processing</td>
+                </tr>
+                <tr>
+                    <td><code>gperftools</code></td>
+                    <td>Formula</td>
+                    <td>Performance analysis tools</td>
+                    <td></td>
+                    <td>System Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>hyperfine</code></td>
+                    <td>Formula</td>
+                    <td>Command-line benchmarking</td>
+                    <td></td>
+                    <td>System Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>mac-cleanup-go</code></td>
+                    <td>Formula</td>
+                    <td>macOS cleanup utility</td>
+                    <td></td>
+                    <td>System Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>mactop</code></td>
+                    <td>Formula</td>
+                    <td>macOS system monitor</td>
+                    <td></td>
+                    <td>System Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>parallel</code></td>
+                    <td>Formula</td>
+                    <td>Execute jobs in parallel</td>
+                    <td></td>
+                    <td>System Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>smartmontools</code></td>
+                    <td>Formula</td>
+                    <td>Disk health monitoring</td>
+                    <td></td>
+                    <td>System Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>tldr</code></td>
+                    <td>Formula</td>
+                    <td>Simplified man pages</td>
+                    <td><code>tealdeer</code></td>
+                    <td>System Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>ipython</code></td>
+                    <td>Formula</td>
+                    <td>Interactive Python shell</td>
+                    <td><code>ptpython</code></td>
+                    <td>Python Tools</td>
+                </tr>
+                <tr>
+                    <td><code>pygments</code></td>
+                    <td>Formula</td>
+                    <td>Syntax highlighting</td>
+                    <td></td>
+                    <td>Python Tools</td>
+                </tr>
+                <tr>
+                    <td><code>uv</code></td>
+                    <td>Formula</td>
+                    <td>Fast Python package installer</td>
+                    <td></td>
+                    <td>Python Tools</td>
+                </tr>
+                <tr>
+                    <td><code>luarocks</code></td>
+                    <td>Formula</td>
+                    <td>Lua package manager</td>
+                    <td></td>
+                    <td>Lua Ecosystem</td>
+                </tr>
+                <tr>
+                    <td><code>gettext</code></td>
+                    <td>Formula</td>
+                    <td>Internationalization library</td>
+                    <td></td>
+                    <td>Development Libraries</td>
+                </tr>
+                <tr>
+                    <td><code>graphviz</code></td>
+                    <td>Formula</td>
+                    <td>Graph visualization</td>
+                    <td></td>
+                    <td>Development Libraries</td>
+                </tr>
+                <tr>
+                    <td><code>gsl</code></td>
+                    <td>Formula</td>
+                    <td>GNU Scientific Library</td>
+                    <td></td>
+                    <td>Development Libraries</td>
+                </tr>
+                <tr>
+                    <td><code>libcerf</code></td>
+                    <td>Formula</td>
+                    <td>Complex error functions</td>
+                    <td></td>
+                    <td>Development Libraries</td>
+                </tr>
+                <tr>
+                    <td><code>libomp</code></td>
+                    <td>Formula</td>
+                    <td>OpenMP runtime</td>
+                    <td></td>
+                    <td>Development Libraries</td>
+                </tr>
+                <tr>
+                    <td><code>qt@5</code></td>
+                    <td>Formula</td>
+                    <td>Cross-platform UI framework</td>
+                    <td><code>qt</code></td>
+                    <td>Development Libraries</td>
+                </tr>
+                <tr>
+                    <td><code>tree-sitter-cli</code></td>
+                    <td>Formula</td>
+                    <td>Parser generator tool</td>
+                    <td></td>
+                    <td>Development Libraries</td>
+                </tr>
+                <tr>
+                    <td><code>rizin</code></td>
+                    <td>Formula</td>
+                    <td>Reverse engineering framework</td>
+                    <td><code>radare2</code></td>
+                    <td>Reverse Engineering</td>
+                </tr>
+                <tr>
+                    <td><code>arduino-cli</code></td>
+                    <td>Formula</td>
+                    <td>Arduino command-line tool</td>
+                    <td></td>
+                    <td>Hardware &amp; Embedded</td>
+                </tr>
+                <tr>
+                    <td><code>iso-codes</code></td>
+                    <td>Formula</td>
+                    <td>ISO language/country codes</td>
+                    <td></td>
+                    <td>Miscellaneous</td>
+                </tr>
+                <tr>
+                    <td><code>pastel</code></td>
+                    <td>Formula</td>
+                    <td>Color manipulation CLI</td>
+                    <td></td>
+                    <td>Miscellaneous</td>
+                </tr>
+                <tr>
+                    <td><code>audacity</code></td>
+                    <td>Cask</td>
+                    <td>Audio editor</td>
+                    <td><code>ocenaudio</code></td>
+                    <td>Media Players &amp; Editors</td>
+                </tr>
+                <tr>
+                    <td><code>blender</code></td>
+                    <td>Cask</td>
+                    <td>3D creation suite</td>
+                    <td></td>
+                    <td>Media Players &amp; Editors</td>
+                </tr>
+                <tr>
+                    <td><code>iina</code></td>
+                    <td>Cask</td>
+                    <td>Modern media player</td>
+                    <td></td>
+                    <td>Media Players &amp; Editors</td>
+                </tr>
+                <tr>
+                    <td><code>makemkv</code></td>
+                    <td>Cask</td>
+                    <td>DVD/Blu-ray ripper</td>
+                    <td><code>handbrake</code></td>
+                    <td>Media Players &amp; Editors</td>
+                </tr>
+                <tr>
+                    <td><code>calibre</code></td>
+                    <td>Cask</td>
+                    <td>E-book manager</td>
+                    <td></td>
+                    <td>E-book &amp; Media Management</td>
+                </tr>
+                <tr>
+                    <td><code>kid3</code></td>
+                    <td>Cask</td>
+                    <td>Audio file tag editor</td>
+                    <td></td>
+                    <td>E-book &amp; Media Management</td>
+                </tr>
+                <tr>
+                    <td><code>blackhole-16ch</code></td>
+                    <td>Cask</td>
+                    <td>Virtual audio driver (16 channel)</td>
+                    <td></td>
+                    <td>Audio Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>blackhole-2ch</code></td>
+                    <td>Cask</td>
+                    <td>Virtual audio driver (2 channel)</td>
+                    <td></td>
+                    <td>Audio Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>basictex</code></td>
+                    <td>Cask</td>
+                    <td>Minimal TeX distribution</td>
+                    <td></td>
+                    <td>Development Tools</td>
+                </tr>
+                <tr>
+                    <td><code>dbeaver-community</code></td>
+                    <td>Cask</td>
+                    <td>Database management tool</td>
+                    <td><code>tableplus</code></td>
+                    <td>Development Tools</td>
+                </tr>
+                <tr>
+                    <td><code>gitup-app</code></td>
+                    <td>Cask</td>
+                    <td>Git GUI client</td>
+                    <td><code>fork</code></td>
+                    <td>Development Tools</td>
+                </tr>
+                <tr>
+                    <td><code>jdk-mission-control</code></td>
+                    <td>Cask</td>
+                    <td>JVM monitoring and profiling</td>
+                    <td></td>
+                    <td>Development Tools</td>
+                </tr>
+                <tr>
+                    <td><code>kitty</code></td>
+                    <td>Cask</td>
+                    <td>GPU-accelerated terminal</td>
+                    <td><code>ghostty</code>, <code>wezterm</code></td>
+                    <td>Development Tools</td>
+                </tr>
+                <tr>
+                    <td><code>appcleaner</code></td>
+                    <td>Cask</td>
+                    <td>Application uninstaller</td>
+                    <td><code>pearcleaner</code></td>
+                    <td>System Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>disk-inventory-x</code></td>
+                    <td>Cask</td>
+                    <td>Disk usage visualizer</td>
+                    <td><code>grandperspective</code></td>
+                    <td>System Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>grandperspective</code></td>
+                    <td>Cask</td>
+                    <td>Disk usage analyzer</td>
+                    <td></td>
+                    <td>System Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>keka</code></td>
+                    <td>Cask</td>
+                    <td>File archiver</td>
+                    <td></td>
+                    <td>System Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>stats</code></td>
+                    <td>Cask</td>
+                    <td>System monitor in menu bar</td>
+                    <td></td>
+                    <td>System Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>suspicious-package</code></td>
+                    <td>Cask</td>
+                    <td>Package inspector</td>
+                    <td></td>
+                    <td>System Utilities</td>
+                </tr>
+                <tr>
+                    <td><code>qlmarkdown</code></td>
+                    <td>Cask</td>
+                    <td>Preview Markdown files</td>
+                    <td></td>
+                    <td>Quick Look Plugins</td>
+                </tr>
+                <tr>
+                    <td><code>syntax-highlight</code></td>
+                    <td>Cask</td>
+                    <td>Preview source code files</td>
+                    <td></td>
+                    <td>Quick Look Plugins</td>
+                </tr>
+                <tr>
+                    <td><code>font-fira-mono-nerd-font</code></td>
+                    <td>Cask</td>
+                    <td>Fira Mono with Nerd Font icons</td>
+                    <td></td>
+                    <td>Fonts</td>
+                </tr>
+                <tr>
+                    <td><code>font-symbols-only-nerd-font</code></td>
+                    <td>Cask</td>
+                    <td>Nerd Font symbols only</td>
+                    <td></td>
+                    <td>Fonts</td>
+                </tr>
+                <tr>
+                    <td><code>utm</code></td>
+                    <td>Cask</td>
+                    <td>Virtual machines for macOS</td>
+                    <td></td>
+                    <td>Virtualization</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-<div class="no-results" id="noResults">No packages match the current filters.</div>
-
-<script>
-(function() {
-  var table = document.getElementById('pkgTable');
-  var rows = Array.from(table.querySelectorAll('tbody tr'));
-  var searchInput = document.getElementById('nameSearch');
-  var noResults = document.getElementById('noResults');
-
-  // Filter state
-  var filters = {
-    typeFilter: { col: 1, selected: new Set(), all: [], badge: document.getElementById('typeBadge'), btn: document.getElementById('typeBtnEl') },
-    catFilter:  { col: 4, selected: new Set(), all: [], badge: document.getElementById('catBadge'),  btn: document.getElementById('catBtnEl') }
-  };
-
-  // Stats
-  var statTotal = document.getElementById('statTotal');
-  var statFormula = document.getElementById('statFormula');
-  var statCask = document.getElementById('statCask');
-  var statShowing = document.getElementById('statShowing');
-  var totalFormulas = rows.filter(function(r) { return r.cells[1].textContent.trim() === 'Formula'; }).length;
-  var totalCasks = rows.length - totalFormulas;
-  statTotal.textContent = rows.length + ' packages';
-  statFormula.textContent = totalFormulas + ' formulas';
-  statCask.textContent = totalCasks + ' casks';
-
-  // Initialize filters: build option elements once, never destroy them
-  Object.keys(filters).forEach(function(id) {
-    var f = filters[id];
-    var vals = new Set();
-    rows.forEach(function(r) { vals.add(r.cells[f.col].textContent.trim()); });
-    f.all = Array.from(vals).sort();
-    f.selected = new Set(f.all);
-    f.checkboxes = {}; // store references to checkbox elements
-    f.rows = {};       // store references to row elements
-
-    var container = document.querySelector('#' + id + ' .filter-options');
-    f.all.forEach(function(v) {
-      var row = document.createElement('div');
-      row.className = 'filter-row';
-      row.setAttribute('data-value', v.toLowerCase());
-
-      var label = document.createElement('label');
-      var cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.checked = true;
-      cb.addEventListener('change', function() {
-        if (this.checked) f.selected.add(v); else f.selected.delete(v);
-        applyFilters();
-      });
-      label.appendChild(cb);
-      label.appendChild(document.createTextNode(v));
-
-      var onlyBtn = document.createElement('button');
-      onlyBtn.className = 'only-btn';
-      onlyBtn.textContent = 'Only';
-      onlyBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        f.selected = new Set([v]);
-        syncCheckboxes(id);
-        applyFilters();
-      });
-
-      row.appendChild(label);
-      row.appendChild(onlyBtn);
-      container.appendChild(row);
-
-      f.checkboxes[v] = cb;
-      f.rows[v] = row;
-    });
-  });
-
-  // Update checkbox checked states to match f.selected, without rebuilding DOM
-  function syncCheckboxes(id) {
-    var f = filters[id];
-    f.all.forEach(function(v) {
-      f.checkboxes[v].checked = f.selected.has(v);
-    });
-  }
-
-  // Show/hide option rows based on search query
-  function filterOptionRows(id, query) {
-    var f = filters[id];
-    var q = query.toLowerCase();
-    f.all.forEach(function(v) {
-      var match = !q || v.toLowerCase().indexOf(q) !== -1;
-      f.rows[v].style.display = match ? '' : 'none';
-    });
-  }
-
-  function updateBadges() {
-    Object.keys(filters).forEach(function(id) {
-      var f = filters[id];
-      if (f.selected.size < f.all.length) {
-        f.badge.innerHTML = '<span class="filter-badge">' + f.selected.size + '/' + f.all.length + '</span>';
-        f.btn.classList.add('active');
-      } else {
-        f.badge.innerHTML = '';
-        f.btn.classList.remove('active');
-      }
-    });
-  }
-
-  function applyFilters() {
-    var query = searchInput.value.toLowerCase();
-    var visible = 0;
-    rows.forEach(function(r) {
-      var typeVal = r.cells[1].textContent.trim();
-      var catVal = r.cells[4].textContent.trim();
-      var nameVal = r.cells[0].textContent.toLowerCase();
-      var descVal = r.cells[2].textContent.toLowerCase();
-      var matchType = filters.typeFilter.selected.has(typeVal);
-      var matchCat = filters.catFilter.selected.has(catVal);
-      var matchSearch = !query || nameVal.indexOf(query) !== -1 || descVal.indexOf(query) !== -1;
-      var show = matchType && matchCat && matchSearch;
-      r.classList.toggle('hidden', !show);
-      if (show) visible++;
-    });
-    statShowing.textContent = visible < rows.length ? 'showing ' + visible : '';
-    noResults.classList.toggle('show', visible === 0);
-    updateBadges();
-  }
-
-  // Search
-  searchInput.addEventListener('input', applyFilters);
-
-  // Toggle dropdown
-  function toggleDropdown(id) {
-    var dd = document.getElementById(id);
-    var isOpen = dd.classList.contains('show');
-    closeAll();
-    if (!isOpen) {
-      dd.classList.add('show');
-      var search = dd.querySelector('.filter-search');
-      search.value = '';
-      filterOptionRows(id, '');
-      search.focus();
-    }
-  }
-
-  function closeAll() {
-    document.querySelectorAll('.filter-dropdown').forEach(function(d) { d.classList.remove('show'); });
-  }
-
-  // Wire up filter buttons
-  var allDropdowns = [];
-  Object.keys(filters).forEach(function(id) {
-    var f = filters[id];
-    var dd = document.getElementById(id);
-    allDropdowns.push({ dd: dd, wrap: dd.parentElement });
-
-    f.btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      toggleDropdown(id);
-    });
-
-    dd.querySelector('.filter-search').addEventListener('input', function() {
-      filterOptionRows(id, this.value);
-    });
-
-    dd.querySelector('.sel-all').addEventListener('click', function(e) {
-      e.preventDefault();
-      f.selected = new Set(f.all);
-      syncCheckboxes(id);
-      applyFilters();
-    });
-
-    dd.querySelector('.clr-all').addEventListener('click', function(e) {
-      e.preventDefault();
-      f.selected = new Set();
-      syncCheckboxes(id);
-      applyFilters();
-    });
-  });
-
-  // Close dropdowns when clicking outside — uses contains() instead of stopPropagation
-  document.addEventListener('click', function(e) {
-    allDropdowns.forEach(function(item) {
-      if (!item.wrap.contains(e.target)) {
-        item.dd.classList.remove('show');
-      }
-    });
-  });
-
-  // Keyboard: Escape closes dropdowns
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeAll();
-  });
-
-  // --- Column sorting ---
-  var tbody = table.querySelector('tbody');
-  var currentSort = { col: -1, dir: 'asc' };
-
-  function sortByColumn(colIndex) {
-    var allTh = table.querySelectorAll('th.sortable');
-    // Toggle direction if same column, otherwise default to asc
-    if (currentSort.col === colIndex) {
-      currentSort.dir = currentSort.dir === 'asc' ? 'desc' : 'asc';
-    } else {
-      currentSort.col = colIndex;
-      currentSort.dir = 'asc';
-    }
-    // Update header classes
-    allTh.forEach(function(th) { th.classList.remove('asc', 'desc'); });
-    var activeTh = table.querySelector('th[data-col="' + colIndex + '"]');
-    if (activeTh) activeTh.classList.add(currentSort.dir);
-    // Also update filter column headers
-    if (colIndex === 1) document.getElementById('typeBtnEl').parentElement.parentElement.classList.add(currentSort.dir);
-    if (colIndex === 4) document.getElementById('catBtnEl').parentElement.parentElement.classList.add(currentSort.dir);
-
-    var dir = currentSort.dir === 'asc' ? 1 : -1;
-    rows.sort(function(a, b) {
-      var aVal = a.cells[colIndex].textContent.trim().toLowerCase();
-      var bVal = b.cells[colIndex].textContent.trim().toLowerCase();
-      if (aVal < bVal) return -1 * dir;
-      if (aVal > bVal) return 1 * dir;
-      return 0;
-    });
-    rows.forEach(function(r) { tbody.appendChild(r); });
-  }
-
-  // Sortable plain headers
-  table.querySelectorAll('th.sortable').forEach(function(th) {
-    th.addEventListener('click', function() {
-      sortByColumn(parseInt(th.getAttribute('data-col')));
-    });
-  });
-
-  // Make Formula/Cask and Category column headers also sortable (via right-click area or shift+click)
-  // We'll add sort on shift+click for filter columns to avoid conflict with dropdown toggle
-  Object.keys(filters).forEach(function(id) {
-    var f = filters[id];
-    var th = f.btn.closest('th');
-    th.classList.add('sortable');
-    th.setAttribute('data-col', f.col);
-    th.addEventListener('click', function(e) {
-      // Only sort if clicking the th itself, not the filter button or dropdown
-      if (e.target === th) {
-        sortByColumn(f.col);
-      }
-    });
-  });
-
-  // --- Row counts per filter option ---
-  function updateFilterCounts() {
-    Object.keys(filters).forEach(function(id) {
-      var f = filters[id];
-      var counts = {};
-      f.all.forEach(function(v) { counts[v] = 0; });
-      rows.forEach(function(r) {
-        var val = r.cells[f.col].textContent.trim();
-        // Count only rows visible by the OTHER filter + search (not this filter)
-        var otherId = id === 'typeFilter' ? 'catFilter' : 'typeFilter';
-        var otherVal = r.cells[filters[otherId].col].textContent.trim();
-        var query = searchInput.value.toLowerCase();
-        var nameVal = r.cells[0].textContent.toLowerCase();
-        var descVal = r.cells[2].textContent.toLowerCase();
-        var matchOther = filters[otherId].selected.has(otherVal);
-        var matchSearch = !query || nameVal.indexOf(query) !== -1 || descVal.indexOf(query) !== -1;
-        if (matchOther && matchSearch) {
-          counts[val]++;
-        }
-      });
-      f.all.forEach(function(v) {
-        var row = f.rows[v];
-        var countEl = row.querySelector('.filter-count');
-        if (!countEl) {
-          countEl = document.createElement('span');
-          countEl.className = 'filter-count';
-          row.insertBefore(countEl, row.querySelector('.only-btn'));
-        }
-        countEl.textContent = counts[v];
-      });
-    });
-  }
-
-  // Patch applyFilters to also update counts
-  var origApplyFilters = applyFilters;
-  applyFilters = function() {
-    origApplyFilters();
-    updateFilterCounts();
-  };
-
-  // Initial render
-  updateBadges();
-  applyFilters();
-})();
-</script>
+    <div class="no-results" id="noResults">No packages match the current filters.</div>
+    <script src="app.js"></script>
 </body>
+
 </html>
