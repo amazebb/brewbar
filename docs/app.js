@@ -1,24 +1,14 @@
 (function() {
-    Promise.all([
-        fetch('categories.txt').then(function(r) { return r.text(); }),
-        fetch('Brewfile.info').then(function(r) { return r.text(); })
-    ]).then(function(results) {
-        var CATEGORIES = {};
-        results[0].split('\n').forEach(function(line) {
-            if (!line.trim()) return;
-            var tab = line.indexOf('\t');
-            if (tab === -1) return;
-            CATEGORIES[line.slice(0, tab).trim()] = line.slice(tab + 1).trim();
-        });
-
+    fetch('packages.tsv').then(function(r) { return r.text(); }).then(function(text) {
         var tbody = document.querySelector('#pkgTable tbody');
-        results[1].split('\n').forEach(function(line) {
+        text.split('\n').forEach(function(line) {
             if (!line.trim()) return;
             var parts = line.split('\t');
             if (parts.length < 2) return;
             var type = parts[0];
             var name = parts[1];
             var desc = (parts[2] || '').trim();
+            var cat  = (parts[3] || '').trim();
 
             var tr = document.createElement('tr');
 
@@ -34,7 +24,7 @@
             tdDesc.textContent = desc;
 
             var tdCat = document.createElement('td');
-            tdCat.textContent = CATEGORIES[name] || '';
+            tdCat.textContent = cat;
 
             tr.appendChild(tdName);
             tr.appendChild(tdType);
