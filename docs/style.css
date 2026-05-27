@@ -200,12 +200,10 @@
       vertical-align: middle;
   }
 
-  /* Dropdown panel */
+  /* Dropdown panel — portalled to <body> by JS, positioned via getBoundingClientRect */
   .filter-dropdown {
       display: none;
-      position: absolute;
-      top: calc(100% + 4px);
-      left: 0;
+      position: fixed;
       background: #fff;
       border: 1px solid #d0d7de;
       border-radius: 8px;
