@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+(brew info --installed | grep 'Cask from' -B1 | grep '==>' | sed 's/==> /cask /; s/:/\t/' | column -ts $'\t'; \
+brew info --installed --formula | grep 'on request' -B2 | grep  '==>' | sed 's/==> /brew /; s/:/\t/' | column -ts $'\t') > Brewfile.info
