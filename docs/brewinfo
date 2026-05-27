@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
-(
+# (
+#     brew info --installed | grep 'Cask from' -B1 | grep '==>' | sed 's/==> /cask\t/; s/:/\t/'
+#     brew info --installed --formula | grep 'on request' -B2 | grep '==>' | sed 's/==> /brew\t/; s/:/\t/'
+# ) >Brewfile.info
+
+join -t $'\t' -1 1 -2 2 -o 2.1,2.2,2.3,1.2 <(sort categories.txt) <(sort -k2 <(
     brew info --installed | grep 'Cask from' -B1 | grep '==>' | sed 's/==> /cask\t/; s/:/\t/'
     brew info --installed --formula | grep 'on request' -B2 | grep '==>' | sed 's/==> /brew\t/; s/:/\t/'
-) >Brewfile.info
-
-join -t $'\t' -1 1 -2 2 -o 2.1,2.2,2.3,1.2 <(sort categories.txt) <(sort -k2 Brewfile.info) | sort -k1,2 >packages.tsv
+)) | sort -k1,2 >packages.tsv
