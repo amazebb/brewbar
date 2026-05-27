@@ -5,22 +5,20 @@
     ]).then(function(results) {
         var CATEGORIES = {};
         results[0].split('\n').forEach(function(line) {
-            line = line.trim();
-            if (!line) return;
-            var parts = line.split(/\s+/);
-            if (parts.length < 2) return;
-            CATEGORIES[parts[0]] = parts.slice(1).join(' ');
+            if (!line.trim()) return;
+            var tab = line.indexOf('\t');
+            if (tab === -1) return;
+            CATEGORIES[line.slice(0, tab).trim()] = line.slice(tab + 1).trim();
         });
 
         var tbody = document.querySelector('#pkgTable tbody');
         results[1].split('\n').forEach(function(line) {
-            line = line.trim();
-            if (!line) return;
-            var parts = line.split(/\s+/);
+            if (!line.trim()) return;
+            var parts = line.split('\t');
             if (parts.length < 2) return;
             var type = parts[0];
             var name = parts[1];
-            var desc = parts.slice(2).join(' ');
+            var desc = (parts[2] || '').trim();
 
             var tr = document.createElement('tr');
 
