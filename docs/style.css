@@ -1,18 +1,19 @@
   :root {
-      --text:           #1f2328;
-      --text-muted:     #656d76;
-      --bg:             #ffffff;
-      --bg-subtle:      #f6f8fa;
-      --bg-hover:       #e8ecf0;
-      --border:         #d0d7de;
-      --border-muted:   #b0b8c1;
-      --accent:         #0969da;
-      --accent-subtle:  #ddf4ff;
-      --accent-border:  #54aeff;
-      --accent-shadow:  rgba(9, 105, 218, 0.15);
-      --code-bg:        #eff1f3;
-      --row-hover:      #f0f4ff;
+      --text:            #1f2328;
+      --text-muted:      #656d76;
+      --bg:              #ffffff;
+      --bg-subtle:       #f6f8fa;
+      --bg-hover:        #e8ecf0;
+      --border:          #d0d7de;
+      --border-muted:    #b0b8c1;
+      --accent:          #0969da;
+      --accent-subtle:   #ddf4ff;
+      --accent-border:   #54aeff;
+      --accent-shadow:   rgba(9, 105, 218, 0.15);
+      --code-bg:         #eff1f3;
+      --row-hover:       #f0f4ff;
       --dropdown-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      --radius:          6px;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -38,6 +39,11 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+  }
+
+  button {
+      font-family: inherit;
+      cursor: pointer;
   }
 
   body {
@@ -82,7 +88,7 @@
   .stats span {
       background: var(--bg-subtle);
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: var(--radius);
       padding: 4px 10px;
   }
 
@@ -98,11 +104,9 @@
   #brewBtn {
       padding: 8px 14px;
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: var(--radius);
       font-size: 14px;
-      font-family: inherit;
       background: var(--bg-subtle);
-      cursor: pointer;
       color: var(--text);
       white-space: nowrap;
   }
@@ -118,14 +122,15 @@
       max-width: 400px;
       padding: 8px 12px;
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: var(--radius);
       font-size: 14px;
       outline: none;
       background: var(--bg);
       color: var(--text);
   }
 
-  .search-bar input:focus {
+  .search-bar input:focus,
+  .filter-search:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px var(--accent-shadow);
   }
@@ -133,7 +138,7 @@
   /* Table */
   .table-wrap {
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: var(--radius);
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
   }
@@ -200,15 +205,13 @@
       color: var(--text-muted);
   }
 
-  th.sortable.asc::after {
-      content: " \2191";
+  th.sortable.asc::after,
+  th.sortable.desc::after {
       color: var(--accent);
   }
 
-  th.sortable.desc::after {
-      content: " \2193";
-      color: var(--accent);
-  }
+  th.sortable.asc::after  { content: " \2191"; }
+  th.sortable.desc::after { content: " \2193"; }
 
   /* Row count in filter options */
   .filter-count {
@@ -225,12 +228,10 @@
   }
 
   .filter-btn {
-      cursor: pointer;
       background: none;
       border: 1px solid transparent;
       font-weight: 600;
       font-size: 14px;
-      font-family: inherit;
       padding: 2px 6px;
       color: inherit;
       border-radius: 4px;
@@ -285,16 +286,11 @@
       margin: 8px;
       padding: 6px 10px;
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: var(--radius);
       font-size: 13px;
       outline: none;
       background: var(--bg);
       color: var(--text);
-  }
-
-  .filter-search:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-shadow);
   }
 
   .filter-options {
@@ -334,10 +330,8 @@
       color: var(--accent);
       background: none;
       border: none;
-      cursor: pointer;
       padding: 2px 6px;
       border-radius: 3px;
-      font-family: inherit;
       opacity: 0;
       transition: opacity 0.1s;
   }
@@ -359,12 +353,10 @@
 
   .filter-actions button {
       font-size: 12px;
-      cursor: pointer;
       background: none;
       border: none;
       color: var(--accent);
       padding: 2px 4px;
-      font-family: inherit;
   }
 
   .filter-actions button:hover {
