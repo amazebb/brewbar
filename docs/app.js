@@ -154,7 +154,7 @@
                 r.classList.toggle('hidden', !show);
                 if (show) visible++;
             });
-            statShowing.textContent = visible < rows.length ? 'showing ' + visible : '';
+            statShowing.textContent = 'showing ' + visible;
             noResults.classList.toggle('show', visible === 0);
             updateBadges();
         }
@@ -172,6 +172,13 @@
                 dd.style.top = (rect.bottom + 4) + 'px';
                 dd.style.left = rect.left + 'px';
                 dd.classList.add('show');
+                var ddRect = dd.getBoundingClientRect();
+                if (ddRect.right > window.innerWidth - 8) {
+                    dd.style.left = Math.max(8, window.innerWidth - ddRect.width - 8) + 'px';
+                }
+                if (ddRect.left < 8) {
+                    dd.style.left = '8px';
+                }
                 var search = dd.querySelector('.filter-search');
                 search.value = '';
                 filterOptionRows(id, '');
