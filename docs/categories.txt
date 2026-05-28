@@ -1,6 +1,7 @@
 bash	Shells & Terminal
 bat	Shells & Terminal
 btop	Shells & Terminal
+bun	Programming Languages & Runtimes
 coreutils	Shells & Terminal
 eza	Shells & Terminal
 fd	Shells & Terminal
@@ -19,7 +20,6 @@ chapel	Programming Languages & Runtimes
 fennel	Programming Languages & Runtimes
 lua	Programming Languages & Runtimes
 node	Programming Languages & Runtimes
-oven-sh/bun/bun	Programming Languages & Runtimes
 perl	Programming Languages & Runtimes
 basedpyright	Language Servers & IDE Support
 bash-language-server	Language Servers & IDE Support
