@@ -1,36 +1,36 @@
   :root {
-      --text:            #1f2328;
-      --text-muted:      #656d76;
-      --bg:              #ffffff;
-      --bg-subtle:       #f6f8fa;
-      --bg-hover:        #e8ecf0;
-      --border:          #d0d7de;
-      --border-muted:    #b0b8c1;
-      --accent:          #0969da;
-      --accent-subtle:   #ddf4ff;
-      --accent-border:   #54aeff;
-      --accent-shadow:   rgba(9, 105, 218, 0.15);
-      --code-bg:         #eff1f3;
-      --row-hover:       #f0f4ff;
+      --text: #1f2328;
+      --text-muted: #656d76;
+      --bg: #ffffff;
+      --bg-subtle: #f6f8fa;
+      --bg-hover: #e8ecf0;
+      --border: #d0d7de;
+      --border-muted: #b0b8c1;
+      --accent: #0969da;
+      --accent-subtle: #ddf4ff;
+      --accent-border: #54aeff;
+      --accent-shadow: rgba(9, 105, 218, 0.15);
+      --code-bg: #eff1f3;
+      --row-hover: #f0f4ff;
       --dropdown-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-      --radius:          6px;
+      --radius: 6px;
   }
 
   @media (prefers-color-scheme: dark) {
       :root {
-          --text:           #e6edf3;
-          --text-muted:     #8b949e;
-          --bg:             #0d1117;
-          --bg-subtle:      #161b22;
-          --bg-hover:       #1c2128;
-          --border:         #30363d;
-          --border-muted:   #8b949e;
-          --accent:         #58a6ff;
-          --accent-subtle:  #122d42;
-          --accent-border:  #58a6ff;
-          --accent-shadow:  rgba(88, 166, 255, 0.15);
-          --code-bg:        #343942;
-          --row-hover:      #1c2128;
+          --text: #e6edf3;
+          --text-muted: #8b949e;
+          --bg: #0d1117;
+          --bg-subtle: #161b22;
+          --bg-hover: #1c2128;
+          --border: #30363d;
+          --border-muted: #8b949e;
+          --accent: #58a6ff;
+          --accent-subtle: #122d42;
+          --accent-border: #58a6ff;
+          --accent-shadow: rgba(88, 166, 255, 0.15);
+          --code-bg: #343942;
+          --row-hover: #1c2128;
           --dropdown-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
       }
   }
@@ -180,7 +180,7 @@
 
   code a,
   code a:visited {
-      color: blue !important;
+      color: var(--accent) !important;
       text-decoration: none !important;
       background: var(--code-bg);
       padding: 2px 6px;
@@ -210,8 +210,13 @@
       color: var(--accent);
   }
 
-  th.sortable.asc::after  { content: " \2191"; }
-  th.sortable.desc::after { content: " \2193"; }
+  th.sortable.asc::after {
+      content: " \2191";
+  }
+
+  th.sortable.desc::after {
+      content: " \2193";
+  }
 
   /* Row count in filter options */
   .filter-count {
