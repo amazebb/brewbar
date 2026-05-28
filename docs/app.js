@@ -1,73 +1,83 @@
 (function() {
     fetch('packages.tsv').then(r => r.text()).then(text => {
         const tbody = document.querySelector('#pkgTable tbody');
+        const data = [];
+
         text.split('\n').forEach(line => {
             if (!line.trim()) return;
             const parts = line.split('\t');
             if (parts.length < 2) return;
-            const type = parts[0];
-            const name = parts[1];
-            const desc = (parts[2] || '').trim();
-            const cat = (parts[4] || '').trim();
+
+            const item = {
+                type: parts[0],
+                name: parts[1],
+                desc: (parts[2] || '').trim(),
+                url:  parts[3],
+                cat:  (parts[4] || '').trim()
+            };
 
             const tr = document.createElement('tr');
 
             const tdName = document.createElement('td');
             const codeElement = document.createElement('code');
             const codeLink = document.createElement('a');
-            codeLink.textContent = name;
-            codeLink.href = parts[3];
+            codeLink.textContent = item.name;
+            codeLink.href = item.url;
             codeElement.appendChild(codeLink);
             tdName.appendChild(codeElement);
 
             const tdType = document.createElement('td');
-            tdType.textContent = type;
+            tdType.textContent = item.type;
 
             const tdDesc = document.createElement('td');
-            tdDesc.textContent = desc;
+            tdDesc.textContent = item.desc;
 
             const tdCat = document.createElement('td');
-            tdCat.textContent = cat;
+            tdCat.textContent = item.cat;
 
             tr.appendChild(tdName);
             tr.appendChild(tdType);
             tr.appendChild(tdDesc);
             tr.appendChild(tdCat);
             tbody.appendChild(tr);
+
+            item.tr = tr;
+            data.push(item);
         });
 
-        initTable();
+        initTable(data);
     });
 
-    function initTable() {
+    function initTable(data) {
         const table = document.getElementById('pkgTable');
-        const rows = Array.from(table.querySelectorAll('tbody tr'));
+        const tbody = table.querySelector('tbody');
         const searchInput = document.getElementById('nameSearch');
         const noResults = document.getElementById('noResults');
 
-        // Filter state — category is column 3 (no Alternatives column in this table)
+        // Maps col index (used by sortable th data-col attr) to data key
+        const colKeys = ['name', 'type', 'desc', 'cat'];
+
+        // Filter state
         const filters = {
-            typeFilter: { col: 1, selected: new Set(), all: [], badge: document.getElementById('typeBadge'), btn: document.getElementById('typeBtnEl') },
-            catFilter: { col: 3, selected: new Set(), all: [], badge: document.getElementById('catBadge'), btn: document.getElementById('catBtnEl') }
+            typeFilter: { key: 'type', col: 1, selected: new Set(), all: [], badge: document.getElementById('typeBadge'), btn: document.getElementById('typeBtnEl') },
+            catFilter:  { key: 'cat',  col: 3, selected: new Set(), all: [], badge: document.getElementById('catBadge'),  btn: document.getElementById('catBtnEl') }
         };
 
         // Stats
-        const statTotal = document.getElementById('statTotal');
+        const statTotal   = document.getElementById('statTotal');
         const statFormula = document.getElementById('statFormula');
-        const statCask = document.getElementById('statCask');
+        const statCask    = document.getElementById('statCask');
         const statShowing = document.getElementById('statShowing');
-        const totalBrew = rows.filter(r => r.cells[1].textContent.trim() === 'brew').length;
-        const totalCask = rows.length - totalBrew;
-        statTotal.textContent = `${rows.length} packages`;
+        const totalBrew = data.filter(d => d.type === 'brew').length;
+        const totalCask = data.length - totalBrew;
+        statTotal.textContent   = `${data.length} packages`;
         statFormula.textContent = `${totalBrew} formulas`;
-        statCask.textContent = `${totalCask} casks`;
+        statCask.textContent    = `${totalCask} casks`;
 
         // Initialize filters: build option elements once, never destroy them
         Object.keys(filters).forEach(id => {
             const f = filters[id];
-            const vals = new Set();
-            rows.forEach(r => vals.add(r.cells[f.col].textContent.trim()));
-            f.all = Array.from(vals).sort();
+            f.all = [...new Set(data.map(d => d[f.key]))].sort();
             f.selected = new Set(f.all);
             f.checkboxes = {};
             f.rows = {};
@@ -140,23 +150,17 @@
         }
 
         function updateFilterCounts() {
+            const query = searchInput.value.toLowerCase();
             Object.keys(filters).forEach(id => {
                 const f = filters[id];
+                const otherId = id === 'typeFilter' ? 'catFilter' : 'typeFilter';
+                const otherF = filters[otherId];
                 const counts = {};
                 f.all.forEach(v => { counts[v] = 0; });
-                rows.forEach(r => {
-                    const val = r.cells[f.col].textContent.trim();
-                    // Count only rows visible by the OTHER filter + search (not this filter)
-                    const otherId = id === 'typeFilter' ? 'catFilter' : 'typeFilter';
-                    const otherVal = r.cells[filters[otherId].col].textContent.trim();
-                    const query = searchInput.value.toLowerCase();
-                    const nameVal = r.cells[0].textContent.toLowerCase();
-                    const descVal = r.cells[2].textContent.toLowerCase();
-                    const matchOther = filters[otherId].selected.has(otherVal);
-                    const matchSearch = !query || nameVal.includes(query) || descVal.includes(query);
-                    if (matchOther && matchSearch) {
-                        counts[val]++;
-                    }
+                data.forEach(item => {
+                    const matchOther = otherF.selected.has(item[otherF.key]);
+                    const matchSearch = !query || item.name.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query);
+                    if (matchOther && matchSearch) counts[item[f.key]]++;
                 });
                 f.all.forEach(v => {
                     const row = f.rows[v];
@@ -176,16 +180,12 @@
         function applyFilters() {
             const query = searchInput.value.toLowerCase();
             let visible = 0;
-            rows.forEach(r => {
-                const typeVal = r.cells[1].textContent.trim();
-                const catVal = r.cells[3].textContent.trim();
-                const nameVal = r.cells[0].textContent.toLowerCase();
-                const descVal = r.cells[2].textContent.toLowerCase();
-                const matchType = filters.typeFilter.selected.has(typeVal);
-                const matchCat = filters.catFilter.selected.has(catVal);
-                const matchSearch = !query || nameVal.includes(query) || descVal.includes(query);
+            data.forEach(item => {
+                const matchType   = filters.typeFilter.selected.has(item.type);
+                const matchCat    = filters.catFilter.selected.has(item.cat);
+                const matchSearch = !query || item.name.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query);
                 const show = matchType && matchCat && matchSearch;
-                r.classList.toggle('hidden', !show);
+                item.tr.classList.toggle('hidden', !show);
                 if (show) visible++;
             });
             statShowing.textContent = `showing ${visible}`;
@@ -231,7 +231,7 @@
             const f = filters[id];
             const dd = document.getElementById(id);
             const anchor = f.btn.parentElement; // .filter-wrap, stays in the table
-            allDropdowns.push({ dd: dd, wrap: anchor });
+            allDropdowns.push({ dd, wrap: anchor });
             document.body.appendChild(dd); // move out of table DOM
 
             f.btn.addEventListener('click', e => {
@@ -273,7 +273,6 @@
         });
 
         // --- Column sorting ---
-        const tbody = table.querySelector('tbody');
         const currentSort = { col: -1, dir: 'asc' };
 
         function sortByColumn(colIndex) {
@@ -290,15 +289,16 @@
             if (colIndex === 1) document.getElementById('typeBtnEl').parentElement.parentElement.classList.add(currentSort.dir);
             if (colIndex === 3) document.getElementById('catBtnEl').parentElement.parentElement.classList.add(currentSort.dir);
 
+            const key = colKeys[colIndex];
             const dir = currentSort.dir === 'asc' ? 1 : -1;
-            rows.sort((a, b) => {
-                const aVal = a.cells[colIndex].textContent.trim().toLowerCase();
-                const bVal = b.cells[colIndex].textContent.trim().toLowerCase();
+            data.sort((a, b) => {
+                const aVal = a[key].toLowerCase();
+                const bVal = b[key].toLowerCase();
                 if (aVal < bVal) return -1 * dir;
                 if (aVal > bVal) return 1 * dir;
                 return 0;
             });
-            rows.forEach(r => tbody.appendChild(r));
+            data.forEach(item => tbody.appendChild(item.tr));
         }
 
         // Sortable plain headers
@@ -315,21 +315,17 @@
             th.classList.add('sortable');
             th.setAttribute('data-col', f.col);
             th.addEventListener('click', e => {
-                if (e.target === th) {
-                    sortByColumn(f.col);
-                }
+                if (e.target === th) sortByColumn(f.col);
             });
         });
 
         // CSV export of current filtered view
         document.getElementById('exportBtn').addEventListener('click', () => {
             const lines = ['Name,Type,Description,Category'];
-            rows.forEach(r => {
-                if (r.classList.contains('hidden')) return;
-                const cells = Array.from(r.cells).map(td => {
-                    const v = td.textContent.trim().replace(/"/g, '""');
-                    return `"${v}"`;
-                });
+            data.forEach(item => {
+                if (item.tr.classList.contains('hidden')) return;
+                const cells = [item.name, item.type, item.desc, item.cat]
+                    .map(v => `"${v.replace(/"/g, '""')}"`);
                 lines.push(cells.join(','));
             });
             const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
@@ -343,18 +339,15 @@
         // Copy brew install command for current filtered view
         document.getElementById('brewBtn').addEventListener('click', () => {
             const formulas = [], casks = [];
-            rows.forEach(r => {
-                if (r.classList.contains('hidden')) return;
-                const type = r.cells[1].textContent.trim();
-                const name = r.cells[0].textContent.trim();
-                if (type === 'cask') casks.push(name); else formulas.push(name);
+            data.forEach(item => {
+                if (item.tr.classList.contains('hidden')) return;
+                if (item.type === 'cask') casks.push(item.name); else formulas.push(item.name);
             });
             const parts = [];
             if (formulas.length) parts.push(`brew install ${formulas.join(' ')}`);
             if (casks.length) parts.push(`brew install --cask ${casks.join(' ')}`);
-            const text = parts.join('\n');
             const btn = document.getElementById('brewBtn');
-            navigator.clipboard.writeText(text).then(() => {
+            navigator.clipboard.writeText(parts.join('\n')).then(() => {
                 btn.textContent = 'Copied!';
                 setTimeout(() => { btn.textContent = 'Copy brew install'; }, 2000);
             });
