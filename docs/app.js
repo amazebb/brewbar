@@ -1,7 +1,7 @@
 (function() {
-    fetch('packages.tsv').then(function(r) { return r.text(); }).then(function(text) {
+    fetch('packages.tsv').then(r => r.text()).then(text => {
         const tbody = document.querySelector('#pkgTable tbody');
-        text.split('\n').forEach(function(line) {
+        text.split('\n').forEach(line => {
             if (!line.trim()) return;
             const parts = line.split('\t');
             if (parts.length < 2) return;
@@ -56,24 +56,24 @@
         const statFormula = document.getElementById('statFormula');
         const statCask = document.getElementById('statCask');
         const statShowing = document.getElementById('statShowing');
-        const totalBrew = rows.filter(function(r) { return r.cells[1].textContent.trim() === 'brew'; }).length;
+        const totalBrew = rows.filter(r => r.cells[1].textContent.trim() === 'brew').length;
         const totalCask = rows.length - totalBrew;
-        statTotal.textContent = rows.length + ' packages';
-        statFormula.textContent = totalBrew + ' formulas';
-        statCask.textContent = totalCask + ' casks';
+        statTotal.textContent = `${rows.length} packages`;
+        statFormula.textContent = `${totalBrew} formulas`;
+        statCask.textContent = `${totalCask} casks`;
 
         // Initialize filters: build option elements once, never destroy them
-        Object.keys(filters).forEach(function(id) {
+        Object.keys(filters).forEach(id => {
             const f = filters[id];
             const vals = new Set();
-            rows.forEach(function(r) { vals.add(r.cells[f.col].textContent.trim()); });
+            rows.forEach(r => vals.add(r.cells[f.col].textContent.trim()));
             f.all = Array.from(vals).sort();
             f.selected = new Set(f.all);
             f.checkboxes = {};
             f.rows = {};
 
-            const container = document.querySelector('#' + id + ' .filter-options');
-            f.all.forEach(function(v) {
+            const container = document.querySelector(`#${id} .filter-options`);
+            f.all.forEach(v => {
                 const row = document.createElement('div');
                 row.className = 'filter-row';
                 row.setAttribute('data-value', v.toLowerCase());
@@ -92,7 +92,7 @@
                 const onlyBtn = document.createElement('button');
                 onlyBtn.className = 'only-btn';
                 onlyBtn.textContent = 'Only';
-                onlyBtn.addEventListener('click', function(e) {
+                onlyBtn.addEventListener('click', e => {
                     e.preventDefault();
                     f.selected = new Set([v]);
                     syncCheckboxes(id);
@@ -111,7 +111,7 @@
         // Update checkbox checked states to match f.selected, without rebuilding DOM
         function syncCheckboxes(id) {
             const f = filters[id];
-            f.all.forEach(function(v) {
+            f.all.forEach(v => {
                 f.checkboxes[v].checked = f.selected.has(v);
             });
         }
@@ -120,17 +120,17 @@
         function filterOptionRows(id, query) {
             const f = filters[id];
             const q = query.toLowerCase();
-            f.all.forEach(function(v) {
-                const match = !q || v.toLowerCase().indexOf(q) !== -1;
+            f.all.forEach(v => {
+                const match = !q || v.toLowerCase().includes(q);
                 f.rows[v].style.display = match ? '' : 'none';
             });
         }
 
         function updateBadges() {
-            Object.keys(filters).forEach(function(id) {
+            Object.keys(filters).forEach(id => {
                 const f = filters[id];
                 if (f.selected.size < f.all.length) {
-                    f.badge.innerHTML = '<span class="filter-badge">' + f.selected.size + '/' + f.all.length + '</span>';
+                    f.badge.innerHTML = `<span class="filter-badge">${f.selected.size}/${f.all.length}</span>`;
                     f.btn.classList.add('active');
                 } else {
                     f.badge.innerHTML = '';
@@ -139,24 +139,57 @@
             });
         }
 
+        function updateFilterCounts() {
+            Object.keys(filters).forEach(id => {
+                const f = filters[id];
+                const counts = {};
+                f.all.forEach(v => { counts[v] = 0; });
+                rows.forEach(r => {
+                    const val = r.cells[f.col].textContent.trim();
+                    // Count only rows visible by the OTHER filter + search (not this filter)
+                    const otherId = id === 'typeFilter' ? 'catFilter' : 'typeFilter';
+                    const otherVal = r.cells[filters[otherId].col].textContent.trim();
+                    const query = searchInput.value.toLowerCase();
+                    const nameVal = r.cells[0].textContent.toLowerCase();
+                    const descVal = r.cells[2].textContent.toLowerCase();
+                    const matchOther = filters[otherId].selected.has(otherVal);
+                    const matchSearch = !query || nameVal.includes(query) || descVal.includes(query);
+                    if (matchOther && matchSearch) {
+                        counts[val]++;
+                    }
+                });
+                f.all.forEach(v => {
+                    const row = f.rows[v];
+                    let countEl = row.querySelector('.filter-count');
+                    if (!countEl) {
+                        countEl = document.createElement('span');
+                        countEl.className = 'filter-count';
+                        row.insertBefore(countEl, row.querySelector('.only-btn'));
+                    }
+                    countEl.textContent = counts[v];
+                });
+            });
+        }
+
         function applyFilters() {
             const query = searchInput.value.toLowerCase();
             let visible = 0;
-            rows.forEach(function(r) {
+            rows.forEach(r => {
                 const typeVal = r.cells[1].textContent.trim();
                 const catVal = r.cells[3].textContent.trim();
                 const nameVal = r.cells[0].textContent.toLowerCase();
                 const descVal = r.cells[2].textContent.toLowerCase();
                 const matchType = filters.typeFilter.selected.has(typeVal);
                 const matchCat = filters.catFilter.selected.has(catVal);
-                const matchSearch = !query || nameVal.indexOf(query) !== -1 || descVal.indexOf(query) !== -1;
+                const matchSearch = !query || nameVal.includes(query) || descVal.includes(query);
                 const show = matchType && matchCat && matchSearch;
                 r.classList.toggle('hidden', !show);
                 if (show) visible++;
             });
-            statShowing.textContent = 'showing ' + visible;
+            statShowing.textContent = `showing ${visible}`;
             noResults.classList.toggle('show', visible === 0);
             updateBadges();
+            updateFilterCounts();
         }
 
         // Search
@@ -169,12 +202,12 @@
             closeAll();
             if (!isOpen) {
                 const rect = filters[id].btn.parentElement.getBoundingClientRect();
-                dd.style.top = (rect.bottom + 4) + 'px';
-                dd.style.left = rect.left + 'px';
+                dd.style.top = `${rect.bottom + 4}px`;
+                dd.style.left = `${rect.left}px`;
                 dd.classList.add('show');
                 const ddRect = dd.getBoundingClientRect();
                 if (ddRect.right > window.innerWidth - 8) {
-                    dd.style.left = Math.max(8, window.innerWidth - ddRect.width - 8) + 'px';
+                    dd.style.left = `${Math.max(8, window.innerWidth - ddRect.width - 8)}px`;
                 }
                 if (ddRect.left < 8) {
                     dd.style.left = '8px';
@@ -187,19 +220,19 @@
         }
 
         function closeAll() {
-            document.querySelectorAll('.filter-dropdown').forEach(function(d) { d.classList.remove('show'); });
+            document.querySelectorAll('.filter-dropdown').forEach(d => d.classList.remove('show'));
         }
 
         // Wire up filter buttons — portal each dropdown to <body> so table-wrap overflow never clips it
         const allDropdowns = [];
-        Object.keys(filters).forEach(function(id) {
+        Object.keys(filters).forEach(id => {
             const f = filters[id];
             const dd = document.getElementById(id);
             const anchor = f.btn.parentElement; // .filter-wrap, stays in the table
             allDropdowns.push({ dd: dd, wrap: anchor });
             document.body.appendChild(dd); // move out of table DOM
 
-            f.btn.addEventListener('click', function(e) {
+            f.btn.addEventListener('click', e => {
                 e.preventDefault();
                 toggleDropdown(id);
             });
@@ -208,14 +241,14 @@
                 filterOptionRows(id, this.value);
             });
 
-            dd.querySelector('.sel-all').addEventListener('click', function(e) {
+            dd.querySelector('.sel-all').addEventListener('click', e => {
                 e.preventDefault();
                 f.selected = new Set(f.all);
                 syncCheckboxes(id);
                 applyFilters();
             });
 
-            dd.querySelector('.clr-all').addEventListener('click', function(e) {
+            dd.querySelector('.clr-all').addEventListener('click', e => {
                 e.preventDefault();
                 f.selected = new Set();
                 syncCheckboxes(id);
@@ -224,8 +257,8 @@
         });
 
         // Close dropdowns when clicking outside — uses contains() instead of stopPropagation
-        document.addEventListener('click', function(e) {
-            allDropdowns.forEach(function(item) {
+        document.addEventListener('click', e => {
+            allDropdowns.forEach(item => {
                 if (!item.wrap.contains(e.target)) {
                     item.dd.classList.remove('show');
                 }
@@ -233,7 +266,7 @@
         });
 
         // Keyboard: Escape closes dropdowns
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', e => {
             if (e.key === 'Escape') closeAll();
         });
 
@@ -249,91 +282,51 @@
                 currentSort.col = colIndex;
                 currentSort.dir = 'asc';
             }
-            allTh.forEach(function(th) { th.classList.remove('asc', 'desc'); });
-            const activeTh = table.querySelector('th[data-col="' + colIndex + '"]');
+            allTh.forEach(th => th.classList.remove('asc', 'desc'));
+            const activeTh = table.querySelector(`th[data-col="${colIndex}"]`);
             if (activeTh) activeTh.classList.add(currentSort.dir);
             if (colIndex === 1) document.getElementById('typeBtnEl').parentElement.parentElement.classList.add(currentSort.dir);
             if (colIndex === 3) document.getElementById('catBtnEl').parentElement.parentElement.classList.add(currentSort.dir);
 
             const dir = currentSort.dir === 'asc' ? 1 : -1;
-            rows.sort(function(a, b) {
+            rows.sort((a, b) => {
                 const aVal = a.cells[colIndex].textContent.trim().toLowerCase();
                 const bVal = b.cells[colIndex].textContent.trim().toLowerCase();
                 if (aVal < bVal) return -1 * dir;
                 if (aVal > bVal) return 1 * dir;
                 return 0;
             });
-            rows.forEach(function(r) { tbody.appendChild(r); });
+            rows.forEach(r => tbody.appendChild(r));
         }
 
         // Sortable plain headers
-        table.querySelectorAll('th.sortable').forEach(function(th) {
-            th.addEventListener('click', function() {
+        table.querySelectorAll('th.sortable').forEach(th => {
+            th.addEventListener('click', () => {
                 sortByColumn(parseInt(th.getAttribute('data-col')));
             });
         });
 
         // Make Type and Category column headers also sortable on direct th click
-        Object.keys(filters).forEach(function(id) {
+        Object.keys(filters).forEach(id => {
             const f = filters[id];
             const th = f.btn.closest('th');
             th.classList.add('sortable');
             th.setAttribute('data-col', f.col);
-            th.addEventListener('click', function(e) {
+            th.addEventListener('click', e => {
                 if (e.target === th) {
                     sortByColumn(f.col);
                 }
             });
         });
 
-        // --- Row counts per filter option ---
-        function updateFilterCounts() {
-            Object.keys(filters).forEach(function(id) {
-                const f = filters[id];
-                const counts = {};
-                f.all.forEach(function(v) { counts[v] = 0; });
-                rows.forEach(function(r) {
-                    const val = r.cells[f.col].textContent.trim();
-                    // Count only rows visible by the OTHER filter + search (not this filter)
-                    const otherId = id === 'typeFilter' ? 'catFilter' : 'typeFilter';
-                    const otherVal = r.cells[filters[otherId].col].textContent.trim();
-                    const query = searchInput.value.toLowerCase();
-                    const nameVal = r.cells[0].textContent.toLowerCase();
-                    const descVal = r.cells[2].textContent.toLowerCase();
-                    const matchOther = filters[otherId].selected.has(otherVal);
-                    const matchSearch = !query || nameVal.indexOf(query) !== -1 || descVal.indexOf(query) !== -1;
-                    if (matchOther && matchSearch) {
-                        counts[val]++;
-                    }
-                });
-                f.all.forEach(function(v) {
-                    const row = f.rows[v];
-                    let countEl = row.querySelector('.filter-count');
-                    if (!countEl) {
-                        countEl = document.createElement('span');
-                        countEl.className = 'filter-count';
-                        row.insertBefore(countEl, row.querySelector('.only-btn'));
-                    }
-                    countEl.textContent = counts[v];
-                });
-            });
-        }
-
-        // Patch applyFilters to also update counts
-        const origApplyFilters = applyFilters;
-        applyFilters = function() {
-            origApplyFilters();
-            updateFilterCounts();
-        };
-
         // CSV export of current filtered view
-        document.getElementById('exportBtn').addEventListener('click', function() {
+        document.getElementById('exportBtn').addEventListener('click', () => {
             const lines = ['Name,Type,Description,Category'];
-            rows.forEach(function(r) {
+            rows.forEach(r => {
                 if (r.classList.contains('hidden')) return;
-                const cells = Array.from(r.cells).map(function(td) {
+                const cells = Array.from(r.cells).map(td => {
                     const v = td.textContent.trim().replace(/"/g, '""');
-                    return '"' + v + '"';
+                    return `"${v}"`;
                 });
                 lines.push(cells.join(','));
             });
@@ -346,22 +339,22 @@
         });
 
         // Copy brew install command for current filtered view
-        document.getElementById('brewBtn').addEventListener('click', function() {
+        document.getElementById('brewBtn').addEventListener('click', () => {
             const formulas = [], casks = [];
-            rows.forEach(function(r) {
+            rows.forEach(r => {
                 if (r.classList.contains('hidden')) return;
                 const type = r.cells[1].textContent.trim();
                 const name = r.cells[0].textContent.trim();
                 if (type === 'cask') casks.push(name); else formulas.push(name);
             });
             const parts = [];
-            if (formulas.length) parts.push('brew install ' + formulas.join(' '));
-            if (casks.length) parts.push('brew install --cask ' + casks.join(' '));
+            if (formulas.length) parts.push(`brew install ${formulas.join(' ')}`);
+            if (casks.length) parts.push(`brew install --cask ${casks.join(' ')}`);
             const text = parts.join('\n');
             const btn = document.getElementById('brewBtn');
-            navigator.clipboard.writeText(text).then(function() {
+            navigator.clipboard.writeText(text).then(() => {
                 btn.textContent = 'Copied!';
-                setTimeout(function() { btn.textContent = 'Copy brew install'; }, 2000);
+                setTimeout(() => { btn.textContent = 'Copy brew install'; }, 2000);
             });
         });
 
