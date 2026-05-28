@@ -1,3 +1,39 @@
+  :root {
+      --text:           #1f2328;
+      --text-muted:     #656d76;
+      --bg:             #ffffff;
+      --bg-subtle:      #f6f8fa;
+      --bg-hover:       #e8ecf0;
+      --border:         #d0d7de;
+      --border-muted:   #b0b8c1;
+      --accent:         #0969da;
+      --accent-subtle:  #ddf4ff;
+      --accent-border:  #54aeff;
+      --accent-shadow:  rgba(9, 105, 218, 0.15);
+      --code-bg:        #eff1f3;
+      --row-hover:      #f0f4ff;
+      --dropdown-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  @media (prefers-color-scheme: dark) {
+      :root {
+          --text:           #e6edf3;
+          --text-muted:     #8b949e;
+          --bg:             #0d1117;
+          --bg-subtle:      #161b22;
+          --bg-hover:       #1c2128;
+          --border:         #30363d;
+          --border-muted:   #8b949e;
+          --accent:         #58a6ff;
+          --accent-subtle:  #122d42;
+          --accent-border:  #58a6ff;
+          --accent-shadow:  rgba(88, 166, 255, 0.15);
+          --code-bg:        #343942;
+          --row-hover:      #1c2128;
+          --dropdown-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      }
+  }
+
   * {
       box-sizing: border-box;
       margin: 0;
@@ -6,8 +42,8 @@
 
   body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      color: #1f2328;
-      background: #fff;
+      color: var(--text);
+      background: var(--bg);
       padding: 24px;
       max-width: 1200px;
       margin: 0 auto;
@@ -20,13 +56,13 @@
   }
 
   .subtitle {
-      color: #656d76;
+      color: var(--text-muted);
       font-size: 14px;
       margin-bottom: 20px;
   }
 
   .subtitle a {
-      color: #0969da;
+      color: var(--accent);
       text-decoration: none;
   }
 
@@ -40,12 +76,12 @@
       gap: 16px;
       margin-bottom: 16px;
       font-size: 13px;
-      color: #656d76;
+      color: var(--text-muted);
   }
 
   .stats span {
-      background: #f6f8fa;
-      border: 1px solid #d0d7de;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
       border-radius: 6px;
       padding: 4px 10px;
   }
@@ -61,40 +97,42 @@
   #exportBtn,
   #brewBtn {
       padding: 8px 14px;
-      border: 1px solid #d0d7de;
+      border: 1px solid var(--border);
       border-radius: 6px;
       font-size: 14px;
       font-family: inherit;
-      background: #f6f8fa;
+      background: var(--bg-subtle);
       cursor: pointer;
-      color: #1f2328;
+      color: var(--text);
       white-space: nowrap;
   }
 
   #exportBtn:hover,
   #brewBtn:hover {
-      background: #e8ecf0;
-      border-color: #b0b8c1;
+      background: var(--bg-hover);
+      border-color: var(--border-muted);
   }
 
   .search-bar input {
       width: 100%;
       max-width: 400px;
       padding: 8px 12px;
-      border: 1px solid #d0d7de;
+      border: 1px solid var(--border);
       border-radius: 6px;
       font-size: 14px;
       outline: none;
+      background: var(--bg);
+      color: var(--text);
   }
 
   .search-bar input:focus {
-      border-color: #0969da;
-      box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.15);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-shadow);
   }
 
   /* Table */
   .table-wrap {
-      border: 1px solid #d0d7de;
+      border: 1px solid var(--border);
       border-radius: 6px;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -111,11 +149,11 @@
   td {
       padding: 8px 16px;
       text-align: left;
-      border-bottom: 1px solid #d0d7de;
+      border-bottom: 1px solid var(--border);
   }
 
   th {
-      background: #f6f8fa;
+      background: var(--bg-subtle);
       position: sticky;
       top: 0;
       z-index: 2;
@@ -128,7 +166,7 @@
   }
 
   tbody tr:hover {
-      background: #f6f8fa;
+      background: var(--bg-subtle);
   }
 
   tr.hidden {
@@ -139,7 +177,7 @@
   code a:visited {
       color: blue !important;
       text-decoration: none !important;
-      background: #eff1f3;
+      background: var(--code-bg);
       padding: 2px 6px;
       border-radius: 4px;
       font-size: 13px;
@@ -153,28 +191,28 @@
   }
 
   th.sortable:hover {
-      background: #e8ecf0;
+      background: var(--bg-hover);
   }
 
   th.sortable::after {
       content: " \2195";
       font-size: 11px;
-      color: #656d76;
+      color: var(--text-muted);
   }
 
   th.sortable.asc::after {
       content: " \2191";
-      color: #0969da;
+      color: var(--accent);
   }
 
   th.sortable.desc::after {
       content: " \2193";
-      color: #0969da;
+      color: var(--accent);
   }
 
   /* Row count in filter options */
   .filter-count {
-      color: #656d76;
+      color: var(--text-muted);
       font-size: 12px;
       margin-left: auto;
       padding-right: 4px;
@@ -199,24 +237,24 @@
   }
 
   .filter-btn:hover {
-      background: #e8ecf0;
+      background: var(--bg-hover);
   }
 
   .filter-btn::after {
       content: " \25BE";
       font-size: 11px;
-      color: #656d76;
+      color: var(--text-muted);
   }
 
   .filter-btn.active {
-      background: #ddf4ff;
-      border-color: #54aeff;
+      background: var(--accent-subtle);
+      border-color: var(--accent-border);
   }
 
   /* Badge */
   .filter-badge {
-      background: #0969da;
-      color: #fff;
+      background: var(--accent);
+      color: var(--bg);
       border-radius: 10px;
       font-size: 11px;
       padding: 1px 7px;
@@ -229,10 +267,10 @@
   .filter-dropdown {
       display: none;
       position: fixed;
-      background: #fff;
-      border: 1px solid #d0d7de;
+      background: var(--bg);
+      border: 1px solid var(--border);
       border-radius: 8px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      box-shadow: var(--dropdown-shadow);
       min-width: 240px;
       max-height: 360px;
       z-index: 20;
@@ -246,15 +284,17 @@
       width: calc(100% - 16px);
       margin: 8px;
       padding: 6px 10px;
-      border: 1px solid #d0d7de;
+      border: 1px solid var(--border);
       border-radius: 6px;
       font-size: 13px;
       outline: none;
+      background: var(--bg);
+      color: var(--text);
   }
 
   .filter-search:focus {
-      border-color: #0969da;
-      box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.15);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-shadow);
   }
 
   .filter-options {
@@ -272,7 +312,7 @@
   }
 
   .filter-options .filter-row:hover {
-      background: #f0f4ff;
+      background: var(--row-hover);
   }
 
   .filter-options label {
@@ -286,12 +326,12 @@
   }
 
   .filter-options input[type="checkbox"] {
-      accent-color: #0969da;
+      accent-color: var(--accent);
   }
 
   .filter-options .only-btn {
       font-size: 11px;
-      color: #0969da;
+      color: var(--accent);
       background: none;
       border: none;
       cursor: pointer;
@@ -307,14 +347,14 @@
   }
 
   .filter-options .only-btn:hover {
-      background: #ddf4ff;
+      background: var(--accent-subtle);
   }
 
   .filter-actions {
       display: flex;
       justify-content: space-between;
       padding: 8px 10px;
-      border-top: 1px solid #d0d7de;
+      border-top: 1px solid var(--border);
   }
 
   .filter-actions button {
@@ -322,7 +362,7 @@
       cursor: pointer;
       background: none;
       border: none;
-      color: #0969da;
+      color: var(--accent);
       padding: 2px 4px;
       font-family: inherit;
   }
@@ -336,156 +376,10 @@
       display: none;
       padding: 40px;
       text-align: center;
-      color: #656d76;
+      color: var(--text-muted);
       font-size: 14px;
   }
 
   .no-results.show {
       display: block;
-  }
-
-  /* Dark mode */
-  @media (prefers-color-scheme: dark) {
-      body {
-          background: #0d1117;
-          color: #e6edf3;
-      }
-
-      th {
-          background: #161b22;
-      }
-
-      td {
-          border-color: #30363d;
-      }
-
-      th {
-          border-color: #30363d;
-      }
-
-      .table-wrap {
-          border-color: #30363d;
-      }
-
-      tbody tr:hover {
-          background: #161b22;
-      }
-
-      code {
-          background: #343942;
-      }
-
-      .search-bar input {
-          background: #0d1117;
-          color: #e6edf3;
-          border-color: #30363d;
-      }
-
-      #exportBtn,
-      #brewBtn {
-          background: #161b22;
-          color: #e6edf3;
-          border-color: #30363d;
-      }
-
-      #exportBtn:hover,
-      #brewBtn:hover {
-          background: #1c2128;
-          border-color: #8b949e;
-      }
-
-      .search-bar input:focus {
-          border-color: #58a6ff;
-          box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
-      }
-
-      .stats span {
-          background: #161b22;
-          border-color: #30363d;
-          color: #8b949e;
-      }
-
-      .subtitle {
-          color: #8b949e;
-      }
-
-      .subtitle a {
-          color: #58a6ff;
-      }
-
-      th.sortable:hover {
-          background: #1c2128;
-      }
-
-      th.sortable::after {
-          color: #8b949e;
-      }
-
-      th.sortable.asc::after,
-      th.sortable.desc::after {
-          color: #58a6ff;
-      }
-
-      .filter-count {
-          color: #8b949e;
-      }
-
-      .filter-btn:hover {
-          background: #30363d;
-      }
-
-      .filter-btn.active {
-          background: #122d42;
-          border-color: #58a6ff;
-      }
-
-      .filter-btn::after {
-          color: #8b949e;
-      }
-
-      .filter-dropdown {
-          background: #161b22;
-          border-color: #30363d;
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-      }
-
-      .filter-search {
-          background: #0d1117;
-          color: #e6edf3;
-          border-color: #30363d;
-      }
-
-      .filter-search:focus {
-          border-color: #58a6ff;
-          box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
-      }
-
-      .filter-options .filter-row:hover {
-          background: #1c2128;
-      }
-
-      .filter-options .only-btn {
-          color: #58a6ff;
-      }
-
-      .filter-options .only-btn:hover {
-          background: #122d42;
-      }
-
-      .filter-actions {
-          border-color: #30363d;
-      }
-
-      .filter-actions button {
-          color: #58a6ff;
-      }
-
-      .filter-badge {
-          background: #58a6ff;
-          color: #0d1117;
-      }
-
-      .no-results {
-          color: #8b949e;
-      }
   }
