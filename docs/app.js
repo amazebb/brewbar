@@ -1,21 +1,24 @@
 (function() {
-    fetch('packages.tsv').then(r => r.text()).then(text => {
-        const tbody = document.querySelector('#pkgTable tbody');
+    function parseTsv(text) {
         const data = [];
-
         text.split('\n').forEach(line => {
             if (!line.trim()) return;
             const parts = line.split('\t');
             if (parts.length < 2) return;
-
-            const item = {
+            data.push({
                 type: parts[0],
                 name: parts[1],
                 desc: (parts[2] || '').trim(),
-                url:  parts[3],
-                cat:  (parts[4] || '').trim()
-            };
+                url: parts[3],
+                cat: (parts[4] || '').trim()
+            });
+        });
+        return data;
+    }
 
+    function buildRows(data) {
+        const tbody = document.querySelector('#pkgTable tbody');
+        data.forEach(item => {
             const tr = document.createElement('tr');
 
             const tdName = document.createElement('td');
@@ -42,11 +45,13 @@
             tbody.appendChild(tr);
 
             item.tr = tr;
-            data.push(item);
         });
+    }
 
-        initTable(data);
-    });
+    fetch('packages.json')
+        .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+        .catch(() => fetch('packages.tsv').then(r => r.text()).then(parseTsv))
+        .then(data => { buildRows(data); initTable(data); });
 
     function initTable(data) {
         const table = document.getElementById('pkgTable');
@@ -60,19 +65,19 @@
         // Filter state
         const filters = {
             typeFilter: { key: 'type', col: 1, selected: new Set(), all: [], badge: document.getElementById('typeBadge'), btn: document.getElementById('typeBtnEl') },
-            catFilter:  { key: 'cat',  col: 3, selected: new Set(), all: [], badge: document.getElementById('catBadge'),  btn: document.getElementById('catBtnEl') }
+            catFilter: { key: 'cat', col: 3, selected: new Set(), all: [], badge: document.getElementById('catBadge'), btn: document.getElementById('catBtnEl') }
         };
 
         // Stats
-        const statTotal   = document.getElementById('statTotal');
+        const statTotal = document.getElementById('statTotal');
         const statFormula = document.getElementById('statFormula');
-        const statCask    = document.getElementById('statCask');
+        const statCask = document.getElementById('statCask');
         const statShowing = document.getElementById('statShowing');
         const totalBrew = data.filter(d => d.type === 'brew').length;
         const totalCask = data.length - totalBrew;
-        statTotal.textContent   = `${data.length} packages`;
+        statTotal.textContent = `${data.length} packages`;
         statFormula.textContent = `${totalBrew} formulas`;
-        statCask.textContent    = `${totalCask} casks`;
+        statCask.textContent = `${totalCask} casks`;
 
         // Initialize filters: build option elements once, never destroy them
         Object.keys(filters).forEach(id => {
@@ -181,8 +186,8 @@
             const query = searchInput.value.toLowerCase();
             let visible = 0;
             data.forEach(item => {
-                const matchType   = filters.typeFilter.selected.has(item.type);
-                const matchCat    = filters.catFilter.selected.has(item.cat);
+                const matchType = filters.typeFilter.selected.has(item.type);
+                const matchCat = filters.catFilter.selected.has(item.cat);
                 const matchSearch = !query || item.name.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query);
                 const show = matchType && matchCat && matchSearch;
                 item.tr.classList.toggle('hidden', !show);
