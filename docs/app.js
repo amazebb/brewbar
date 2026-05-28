@@ -335,6 +335,26 @@
             URL.revokeObjectURL(a.href);
         });
 
+        // Copy brew install command for current filtered view
+        document.getElementById('brewBtn').addEventListener('click', function() {
+            var formulas = [], casks = [];
+            rows.forEach(function(r) {
+                if (r.classList.contains('hidden')) return;
+                var type = r.cells[1].textContent.trim();
+                var name = r.cells[0].textContent.trim();
+                if (type === 'cask') casks.push(name); else formulas.push(name);
+            });
+            var parts = [];
+            if (formulas.length) parts.push('brew install ' + formulas.join(' '));
+            if (casks.length)    parts.push('brew install --cask ' + casks.join(' '));
+            var text = parts.join('\n');
+            var btn = document.getElementById('brewBtn');
+            navigator.clipboard.writeText(text).then(function() {
+                btn.textContent = 'Copied!';
+                setTimeout(function() { btn.textContent = 'Copy brew install'; }, 2000);
+            });
+        });
+
         // Initial render
         updateBadges();
         applyFilters();
