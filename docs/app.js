@@ -40,46 +40,46 @@
     });
 
     function initTable() {
-        var table = document.getElementById('pkgTable');
-        var rows = Array.from(table.querySelectorAll('tbody tr'));
-        var searchInput = document.getElementById('nameSearch');
-        var noResults = document.getElementById('noResults');
+        const table = document.getElementById('pkgTable');
+        const rows = Array.from(table.querySelectorAll('tbody tr'));
+        const searchInput = document.getElementById('nameSearch');
+        const noResults = document.getElementById('noResults');
 
         // Filter state — category is column 3 (no Alternatives column in this table)
-        var filters = {
+        const filters = {
             typeFilter: { col: 1, selected: new Set(), all: [], badge: document.getElementById('typeBadge'), btn: document.getElementById('typeBtnEl') },
             catFilter: { col: 3, selected: new Set(), all: [], badge: document.getElementById('catBadge'), btn: document.getElementById('catBtnEl') }
         };
 
         // Stats
-        var statTotal = document.getElementById('statTotal');
-        var statFormula = document.getElementById('statFormula');
-        var statCask = document.getElementById('statCask');
-        var statShowing = document.getElementById('statShowing');
-        var totalBrew = rows.filter(function(r) { return r.cells[1].textContent.trim() === 'brew'; }).length;
-        var totalCask = rows.length - totalBrew;
+        const statTotal = document.getElementById('statTotal');
+        const statFormula = document.getElementById('statFormula');
+        const statCask = document.getElementById('statCask');
+        const statShowing = document.getElementById('statShowing');
+        const totalBrew = rows.filter(function(r) { return r.cells[1].textContent.trim() === 'brew'; }).length;
+        const totalCask = rows.length - totalBrew;
         statTotal.textContent = rows.length + ' packages';
         statFormula.textContent = totalBrew + ' formulas';
         statCask.textContent = totalCask + ' casks';
 
         // Initialize filters: build option elements once, never destroy them
         Object.keys(filters).forEach(function(id) {
-            var f = filters[id];
-            var vals = new Set();
+            const f = filters[id];
+            const vals = new Set();
             rows.forEach(function(r) { vals.add(r.cells[f.col].textContent.trim()); });
             f.all = Array.from(vals).sort();
             f.selected = new Set(f.all);
             f.checkboxes = {};
             f.rows = {};
 
-            var container = document.querySelector('#' + id + ' .filter-options');
+            const container = document.querySelector('#' + id + ' .filter-options');
             f.all.forEach(function(v) {
-                var row = document.createElement('div');
+                const row = document.createElement('div');
                 row.className = 'filter-row';
                 row.setAttribute('data-value', v.toLowerCase());
 
-                var label = document.createElement('label');
-                var cb = document.createElement('input');
+                const label = document.createElement('label');
+                const cb = document.createElement('input');
                 cb.type = 'checkbox';
                 cb.checked = true;
                 cb.addEventListener('change', function() {
@@ -89,7 +89,7 @@
                 label.appendChild(cb);
                 label.appendChild(document.createTextNode(v));
 
-                var onlyBtn = document.createElement('button');
+                const onlyBtn = document.createElement('button');
                 onlyBtn.className = 'only-btn';
                 onlyBtn.textContent = 'Only';
                 onlyBtn.addEventListener('click', function(e) {
@@ -110,7 +110,7 @@
 
         // Update checkbox checked states to match f.selected, without rebuilding DOM
         function syncCheckboxes(id) {
-            var f = filters[id];
+            const f = filters[id];
             f.all.forEach(function(v) {
                 f.checkboxes[v].checked = f.selected.has(v);
             });
@@ -118,17 +118,17 @@
 
         // Show/hide option rows based on search query
         function filterOptionRows(id, query) {
-            var f = filters[id];
-            var q = query.toLowerCase();
+            const f = filters[id];
+            const q = query.toLowerCase();
             f.all.forEach(function(v) {
-                var match = !q || v.toLowerCase().indexOf(q) !== -1;
+                const match = !q || v.toLowerCase().indexOf(q) !== -1;
                 f.rows[v].style.display = match ? '' : 'none';
             });
         }
 
         function updateBadges() {
             Object.keys(filters).forEach(function(id) {
-                var f = filters[id];
+                const f = filters[id];
                 if (f.selected.size < f.all.length) {
                     f.badge.innerHTML = '<span class="filter-badge">' + f.selected.size + '/' + f.all.length + '</span>';
                     f.btn.classList.add('active');
@@ -140,17 +140,17 @@
         }
 
         function applyFilters() {
-            var query = searchInput.value.toLowerCase();
-            var visible = 0;
+            const query = searchInput.value.toLowerCase();
+            let visible = 0;
             rows.forEach(function(r) {
-                var typeVal = r.cells[1].textContent.trim();
-                var catVal = r.cells[3].textContent.trim();
-                var nameVal = r.cells[0].textContent.toLowerCase();
-                var descVal = r.cells[2].textContent.toLowerCase();
-                var matchType = filters.typeFilter.selected.has(typeVal);
-                var matchCat = filters.catFilter.selected.has(catVal);
-                var matchSearch = !query || nameVal.indexOf(query) !== -1 || descVal.indexOf(query) !== -1;
-                var show = matchType && matchCat && matchSearch;
+                const typeVal = r.cells[1].textContent.trim();
+                const catVal = r.cells[3].textContent.trim();
+                const nameVal = r.cells[0].textContent.toLowerCase();
+                const descVal = r.cells[2].textContent.toLowerCase();
+                const matchType = filters.typeFilter.selected.has(typeVal);
+                const matchCat = filters.catFilter.selected.has(catVal);
+                const matchSearch = !query || nameVal.indexOf(query) !== -1 || descVal.indexOf(query) !== -1;
+                const show = matchType && matchCat && matchSearch;
                 r.classList.toggle('hidden', !show);
                 if (show) visible++;
             });
@@ -164,22 +164,22 @@
 
         // Toggle dropdown
         function toggleDropdown(id) {
-            var dd = document.getElementById(id);
-            var isOpen = dd.classList.contains('show');
+            const dd = document.getElementById(id);
+            const isOpen = dd.classList.contains('show');
             closeAll();
             if (!isOpen) {
-                var rect = filters[id].btn.parentElement.getBoundingClientRect();
+                const rect = filters[id].btn.parentElement.getBoundingClientRect();
                 dd.style.top = (rect.bottom + 4) + 'px';
                 dd.style.left = rect.left + 'px';
                 dd.classList.add('show');
-                var ddRect = dd.getBoundingClientRect();
+                const ddRect = dd.getBoundingClientRect();
                 if (ddRect.right > window.innerWidth - 8) {
                     dd.style.left = Math.max(8, window.innerWidth - ddRect.width - 8) + 'px';
                 }
                 if (ddRect.left < 8) {
                     dd.style.left = '8px';
                 }
-                var search = dd.querySelector('.filter-search');
+                const search = dd.querySelector('.filter-search');
                 search.value = '';
                 filterOptionRows(id, '');
                 search.focus();
@@ -191,11 +191,11 @@
         }
 
         // Wire up filter buttons — portal each dropdown to <body> so table-wrap overflow never clips it
-        var allDropdowns = [];
+        const allDropdowns = [];
         Object.keys(filters).forEach(function(id) {
-            var f = filters[id];
-            var dd = document.getElementById(id);
-            var anchor = f.btn.parentElement; // .filter-wrap, stays in the table
+            const f = filters[id];
+            const dd = document.getElementById(id);
+            const anchor = f.btn.parentElement; // .filter-wrap, stays in the table
             allDropdowns.push({ dd: dd, wrap: anchor });
             document.body.appendChild(dd); // move out of table DOM
 
@@ -238,11 +238,11 @@
         });
 
         // --- Column sorting ---
-        var tbody = table.querySelector('tbody');
-        var currentSort = { col: -1, dir: 'asc' };
+        const tbody = table.querySelector('tbody');
+        const currentSort = { col: -1, dir: 'asc' };
 
         function sortByColumn(colIndex) {
-            var allTh = table.querySelectorAll('th.sortable');
+            const allTh = table.querySelectorAll('th.sortable');
             if (currentSort.col === colIndex) {
                 currentSort.dir = currentSort.dir === 'asc' ? 'desc' : 'asc';
             } else {
@@ -250,15 +250,15 @@
                 currentSort.dir = 'asc';
             }
             allTh.forEach(function(th) { th.classList.remove('asc', 'desc'); });
-            var activeTh = table.querySelector('th[data-col="' + colIndex + '"]');
+            const activeTh = table.querySelector('th[data-col="' + colIndex + '"]');
             if (activeTh) activeTh.classList.add(currentSort.dir);
             if (colIndex === 1) document.getElementById('typeBtnEl').parentElement.parentElement.classList.add(currentSort.dir);
             if (colIndex === 3) document.getElementById('catBtnEl').parentElement.parentElement.classList.add(currentSort.dir);
 
-            var dir = currentSort.dir === 'asc' ? 1 : -1;
+            const dir = currentSort.dir === 'asc' ? 1 : -1;
             rows.sort(function(a, b) {
-                var aVal = a.cells[colIndex].textContent.trim().toLowerCase();
-                var bVal = b.cells[colIndex].textContent.trim().toLowerCase();
+                const aVal = a.cells[colIndex].textContent.trim().toLowerCase();
+                const bVal = b.cells[colIndex].textContent.trim().toLowerCase();
                 if (aVal < bVal) return -1 * dir;
                 if (aVal > bVal) return 1 * dir;
                 return 0;
@@ -275,8 +275,8 @@
 
         // Make Type and Category column headers also sortable on direct th click
         Object.keys(filters).forEach(function(id) {
-            var f = filters[id];
-            var th = f.btn.closest('th');
+            const f = filters[id];
+            const th = f.btn.closest('th');
             th.classList.add('sortable');
             th.setAttribute('data-col', f.col);
             th.addEventListener('click', function(e) {
@@ -289,26 +289,26 @@
         // --- Row counts per filter option ---
         function updateFilterCounts() {
             Object.keys(filters).forEach(function(id) {
-                var f = filters[id];
-                var counts = {};
+                const f = filters[id];
+                const counts = {};
                 f.all.forEach(function(v) { counts[v] = 0; });
                 rows.forEach(function(r) {
-                    var val = r.cells[f.col].textContent.trim();
+                    const val = r.cells[f.col].textContent.trim();
                     // Count only rows visible by the OTHER filter + search (not this filter)
-                    var otherId = id === 'typeFilter' ? 'catFilter' : 'typeFilter';
-                    var otherVal = r.cells[filters[otherId].col].textContent.trim();
-                    var query = searchInput.value.toLowerCase();
-                    var nameVal = r.cells[0].textContent.toLowerCase();
-                    var descVal = r.cells[2].textContent.toLowerCase();
-                    var matchOther = filters[otherId].selected.has(otherVal);
-                    var matchSearch = !query || nameVal.indexOf(query) !== -1 || descVal.indexOf(query) !== -1;
+                    const otherId = id === 'typeFilter' ? 'catFilter' : 'typeFilter';
+                    const otherVal = r.cells[filters[otherId].col].textContent.trim();
+                    const query = searchInput.value.toLowerCase();
+                    const nameVal = r.cells[0].textContent.toLowerCase();
+                    const descVal = r.cells[2].textContent.toLowerCase();
+                    const matchOther = filters[otherId].selected.has(otherVal);
+                    const matchSearch = !query || nameVal.indexOf(query) !== -1 || descVal.indexOf(query) !== -1;
                     if (matchOther && matchSearch) {
                         counts[val]++;
                     }
                 });
                 f.all.forEach(function(v) {
-                    var row = f.rows[v];
-                    var countEl = row.querySelector('.filter-count');
+                    const row = f.rows[v];
+                    let countEl = row.querySelector('.filter-count');
                     if (!countEl) {
                         countEl = document.createElement('span');
                         countEl.className = 'filter-count';
@@ -320,7 +320,7 @@
         }
 
         // Patch applyFilters to also update counts
-        var origApplyFilters = applyFilters;
+        const origApplyFilters = applyFilters;
         applyFilters = function() {
             origApplyFilters();
             updateFilterCounts();
@@ -328,17 +328,17 @@
 
         // CSV export of current filtered view
         document.getElementById('exportBtn').addEventListener('click', function() {
-            var lines = ['Name,Type,Description,Category'];
+            const lines = ['Name,Type,Description,Category'];
             rows.forEach(function(r) {
                 if (r.classList.contains('hidden')) return;
-                var cells = Array.from(r.cells).map(function(td) {
-                    var v = td.textContent.trim().replace(/"/g, '""');
+                const cells = Array.from(r.cells).map(function(td) {
+                    const v = td.textContent.trim().replace(/"/g, '""');
                     return '"' + v + '"';
                 });
                 lines.push(cells.join(','));
             });
-            var blob = new Blob([lines.join('\n')], { type: 'text/csv' });
-            var a = document.createElement('a');
+            const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+            const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
             a.download = 'packages.csv';
             a.click();
@@ -347,18 +347,18 @@
 
         // Copy brew install command for current filtered view
         document.getElementById('brewBtn').addEventListener('click', function() {
-            var formulas = [], casks = [];
+            const formulas = [], casks = [];
             rows.forEach(function(r) {
                 if (r.classList.contains('hidden')) return;
-                var type = r.cells[1].textContent.trim();
-                var name = r.cells[0].textContent.trim();
+                const type = r.cells[1].textContent.trim();
+                const name = r.cells[0].textContent.trim();
                 if (type === 'cask') casks.push(name); else formulas.push(name);
             });
-            var parts = [];
+            const parts = [];
             if (formulas.length) parts.push('brew install ' + formulas.join(' '));
             if (casks.length) parts.push('brew install --cask ' + casks.join(' '));
-            var text = parts.join('\n');
-            var btn = document.getElementById('brewBtn');
+            const text = parts.join('\n');
+            const btn = document.getElementById('brewBtn');
             navigator.clipboard.writeText(text).then(function() {
                 btn.textContent = 'Copied!';
                 setTimeout(function() { btn.textContent = 'Copy brew install'; }, 2000);
