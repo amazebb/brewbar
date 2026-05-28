@@ -316,6 +316,25 @@
             updateFilterCounts();
         };
 
+        // CSV export of current filtered view
+        document.getElementById('exportBtn').addEventListener('click', function() {
+            var lines = ['Name,Type,Description,Category'];
+            rows.forEach(function(r) {
+                if (r.classList.contains('hidden')) return;
+                var cells = Array.from(r.cells).map(function(td) {
+                    var v = td.textContent.trim().replace(/"/g, '""');
+                    return '"' + v + '"';
+                });
+                lines.push(cells.join(','));
+            });
+            var blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'packages.csv';
+            a.click();
+            URL.revokeObjectURL(a.href);
+        });
+
         // Initial render
         updateBadges();
         applyFilters();
