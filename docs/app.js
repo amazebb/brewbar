@@ -1,4 +1,7 @@
 (function() {
+    // true = always show selected/total count in dropdown footer; false = only when something is deselected
+    const BADGE_ALWAYS_SHOW = true;
+
     function parseTsv(text) {
         const data = [];
         text.split('\n').forEach(line => {
@@ -64,8 +67,8 @@
 
         // Filter state
         const filters = {
-            typeFilter: { key: 'type', col: 1, selected: new Set(), all: [], badge: document.getElementById('typeBadge'), btn: document.getElementById('typeBtnEl') },
-            catFilter: { key: 'cat', col: 3, selected: new Set(), all: [], badge: document.getElementById('catBadge'), btn: document.getElementById('catBtnEl') }
+            typeFilter: { key: 'type', col: 1, selected: new Set(), all: [], btn: document.getElementById('typeBtnEl') },
+            catFilter:  { key: 'cat',  col: 3, selected: new Set(), all: [], btn: document.getElementById('catBtnEl') }
         };
 
         // Stats
@@ -141,20 +144,7 @@
             });
         }
 
-        function updateBadges() {
-            Object.keys(filters).forEach(id => {
-                const f = filters[id];
-                if (f.selected.size < f.all.length) {
-                    f.badge.innerHTML = `<span class="filter-badge">${f.selected.size}/${f.all.length}</span>`;
-                    f.btn.classList.add('active');
-                } else {
-                    f.badge.innerHTML = '';
-                    f.btn.classList.remove('active');
-                }
-            });
-        }
-
-        function updateFilterCounts() {
+function updateFilterCounts() {
             const query = searchInput.value.toLowerCase();
             Object.keys(filters).forEach(id => {
                 const f = filters[id];
@@ -179,6 +169,17 @@
                     row.dataset.empty = counts[v] === 0 ? 'true' : '';
                     row.style.display = counts[v] === 0 ? 'none' : '';
                 });
+
+                const visibleTotal    = f.all.filter(v => counts[v] > 0).length;
+                const visibleSelected = f.all.filter(v => counts[v] > 0 && f.selected.has(v)).length;
+                const isFiltered = visibleSelected < visibleTotal;
+                const badgeEl = document.querySelector(`#${id} .filter-actions-badge`);
+                f.btn.classList.toggle('active', isFiltered);
+                if (isFiltered || BADGE_ALWAYS_SHOW) {
+                    badgeEl.innerHTML = `<span class="filter-badge">${visibleSelected}/${visibleTotal}</span>`;
+                } else {
+                    badgeEl.innerHTML = '';
+                }
             });
         }
 
@@ -195,7 +196,6 @@
             });
             statShowing.textContent = `showing ${visible}`;
             noResults.classList.toggle('show', visible === 0);
-            updateBadges();
             updateFilterCounts();
         }
 
@@ -359,7 +359,6 @@
         });
 
         // Initial render
-        updateBadges();
         applyFilters();
     }
 })();
