@@ -4,7 +4,7 @@ brew	basedpyright	 Pyright fork with various improvements and built-in pylance f
 brew	bash	 Bourne-Again SHell, a UNIX command interpreter	Shells & Terminal
 brew	bash-language-server	 Language Server for Bash	Language Servers & IDE Support
 brew	bat	 Clone of cat(1) with syntax highlighting and Git integration	Shells & Terminal
-brew	bear	 Generate compilation database for clang tooling	
+brew	bear	 Generate compilation database for clang tooling	Build Systems & Compilers
 brew	btop	 Resource monitor. C++ version and continuation of bashtop and bpytop	Shells & Terminal
 brew	cabextract	 Extract files from Microsoft cabinet files	File & Archive Tools
 brew	cdrtools	 CD/DVD/Blu-ray premastering and recording software	File & Archive Tools
@@ -16,7 +16,7 @@ brew	cmake-docs	 Documentation for CMake	Build Systems & Compilers
 brew	coreutils	 GNU File, Shell, and Text utilities	Shells & Terminal
 brew	curl	 Get a file from an HTTP, HTTPS or FTP server	Network Tools
 brew	djvulibre	 DjVu viewer	Document & Text Processing
-brew	dosbox-x	 DOSBox with accurate emulation and wide testing	
+brew	dosbox-x	 DOSBox with accurate emulation and wide testing	Virtualization
 brew	duckdb	 Embeddable SQL OLAP Database Management System	Data Processing & Analysis
 brew	epubcheck	 Validate EPUB files, version 2.0 and later	Document & Text Processing
 brew	exiftool	 Perl lib for reading and writing EXIF metadata	Metadata & File Information
@@ -31,7 +31,7 @@ brew	fzf	 Command-line fuzzy finder written in Go	Shells & Terminal
 brew	gawk	 GNU awk utility	Search & Text Processing
 brew	gettext	 GNU internationalization (i18n) and localization (l10n) library	Development Libraries
 brew	gh	 GitHub command-line tool	Version Control
-brew	ghostscript	 Interpreter for PostScript and PDF	
+brew	ghostscript	 Interpreter for PostScript and PDF	Document & Text Processing
 brew	git	 Distributed revision control system	Version Control
 brew	git-svn	 Bidirectional operation between a Subversion repository and Git	Version Control
 brew	gitea	 Painless self-hosted all-in-one software development service	Version Control
@@ -55,7 +55,7 @@ brew	libcerf	 Numeric library for complex error functions	Development Libraries
 brew	libdvdcss	 Access DVDs as block devices without the decryption	File & Archive Tools
 brew	libheif	 ISO/IEC 23008-12:2017 HEIF file format decoder and encoder	Media Processing
 brew	libomp	 LLVM's OpenMP runtime library	Development Libraries
-brew	libraw	 Library for reading RAW files from digital photo cameras	
+brew	libraw	 Library for reading RAW files from digital photo cameras	Development Libraries
 brew	librsync	 Library that implements the rsync remote-delta algorithm	File & Archive Tools
 brew	little-cms2	 Color management engine supporting ICC profiles	Media Processing
 brew	llvm	 Next-gen compiler infrastructure	Build Systems & Compilers
@@ -66,11 +66,11 @@ brew	mactop	 Apple Silicon Monitor Top written in Go Lang	System Utilities
 brew	make	 Utility for directing compilation	Build Systems & Compilers
 brew	mawk	 Interpreter for the AWK Programming Language	Search & Text Processing
 brew	media-info	 Unified display of technical and tag data for audio/video	Metadata & File Information
-brew	mupdf-tools	 Lightweight PDF and XPS viewer	
-brew	ncdu	 NCurses Disk Usage	
+brew	mupdf-tools	 Lightweight PDF and XPS viewer	Document & Text Processing
+brew	ncdu	 NCurses Disk Usage	System Utilities
 brew	ninja	 Small build system for use with gyp or CMake	Build Systems & Compilers
 brew	node	 Open-source, cross-platform JavaScript runtime environment	Programming Languages & Runtimes
-brew	opencode	 AI coding agent, built for the terminal	
+brew	opencode	 AI coding agent, built for the terminal	Development Tools
 brew	openjpeg	 Library for JPEG-2000 image manipulation	Media Processing
 brew	oven-sh/bun/bun	 Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.	Programming Languages & Runtimes
 brew	p7zip	 7-Zip (high compression file archiver) implementation	File & Archive Tools
@@ -79,7 +79,7 @@ brew	parallel	 Shell command parallelization utility	System Utilities
 brew	pastel	 Command-line tool to generate, analyze, convert and manipulate colors	Miscellaneous
 brew	perl	 Highly capable, feature-rich programming language	Programming Languages & Runtimes
 brew	pkgconf	 Package compiler and linker metadata toolkit	Build Systems & Compilers
-brew	poppler	 PDF rendering library (based on the xpdf-3.0 code base)	
+brew	poppler	 PDF rendering library (based on the xpdf-3.0 code base)	Document & Text Processing
 brew	portmidi	 Cross-platform library for real-time MIDI I/O	Media Processing
 brew	pygments	 Generic syntax highlighter	Python Tools
 brew	qpdf	 Tools for and transforming and inspecting PDF files	Document & Text Processing
@@ -99,7 +99,7 @@ brew	sql-language-server	 Language Server for SQL	Language Servers & IDE Support
 brew	swiftlint	 Tool to enforce Swift style and conventions	Code Quality & Linting
 brew	texinfo	 Official documentation format of the GNU project	Document & Text Processing
 brew	tidy-viewer	 CLI csv pretty printer	Data Processing & Analysis
-brew	tlrc	 Official tldr client written in Rust	
+brew	tlrc	 Official tldr client written in Rust	System Utilities
 brew	tmux	 Terminal multiplexer	Shells & Terminal
 brew	tree	 Display directories as trees (with optional color/HTML output)	Shells & Terminal
 brew	tree-sitter-cli	 Parser generator tool	Development Libraries
@@ -113,7 +113,7 @@ brew	xan	 CSV CLI magician written in Rust	Data Processing & Analysis
 brew	yaml-language-server	 Language Server for Yaml Files	Language Servers & IDE Support
 brew	yt-dlp	 Feature-rich command-line audio/video downloader	Media Processing
 brew	zoxide	 Shell extension to navigate your filesystem faster	Shells & Terminal
-cask	android-platform-tools	 (Android SDK Platform-Tools) Android SDK component	
+cask	android-platform-tools	 (Android SDK Platform-Tools) Android SDK component	Development Tools
 cask	appcleaner	 (FreeMacSoft AppCleaner) Application uninstaller	System Utilities
 cask	audacity	 (Audacity) Multi-track audio editor and recorder	Media Players & Editors
 cask	basictex	 (BasicTeX) Compact TeX distribution as alternative to the full TeX Live / MacTeX	Development Tools

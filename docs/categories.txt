@@ -136,5 +136,13 @@ font-symbols-only-nerd-font	Fonts
 font-lilex	Fonts
 font-lilex-nerd-font	Fonts
 utm	Virtualization
-	
-	
+bear	Build Systems & Compilers
+dosbox-x	Virtualization
+ghostscript	Document & Text Processing
+libraw	Development Libraries
+mupdf-tools	Document & Text Processing
+ncdu	System Utilities
+opencode	Development Tools
+poppler	Document & Text Processing
+tlrc	System Utilities
+android-platform-tools	Development Tools
