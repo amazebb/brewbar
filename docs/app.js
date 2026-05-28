@@ -121,7 +121,7 @@
             const f = filters[id];
             const q = query.toLowerCase();
             f.all.forEach(v => {
-                const match = !q || v.toLowerCase().includes(q);
+                const match = (!q || v.toLowerCase().includes(q)) && f.rows[v].dataset.empty !== 'true';
                 f.rows[v].style.display = match ? '' : 'none';
             });
         }
@@ -167,6 +167,8 @@
                         row.insertBefore(countEl, row.querySelector('.only-btn'));
                     }
                     countEl.textContent = counts[v];
+                    row.dataset.empty = counts[v] === 0 ? 'true' : '';
+                    row.style.display = counts[v] === 0 ? 'none' : '';
                 });
             });
         }
@@ -259,7 +261,7 @@
         // Close dropdowns when clicking outside — uses contains() instead of stopPropagation
         document.addEventListener('click', e => {
             allDropdowns.forEach(item => {
-                if (!item.wrap.contains(e.target)) {
+                if (!item.wrap.contains(e.target) && !item.dd.contains(e.target)) {
                     item.dd.classList.remove('show');
                 }
             });
