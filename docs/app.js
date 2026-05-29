@@ -1,6 +1,6 @@
 import { fetchData, initTable, linkCell } from './amazebb-tv/index.js';
 
-const data = await fetchData('packages.json', 'packages.tsv');
+const data = await fetchData('data/packages.json', 'data/packages.tsv');
 
 initTable(data, {
     tableId: 'pkgTable',
