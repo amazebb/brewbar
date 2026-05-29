@@ -1,4 +1,4 @@
-import { initTable } from './table.js';
+import { initTable } from './amazebb-tv/index.js';
 
 // TSV first row is assumed to be column headers
 function parseTsv(text) {

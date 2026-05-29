@@ -1,36 +1,41 @@
+/* ============================================================
+   App-level styles — layout, page chrome, brewbar-specific UI
+   Table component styles live in amazebb-tv/amazebb-tv.css
+   ============================================================ */
+
   :root {
-      --text: #1f2328;
-      --text-muted: #656d76;
-      --bg: #ffffff;
-      --bg-subtle: #f6f8fa;
-      --bg-hover: #e8ecf0;
-      --border: #d0d7de;
-      --border-muted: #b0b8c1;
-      --accent: #0969da;
-      --accent-subtle: #ddf4ff;
-      --accent-border: #54aeff;
-      --accent-shadow: rgba(9, 105, 218, 0.15);
-      --code-bg: #eff1f3;
-      --row-hover: #f0f4ff;
+      --text:            #1f2328;
+      --text-muted:      #656d76;
+      --bg:              #ffffff;
+      --bg-subtle:       #f6f8fa;
+      --bg-hover:        #e8ecf0;
+      --border:          #d0d7de;
+      --border-muted:    #b0b8c1;
+      --accent:          #0969da;
+      --accent-subtle:   #ddf4ff;
+      --accent-border:   #54aeff;
+      --accent-shadow:   rgba(9, 105, 218, 0.15);
+      --code-bg:         #eff1f3;
+      --row-hover:       #f0f4ff;
       --dropdown-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-      --radius: 6px;
+      --radius:          6px;
   }
 
   @media (prefers-color-scheme: dark) {
       :root {
-          --text: #e6edf3;
-          --text-muted: #8b949e;
-          --bg: #0d1117;
-          --bg-subtle: #161b22;
-          --bg-hover: #1c2128;
-          --border: #30363d;
-          --border-muted: #8b949e;
-          --accent: #58a6ff;
-          --accent-subtle: #122d42;
-          --accent-border: #58a6ff;
-          --accent-shadow: rgba(88, 166, 255, 0.15);
-          --code-bg: #343942;
-          --row-hover: #1c2128;
+          --text:            #e6edf3;
+          --text-muted:      #8b949e;
+          --bg:              #0d1117;
+          --bg-subtle:       #161b22;
+          --bg-hover:        #1c2128;
+          --border:          #30363d;
+          --border-muted:    #8b949e;
+          --accent:          #58a6ff;
+          --accent-subtle:   #122d42;
+          --accent-border:   #58a6ff;
+          --accent-shadow:   rgba(88, 166, 255, 0.15);
+          --code-bg:         #343942;
+          --row-hover:       #1c2128;
           --dropdown-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
       }
   }
@@ -92,7 +97,7 @@
       padding: 4px 10px;
   }
 
-  /* Search */
+  /* Search bar */
   .search-bar {
       margin-bottom: 16px;
       display: flex;
@@ -100,6 +105,24 @@
       align-items: center;
   }
 
+  .search-bar input {
+      width: 100%;
+      max-width: 400px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 14px;
+      outline: none;
+      background: var(--bg);
+      color: var(--text);
+  }
+
+  .search-bar input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-shadow);
+  }
+
+  /* Toolbar buttons */
   #exportBtn,
   #brewBtn {
       padding: 8px 14px;
@@ -117,67 +140,7 @@
       border-color: var(--border-muted);
   }
 
-  .search-bar input {
-      width: 100%;
-      max-width: 400px;
-      padding: 8px 12px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      font-size: 14px;
-      outline: none;
-      background: var(--bg);
-      color: var(--text);
-  }
-
-  .search-bar input:focus,
-  .filter-search:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-shadow);
-  }
-
-  /* Table */
-  .table-wrap {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-  }
-
-  table {
-      border-collapse: collapse;
-      width: 100%;
-      min-width: 680px;
-      font-size: 14px;
-  }
-
-  th,
-  td {
-      padding: 8px 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--border);
-  }
-
-  th {
-      background: var(--bg-subtle);
-      position: sticky;
-      top: 0;
-      z-index: 2;
-      white-space: nowrap;
-      font-weight: 600;
-  }
-
-  tr:last-child td {
-      border-bottom: none;
-  }
-
-  tbody tr:hover {
-      background: var(--bg-subtle);
-  }
-
-  tr.hidden {
-      display: none;
-  }
-
+  /* Brewbar name cell — <code><a> rendered by renderNameCell */
   code a,
   code a:visited {
       color: var(--accent) !important;
@@ -187,196 +150,4 @@
       border-radius: 4px;
       font-size: 13px;
       font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
-  }
-
-  /* Sortable column headers */
-  th.sortable {
-      cursor: pointer;
-      user-select: none;
-  }
-
-  th.sortable:hover {
-      background: var(--bg-hover);
-  }
-
-  th.sortable::after {
-      content: " \2195";
-      font-size: 11px;
-      color: var(--text-muted);
-  }
-
-  th.sortable.asc::after,
-  th.sortable.desc::after {
-      color: var(--accent);
-  }
-
-  th.sortable.asc::after {
-      content: " \2191";
-  }
-
-  th.sortable.desc::after {
-      content: " \2193";
-  }
-
-  /* Row count in filter options */
-  .filter-count {
-      color: var(--text-muted);
-      font-size: 12px;
-      margin-left: auto;
-      padding-right: 4px;
-  }
-
-  /* Filter buttons in header */
-  .filter-wrap {
-      position: relative;
-      display: inline-block;
-  }
-
-  .filter-btn {
-      background: none;
-      border: 1px solid transparent;
-      font-weight: 600;
-      font-size: 14px;
-      padding: 2px 6px;
-      color: inherit;
-      border-radius: 4px;
-  }
-
-  .filter-btn:hover {
-      background: var(--bg-hover);
-  }
-
-  .filter-btn::after {
-      content: " \25BE";
-      font-size: 11px;
-      color: var(--text-muted);
-  }
-
-  .filter-btn.active {
-      background: var(--accent-subtle);
-      border-color: var(--accent-border);
-  }
-
-  /* Badge */
-  .filter-badge {
-      background: var(--accent);
-      color: var(--bg);
-      border-radius: 10px;
-      font-size: 11px;
-      padding: 1px 7px;
-      margin-left: 4px;
-      font-weight: normal;
-      vertical-align: middle;
-  }
-
-  /* Dropdown panel — portalled to <body> by JS, positioned via getBoundingClientRect */
-  .filter-dropdown {
-      display: none;
-      position: fixed;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      box-shadow: var(--dropdown-shadow);
-      min-width: 240px;
-      max-height: 360px;
-      z-index: 20;
-  }
-
-  .filter-dropdown.show {
-      display: block;
-  }
-
-  .filter-search {
-      width: calc(100% - 16px);
-      margin: 8px;
-      padding: 6px 10px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      font-size: 13px;
-      outline: none;
-      background: var(--bg);
-      color: var(--text);
-  }
-
-  .filter-options {
-      max-height: 240px;
-      overflow-y: auto;
-      padding: 0 4px 4px;
-  }
-
-  .filter-options .filter-row {
-      display: flex;
-      align-items: center;
-      padding: 2px 4px;
-      border-radius: 4px;
-      gap: 4px;
-  }
-
-  .filter-options .filter-row:hover {
-      background: var(--row-hover);
-  }
-
-  .filter-options label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      font-size: 13px;
-      flex: 1;
-      padding: 2px 4px;
-  }
-
-  .filter-options input[type="checkbox"] {
-      accent-color: var(--accent);
-  }
-
-  .filter-options .only-btn {
-      font-size: 11px;
-      color: var(--accent);
-      background: none;
-      border: none;
-      padding: 2px 6px;
-      border-radius: 3px;
-      opacity: 0;
-      transition: opacity 0.1s;
-  }
-
-  .filter-options .filter-row:hover .only-btn {
-      opacity: 1;
-  }
-
-  .filter-options .only-btn:hover {
-      background: var(--accent-subtle);
-  }
-
-  .filter-actions {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 10px;
-      border-top: 1px solid var(--border);
-  }
-
-  .filter-actions button {
-      font-size: 12px;
-      background: none;
-      border: none;
-      color: var(--accent);
-      padding: 2px 4px;
-  }
-
-  .filter-actions button:hover {
-      text-decoration: underline;
-  }
-
-  /* No results */
-  .no-results {
-      display: none;
-      padding: 40px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 14px;
-  }
-
-  .no-results.show {
-      display: block;
   }
