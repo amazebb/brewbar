@@ -3,16 +3,16 @@ import { fetchData, initTable, linkCell } from './amazebb-tv/index.js';
 const data = await fetchData('packages.json', 'packages.tsv');
 
 initTable(data, {
-    tableId:           'pkgTable',
-    searchKeys:        ['name', 'desc'],
+    tableId: 'pkgTable',
+    searchKeys: ['name', 'desc'],
     searchPlaceholder: 'Search by name or description...',
-    badgeAlwaysShow:   true,
-    exportFilename:    'packages.csv',
+    badgeAlwaysShow: true,
+    exportFilename: 'packages.csv',
     columns: [
-        { key: 'name', render: linkCell('name', 'url', { wrap: 'code' }) },
-        { key: 'type' },
-        { key: 'desc' },
-        { key: 'cat'  }
+        { key: 'name', label: 'Name', filter: false, render: linkCell('name', 'url', { wrap: 'code' }) },
+        { key: 'type', label: 'Type' },
+        { key: 'desc', label: 'Description', filter: false },
+        { key: 'cat', label: 'Category' }
     ]
 });
 
