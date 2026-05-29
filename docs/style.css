@@ -97,34 +97,9 @@
       padding: 4px 10px;
   }
 
-  /* Search bar */
-  .search-bar {
-      margin-bottom: 16px;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-  }
-
-  .search-bar input {
-      width: 100%;
-      max-width: 400px;
-      padding: 8px 12px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      font-size: 14px;
-      outline: none;
-      background: var(--bg);
-      color: var(--text);
-  }
-
-  .search-bar input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-shadow);
-  }
-
-  /* Toolbar buttons */
-  #exportBtn,
+  /* Brew install button — app-specific action */
   #brewBtn {
+      margin-top: 12px;
       padding: 8px 14px;
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -134,7 +109,6 @@
       white-space: nowrap;
   }
 
-  #exportBtn:hover,
   #brewBtn:hover {
       background: var(--bg-hover);
       border-color: var(--border-muted);

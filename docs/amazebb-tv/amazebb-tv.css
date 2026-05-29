@@ -4,6 +4,67 @@
    Depends on CSS custom properties defined by the host app.
    ============================================================ */
 
+  /* Toolbar — search input + export button, inserted before the table wrapper */
+  .atv-toolbar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 16px;
+  }
+
+  .atv-search {
+      width: 100%;
+      max-width: 400px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 14px;
+      outline: none;
+      background: var(--bg);
+      color: var(--text);
+  }
+
+  .atv-search:focus,
+  .filter-search:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-shadow);
+  }
+
+  .atv-export-btn {
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 14px;
+      background: var(--bg-subtle);
+      color: var(--text);
+      white-space: nowrap;
+  }
+
+  .atv-export-btn:hover {
+      background: var(--bg-hover);
+      border-color: var(--border-muted);
+  }
+
+  /* Footer — visible/total row count, inserted after the table wrapper */
+  .atv-footer {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+  }
+
+  /* No results message */
+  .atv-no-results {
+      display: none;
+      padding: 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+  }
+
+  .atv-no-results.show {
+      display: block;
+  }
+
   /* Table wrapper */
   .table-wrap {
       border: 1px solid var(--border);
@@ -227,15 +288,3 @@
       font-weight: normal;
   }
 
-  /* No results message */
-  .no-results {
-      display: none;
-      padding: 40px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 14px;
-  }
-
-  .no-results.show {
-      display: block;
-  }

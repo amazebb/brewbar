@@ -1,5 +1,6 @@
 import { inferColumns, getVisible, computeCounts, sortItems } from './model.js';
 import {
+    buildToolbar, buildFooter, buildNoResults, updateFooter,
     buildHeader, buildRows, buildFilterOptions,
     syncCheckboxes, setRowVisibility,
     updateFilterCounts, filterOptionRows
@@ -8,35 +9,37 @@ import {
 export function initTable(data, config) {
     const {
         tableId,
-        searchInputId,
-        noResultsId,
         searchKeys,
+        searchPlaceholder,
         badgeAlwaysShow = false,
-        onFilter
+        onExport
     } = config;
 
-    const table       = document.getElementById(tableId);
-    const tbody       = table.querySelector('tbody');
-    const thead       = table.querySelector('thead');
-    const searchInput = document.getElementById(searchInputId);
-    const noResults   = document.getElementById(noResultsId);
+    const table     = document.getElementById(tableId);
+    const tbody     = table.querySelector('tbody');
+    const thead     = table.querySelector('thead');
+    const tableWrap = table.closest('.table-wrap') || table.parentElement;
 
     // --- Model: resolve columns ---
     const columns = inferColumns(data, config.columns);
 
-    // --- View: build initial DOM ---
+    // --- View: build chrome around the table ---
+    const { searchInput, exportBtn } = buildToolbar(tableWrap, searchPlaceholder, !!onExport);
+    // Insert order matters: afterend pushes each new element right after tableWrap,
+    // so noResults ends up after footer: tableWrap → footer → noResults
+    const footer    = buildFooter(tableWrap);
+    const noResults = buildNoResults(tableWrap);
+
+    // --- View: build table content ---
     const filterDefs = buildHeader(thead, columns, tableId);
     buildRows(tbody, data, columns);
 
     // --- State ---
-    // filterState: data key → Set of selected values
     const filterState = {};
-    // filterUI: data key → { values, rows, checkboxes }
-    const filterUI = {};
-    let sortedData  = [...data];
-    const sortState = { key: null, dir: 1 };
+    const filterUI    = {};
+    let sortedData    = [...data];
+    const sortState   = { key: null, dir: 1 };
 
-    // Build filter option lists and initialise state
     filterDefs.forEach(def => {
         const values = [...new Set(data.map(d => d[def.key]))].filter(Boolean).sort();
         filterState[def.key] = new Set(values);
@@ -64,8 +67,8 @@ export function initTable(data, config) {
         const visibleSet = new Set(getVisible(sortedData, filterState, query, searchKeys));
 
         setRowVisibility(sortedData, visibleSet);
+        updateFooter(footer, visibleSet.size, data.length);
         noResults.classList.toggle('show', visibleSet.size === 0);
-        if (onFilter) onFilter(visibleSet.size, data.length);
 
         const counts = computeCounts(data, filterState, query, searchKeys);
         filterDefs.forEach(def => {
@@ -75,6 +78,13 @@ export function initTable(data, config) {
     }
 
     searchInput.addEventListener('input', refresh);
+
+    if (exportBtn) {
+        exportBtn.addEventListener('click', () => {
+            const visible = sortedData.filter(item => !item.tr.classList.contains('hidden'));
+            onExport(visible);
+        });
+    }
 
     // --- Dropdown management ---
     const allDropdowns = filterDefs.map(def => ({
@@ -101,8 +111,8 @@ export function initTable(data, config) {
                 dd.style.left = `${Math.max(8, window.innerWidth - r.width - 8)}px`;
             }
             if (r.left < 8) dd.style.left = '8px';
-            const search  = dd.querySelector('.filter-search');
-            search.value  = '';
+            const search = dd.querySelector('.filter-search');
+            search.value = '';
             filterOptionRows(filterUI[def.key].rows, filterUI[def.key].values, '');
             search.focus();
         }

@@ -12,28 +12,19 @@
 <body>
 
     <h1>Homebrew Packages</h1>
-    <div class="stats">
-        <span id="statTotal"></span>
-        <span id="statFormula"></span>
-        <span id="statCask"></span>
-        <span id="statShowing"></span>
-    </div>
-
-    <div class="search-bar">
-        <input type="text" id="nameSearch" placeholder="Search by name or description...">
-        <button id="exportBtn">Export CSV</button>
-        <button id="brewBtn">Copy brew install</button>
-    </div>
 
     <div class="table-wrap">
-        <table id="pkgTable" data-col-name="Name,false" data-col-type="Type" data-col-desc="Description,false"
+        <table id="pkgTable"
+            data-col-name="Name,false"
+            data-col-type="Type"
+            data-col-desc="Description,false"
             data-col-cat="Category">
             <thead></thead>
             <tbody></tbody>
         </table>
     </div>
 
-    <div class="no-results" id="noResults">No packages match the current filters.</div>
+    <button id="brewBtn">Copy brew install</button>
 
     <script type="module" src="app.js"></script>
 </body>

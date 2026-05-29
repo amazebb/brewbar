@@ -1,5 +1,53 @@
 // DOM rendering functions — no business logic or mutable state.
 
+// Builds and inserts a toolbar (search input + optional export button) before the table wrapper.
+// Returns { searchInput, exportBtn } for controller wiring.
+export function buildToolbar(tableWrap, placeholder, hasExport) {
+    const toolbar = document.createElement('div');
+    toolbar.className = 'atv-toolbar';
+
+    const searchInput       = document.createElement('input');
+    searchInput.type        = 'text';
+    searchInput.className   = 'atv-search';
+    searchInput.placeholder = placeholder || 'Search...';
+    toolbar.appendChild(searchInput);
+
+    let exportBtn = null;
+    if (hasExport) {
+        exportBtn             = document.createElement('button');
+        exportBtn.className   = 'atv-export-btn';
+        exportBtn.textContent = 'Export CSV';
+        toolbar.appendChild(exportBtn);
+    }
+
+    tableWrap.insertAdjacentElement('beforebegin', toolbar);
+    return { searchInput, exportBtn };
+}
+
+// Builds and inserts a footer showing visible/total counts after the table wrapper.
+// Returns the footer element for later updates.
+export function buildFooter(tableWrap) {
+    const footer       = document.createElement('div');
+    footer.className   = 'atv-footer';
+    tableWrap.insertAdjacentElement('afterend', footer);
+    return footer;
+}
+
+// Builds and inserts a no-results message after the footer.
+// Returns the element for show/hide toggling.
+export function buildNoResults(tableWrap, message) {
+    const el           = document.createElement('div');
+    el.className       = 'atv-no-results';
+    el.textContent     = message || 'No items match the current filters.';
+    tableWrap.insertAdjacentElement('afterend', el);
+    return el;
+}
+
+// Updates the footer text.
+export function updateFooter(footerEl, visible, total) {
+    footerEl.textContent = `${visible} / ${total}`;
+}
+
 // Builds the thead row from column definitions.
 // Filter columns get a button + portalled dropdown; all others get a plain sortable th.
 // Returns filterDefs: [{ id, btnId, key, col }] for each filterable column.
