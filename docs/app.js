@@ -1,4 +1,4 @@
-import { fetchData, initTable, linkCell } from './abtvjs/index.js';
+import { fetchData, initTable, linkCell } from './amazejs/index.js';
 
 const data = await fetchData('data/packages.json', 'data/packages.tsv');
 
