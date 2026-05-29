@@ -1,1 +1,8 @@
+const _link = document.createElement('link');
+_link.rel  = 'stylesheet';
+_link.href = new URL('./amazebb-tv.css', import.meta.url).href;
+document.head.appendChild(_link);
+
 export { initTable } from './controller.js';
+export { parseTsv } from './model.js';
+export { linkCell } from './view.js';

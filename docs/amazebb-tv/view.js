@@ -1,5 +1,21 @@
 // DOM rendering functions — no business logic or mutable state.
 
+// Returns a render function that builds <a> (optionally wrapped in another element).
+// textKey: data field for link text; hrefKey: data field for href; wrap: tag name e.g. 'code'
+export function linkCell(textKey, hrefKey, { wrap } = {}) {
+    return item => {
+        const a = document.createElement('a');
+        a.textContent = item[textKey];
+        a.href        = item[hrefKey];
+        if (wrap) {
+            const el = document.createElement(wrap);
+            el.appendChild(a);
+            return el;
+        }
+        return a;
+    };
+}
+
 // Builds and inserts a toolbar (search input + optional export button) before the table wrapper.
 // Returns { searchInput, exportBtn } for controller wiring.
 export function buildToolbar(tableWrap, placeholder, hasExport) {
@@ -217,6 +233,24 @@ export function updateFilterCounts(filterDef, values, counts, selected, rows, ba
     } else {
         badgeEl.innerHTML = '';
     }
+}
+
+// Generates a CSV from visible items using column definitions and triggers a download.
+export function downloadCsv(columns, items, filename) {
+    const header = columns.map(c => c.label);
+    const rows   = items.map(item =>
+        columns.map(c => {
+            const v = (item[c.key] || '').toString();
+            return `"${v.replace(/"/g, '""')}"`;
+        })
+    );
+    const csv  = [header, ...rows].map(r => r.join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const a    = document.createElement('a');
+    a.href     = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href);
 }
 
 // Shows/hides option rows inside an open dropdown based on the search query.

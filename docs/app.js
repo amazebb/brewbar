@@ -1,26 +1,4 @@
-import { initTable } from './amazebb-tv/index.js';
-
-// TSV first row is assumed to be column headers
-function parseTsv(text) {
-    const lines = text.split('\n').filter(l => l.trim());
-    if (lines.length < 2) return [];
-    const headers = lines[0].split('\t').map(h => h.trim());
-    return lines.slice(1).map(line => {
-        const parts = line.split('\t');
-        const obj = {};
-        headers.forEach((h, i) => { obj[h] = (parts[i] || '').trim(); });
-        return obj;
-    });
-}
-
-function renderNameCell(item) {
-    const code = document.createElement('code');
-    const a    = document.createElement('a');
-    a.textContent = item.name;
-    a.href        = item.url;
-    code.appendChild(a);
-    return code;
-}
+import { initTable, parseTsv, linkCell } from './amazebb-tv/index.js';
 
 const tbl = document.getElementById('pkgTable');
 
@@ -47,26 +25,13 @@ fetch('packages.json')
             searchKeys:        ['name', 'desc'],
             searchPlaceholder: 'Search by name or description...',
             badgeAlwaysShow:   true,
+            exportFilename:    'packages.csv',
             columns: [
-                { key: 'name', ...colConfig('name'), render: renderNameCell },
+                { key: 'name', ...colConfig('name'), render: linkCell('name', 'url', { wrap: 'code' }) },
                 { key: 'type', ...colConfig('type') },
                 { key: 'desc', ...colConfig('desc') },
                 { key: 'cat',  ...colConfig('cat')  }
-            ],
-            onExport: visibleItems => {
-                const lines = ['Name,Type,Description,Category'];
-                visibleItems.forEach(item => {
-                    const cells = [item.name, item.type, item.desc, item.cat]
-                        .map(v => `"${v.replace(/"/g, '""')}"`);
-                    lines.push(cells.join(','));
-                });
-                const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
-                const a = document.createElement('a');
-                a.href = URL.createObjectURL(blob);
-                a.download = 'packages.csv';
-                a.click();
-                URL.revokeObjectURL(a.href);
-            }
+            ]
         });
 
         // Copy brew install command for current filtered view

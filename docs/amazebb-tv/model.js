@@ -1,5 +1,18 @@
 // Pure data functions — no DOM dependencies.
 
+// Parses a TSV string into an array of objects keyed by the first-row headers.
+export function parseTsv(text) {
+    const lines = text.split('\n').filter(l => l.trim());
+    if (lines.length < 2) return [];
+    const headers = lines[0].split('\t').map(h => h.trim());
+    return lines.slice(1).map(line => {
+        const parts = line.split('\t');
+        const obj = {};
+        headers.forEach((h, i) => { obj[h] = (parts[i] || '').trim(); });
+        return obj;
+    });
+}
+
 // Resolves column definitions, merging config with numeric-detection defaults.
 export function inferColumns(data, configCols) {
     const base = configCols || Object.keys(data[0] || {}).map(key => ({ key }));

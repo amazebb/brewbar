@@ -3,7 +3,7 @@ import {
     buildToolbar, buildFooter, buildNoResults, updateFooter,
     buildHeader, buildRows, buildFilterOptions,
     syncCheckboxes, setRowVisibility,
-    updateFilterCounts, filterOptionRows
+    updateFilterCounts, filterOptionRows, downloadCsv
 } from './view.js';
 
 export function initTable(data, config) {
@@ -12,7 +12,7 @@ export function initTable(data, config) {
         searchKeys,
         searchPlaceholder,
         badgeAlwaysShow = false,
-        onExport
+        exportFilename
     } = config;
 
     const table     = document.getElementById(tableId);
@@ -24,7 +24,7 @@ export function initTable(data, config) {
     const columns = inferColumns(data, config.columns);
 
     // --- View: build chrome around the table ---
-    const { searchInput, exportBtn } = buildToolbar(tableWrap, searchPlaceholder, !!onExport);
+    const { searchInput, exportBtn } = buildToolbar(tableWrap, searchPlaceholder, !!exportFilename);
     // Insert order matters: afterend pushes each new element right after tableWrap,
     // so noResults ends up after footer: tableWrap → footer → noResults
     const footer    = buildFooter(tableWrap);
@@ -82,7 +82,7 @@ export function initTable(data, config) {
     if (exportBtn) {
         exportBtn.addEventListener('click', () => {
             const visible = sortedData.filter(item => !item.tr.classList.contains('hidden'));
-            onExport(visible);
+            downloadCsv(columns, visible, exportFilename);
         });
     }
 
