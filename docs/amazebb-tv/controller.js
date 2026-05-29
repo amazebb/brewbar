@@ -21,7 +21,11 @@ export function initTable(data, config) {
     const tableWrap = table.closest('.table-wrap') || table.parentElement;
 
     // --- Model: resolve columns ---
-    const columns = inferColumns(data, config.columns);
+    const colsWithAttrs = (config.columns || []).map(col => ({
+        ...readColAttr(table, col.key),
+        ...col  // explicit config overrides data-col-* attributes
+    }));
+    const columns = inferColumns(data, colsWithAttrs);
 
     // --- View: build chrome around the table ---
     const { searchInput, exportBtn } = buildToolbar(tableWrap, searchPlaceholder, !!exportFilename);
@@ -191,4 +195,16 @@ export function initTable(data, config) {
     });
 
     refresh();
+}
+
+// Reads data-col-{key} from the table element and returns { label?, filter? }.
+// Format: "Label" or "Label,true|false"
+function readColAttr(table, key) {
+    const attr = table.dataset[`col${key[0].toUpperCase()}${key.slice(1)}`];
+    if (!attr) return {};
+    const [labelPart, filterPart] = attr.split(',').map(s => s.trim());
+    const result = {};
+    if (labelPart) result.label = labelPart;
+    if (filterPart !== undefined) result.filter = filterPart.toLowerCase() !== 'false';
+    return result;
 }

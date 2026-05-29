@@ -1,5 +1,14 @@
 // Pure data functions — no DOM dependencies.
 
+// Fetches data from jsonUrl, falling back to tsvUrl if the JSON request fails.
+export async function fetchData(jsonUrl, tsvUrl) {
+    const jsonRes = await fetch(jsonUrl);
+    if (jsonRes.ok) return jsonRes.json();
+    const tsvRes = await fetch(tsvUrl);
+    if (!tsvRes.ok) throw new Error(`Failed to load data from ${jsonUrl} and ${tsvUrl}`);
+    return parseTsv(await tsvRes.text());
+}
+
 // Parses a TSV string into an array of objects keyed by the first-row headers.
 export function parseTsv(text) {
     const lines = text.split('\n').filter(l => l.trim());
