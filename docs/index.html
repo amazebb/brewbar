@@ -25,37 +25,9 @@
     </div>
 
     <div class="table-wrap">
-        <table id="pkgTable">
-            <thead>
-                <tr>
-                    <th class="sortable" data-col="0">Name</th>
-                    <th>
-                        <span class="filter-wrap">
-                            <button class="filter-btn" id="typeBtnEl">Type</button>
-                            <div class="filter-dropdown" id="typeFilter">
-                                <input class="filter-search" type="text" placeholder="Search...">
-                                <div class="filter-options"></div>
-                                <div class="filter-actions"><button class="sel-all">Show All</button><span
-                                        class="filter-actions-badge"></span><button class="clr-all">Clear All</button>
-                                </div>
-                            </div>
-                        </span>
-                    </th>
-                    <th class="sortable" data-col="2">Description</th>
-                    <th>
-                        <span class="filter-wrap">
-                            <button class="filter-btn" id="catBtnEl">Category</button>
-                            <div class="filter-dropdown" id="catFilter">
-                                <input class="filter-search" type="text" placeholder="Search...">
-                                <div class="filter-options"></div>
-                                <div class="filter-actions"><button class="sel-all">Show All</button><span
-                                        class="filter-actions-badge"></span><button class="clr-all">Clear All</button>
-                                </div>
-                            </div>
-                        </span>
-                    </th>
-                </tr>
-            </thead>
+        <table id="pkgTable" data-col-name="Name,false" data-col-type="Type" data-col-desc="Description,false"
+            data-col-cat="Category">
+            <thead></thead>
             <tbody></tbody>
         </table>
     </div>

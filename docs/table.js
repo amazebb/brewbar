@@ -3,15 +3,24 @@
 //
 // config shape:
 // {
-//   tableId:       string,
-//   searchInputId: string,
-//   noResultsId:   string,
-//   searchKeys:    string[],          // data keys to match against search query
-//   badgeAlwaysShow: boolean,         // show selected/total badge even when all selected
-//   columns: [{ key, col, sortable?, render? }],
-//   filters: [{ id, key, col, btnId }],
-//   onFilter: (visibleCount, total) => void   // optional, for app-specific stat updates
+//   tableId:         string,
+//   searchInputId:   string,
+//   noResultsId:     string,
+//   searchKeys:      string[],
+//   badgeAlwaysShow: boolean,
+//   columns: [{ key, label?, filter?, render? }],
+//   // columns is optional — if omitted, all data keys are shown, none filtered
+//   // key:    data property to read from each row object
+//   // label:  column header display name — overrides auto-capitalized key
+//   // filter: true → adds a dropdown filter for this column
+//   // render: fn(item) → Element — custom cell renderer, overrides default text
+//   onFilter: (visibleCount, total) => void
 // }
+//
+// All columns are sortable by default.
+// Columns with filter:true get a dropdown filter in the header.
+// The thead and all filter dropdowns are built dynamically — no markup needed beyond
+// an empty <thead> and <tbody>.
 
 export function initTable(data, config) {
     const {
@@ -19,22 +28,101 @@ export function initTable(data, config) {
         searchInputId,
         noResultsId,
         searchKeys,
-        columns,
-        filters: filterDefs,
         badgeAlwaysShow = false,
         onFilter
     } = config;
 
+    // Resolve columns — auto-detect from data keys if not provided.
+    // Default filter: true for non-numeric columns, false for numeric.
+    // Explicit filter in column config or data attributes overrides this.
+    const columns = (config.columns || Object.keys(data[0] || {}).map(key => ({ key })))
+        .map((col, i) => {
+            const isNumeric = data.every(item => !item[col.key] || !isNaN(Number(item[col.key])));
+            return { filter: !isNumeric, label: capitalize(col.key), ...col, _i: i };
+        });
+
     const table = document.getElementById(tableId);
     const tbody = table.querySelector('tbody');
+    const thead = table.querySelector('thead');
     const searchInput = document.getElementById(searchInputId);
     const noResults = document.getElementById(noResultsId);
 
-    // col index → data key lookup for sorting
+    // col index → data key (for sorting)
     const colKeys = {};
-    columns.forEach(col => { colKeys[col.col] = col.key; });
+    columns.forEach(col => { colKeys[col._i] = col.key; });
 
-    // Build rows — single reflow via DocumentFragment
+    // --- Build thead ---
+    const headerRow = document.createElement('tr');
+    columns.forEach(col => {
+        const th = document.createElement('th');
+        th.setAttribute('data-col', col._i);
+
+        if (col.filter) {
+            const filterId = `${tableId}_filter_${col.key}`;
+            const btnId = `${tableId}_btn_${col.key}`;
+
+            const wrap = document.createElement('span');
+            wrap.className = 'filter-wrap';
+
+            const btn = document.createElement('button');
+            btn.className = 'filter-btn';
+            btn.id = btnId;
+            btn.textContent = col.label;
+            wrap.appendChild(btn);
+            th.appendChild(wrap);
+
+            // Build dropdown and portal immediately to body
+            const dd = document.createElement('div');
+            dd.className = 'filter-dropdown';
+            dd.id = filterId;
+
+            const fsearch = document.createElement('input');
+            fsearch.className = 'filter-search';
+            fsearch.type = 'text';
+            fsearch.placeholder = 'Search...';
+
+            const foptions = document.createElement('div');
+            foptions.className = 'filter-options';
+
+            const factions = document.createElement('div');
+            factions.className = 'filter-actions';
+
+            const selAll = document.createElement('button');
+            selAll.className = 'sel-all';
+            selAll.textContent = 'Show All';
+
+            const badge = document.createElement('span');
+            badge.className = 'filter-actions-badge';
+
+            const clrAll = document.createElement('button');
+            clrAll.className = 'clr-all';
+            clrAll.textContent = 'Clear All';
+
+            factions.appendChild(selAll);
+            factions.appendChild(badge);
+            factions.appendChild(clrAll);
+            dd.appendChild(fsearch);
+            dd.appendChild(foptions);
+            dd.appendChild(factions);
+            document.body.appendChild(dd);
+        } else {
+            th.className = 'sortable';
+            th.textContent = col.label;
+        }
+
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+
+    // Derive filter defs from columns with filter:true
+    const filterDefs = columns.filter(col => col.filter).map(col => ({
+        id: `${tableId}_filter_${col.key}`,
+        btnId: `${tableId}_btn_${col.key}`,
+        key: col.key,
+        col: col._i
+    }));
+
+    // --- Build rows — single reflow via DocumentFragment ---
     const fragment = document.createDocumentFragment();
     data.forEach(item => {
         const tr = document.createElement('tr');
@@ -52,7 +140,7 @@ export function initTable(data, config) {
     });
     tbody.appendChild(fragment);
 
-    // Build filter state
+    // --- Filter state ---
     const filters = {};
     filterDefs.forEach(def => {
         filters[def.id] = {
@@ -66,7 +154,6 @@ export function initTable(data, config) {
         };
     });
 
-    // Populate filter dropdowns
     Object.keys(filters).forEach(id => {
         const f = filters[id];
         f.all = [...new Set(data.map(d => d[f.key]))].filter(Boolean).sort();
@@ -181,7 +268,7 @@ export function initTable(data, config) {
 
     searchInput.addEventListener('input', applyFilters);
 
-    // Dropdown positioning — portalled to <body> so table-wrap overflow never clips it
+    // --- Dropdown positioning ---
     function toggleDropdown(id) {
         const dd = document.getElementById(id);
         const isOpen = dd.classList.contains('show');
@@ -213,7 +300,6 @@ export function initTable(data, config) {
         const dd = document.getElementById(id);
         const anchor = f.btn.parentElement;
         allDropdowns.push({ dd, wrap: anchor });
-        document.body.appendChild(dd);
 
         f.btn.addEventListener('click', e => { e.preventDefault(); toggleDropdown(id); });
 
@@ -246,7 +332,7 @@ export function initTable(data, config) {
 
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
 
-    // Sorting
+    // --- Sorting ---
     const currentSort = { col: -1, dir: 'asc' };
 
     function sortByColumn(colIndex) {
@@ -278,16 +364,21 @@ export function initTable(data, config) {
         data.forEach(item => tbody.appendChild(item.tr));
     }
 
+    // Wire sort on plain sortable headers
     table.querySelectorAll('th.sortable').forEach(th => {
         th.addEventListener('click', () => sortByColumn(parseInt(th.getAttribute('data-col'))));
     });
 
+    // Filter column headers: also sortable on direct th click
     filterDefs.forEach(def => {
         const th = filters[def.id].btn.closest('th');
         th.classList.add('sortable');
-        th.setAttribute('data-col', def.col);
         th.addEventListener('click', e => { if (e.target === th) sortByColumn(def.col); });
     });
 
     applyFilters();
+}
+
+function capitalize(str) {
+    return str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 }

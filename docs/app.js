@@ -1,20 +1,16 @@
 import { initTable } from './table.js';
 
+// TSV first row is assumed to be column headers
 function parseTsv(text) {
-    const data = [];
-    text.split('\n').forEach(line => {
-        if (!line.trim()) return;
+    const lines = text.split('\n').filter(l => l.trim());
+    if (lines.length < 2) return [];
+    const headers = lines[0].split('\t').map(h => h.trim());
+    return lines.slice(1).map(line => {
         const parts = line.split('\t');
-        if (parts.length < 2) return;
-        data.push({
-            type: parts[0],
-            name: parts[1],
-            desc: (parts[2] || '').trim(),
-            url: parts[3],
-            cat: (parts[4] || '').trim()
-        });
+        const obj = {};
+        headers.forEach((h, i) => { obj[h] = (parts[i] || '').trim(); });
+        return obj;
     });
-    return data;
 }
 
 function renderNameCell(item) {
@@ -26,6 +22,7 @@ function renderNameCell(item) {
     return code;
 }
 
+const tbl = document.getElementById('pkgTable');
 const statTotal = document.getElementById('statTotal');
 const statFormula = document.getElementById('statFormula');
 const statCask = document.getElementById('statCask');
@@ -35,6 +32,20 @@ fetch('packages.json')
     .then(r => { if (!r.ok) throw new Error(); return r.json(); })
     .catch(() => fetch('packages.tsv').then(r => r.text()).then(parseTsv))
     .then(data => {
+        // Read column config from data-col-{key} attributes on the table element.
+        // Format: "Label" or "Label,true|false"
+        // Element 0: display label — overrides auto-capitalized key
+        // Element 1: filter toggle — omit to let table.js decide based on numeric detection
+        const colConfig = key => {
+            const attr = tbl.dataset[`col${key[0].toUpperCase()}${key.slice(1)}`];
+            if (!attr) return {};
+            const [labelPart, filterPart] = attr.split(',').map(s => s.trim());
+            const result = {};
+            if (labelPart) result.label = labelPart;
+            if (filterPart !== undefined) result.filter = filterPart.toLowerCase() !== 'false';
+            return result;
+        };
+
         const totalBrew = data.filter(d => d.type === 'brew').length;
         const totalCask = data.length - totalBrew;
         statTotal.textContent = `${data.length} packages`;
@@ -48,14 +59,10 @@ fetch('packages.json')
             searchKeys: ['name', 'desc'],
             badgeAlwaysShow: true,
             columns: [
-                { key: 'name', col: 0, sortable: true, render: renderNameCell },
-                { key: 'type', col: 1 },
-                { key: 'desc', col: 2, sortable: true },
-                { key: 'cat', col: 3 }
-            ],
-            filters: [
-                { id: 'typeFilter', key: 'type', col: 1, btnId: 'typeBtnEl' },
-                { id: 'catFilter', key: 'cat', col: 3, btnId: 'catBtnEl' }
+                { key: 'name', ...colConfig('name'), render: renderNameCell },
+                { key: 'type', ...colConfig('type') },
+                { key: 'desc', ...colConfig('desc') },
+                { key: 'cat', ...colConfig('cat') }
             ],
             onFilter: visible => {
                 statShowing.textContent = `showing ${visible}`;
