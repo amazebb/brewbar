@@ -6,17 +6,17 @@ join -t $'\t' -a 2 -1 1 -2 2 -o 2.1,2.2,2.3,2.4,1.2 <(sort categories.txt) <(sor
         select(.installed[0].installed_on_request == true) |
         "brew\t\(.name)\t\(.desc)\t\(.homepage)"),
     (.casks[] | "cask\t\(.token)\t\(.name[0]): \(.desc // "")\t\(.homepage)")'
-)) | sort -k1,2 >packages.tsv
+)) | sort -k1,2 >docs/packages.tsv
 
-echo "Wrote packages.tsv"
+echo "Wrote docs/packages.tsv"
 echo
 
-awk -F$'\t' 'BEGIN{print"["} NR>1{printf"%s{\"type\":\"%s\",\"name\":\"%s\",\"desc\":\"%s\",\"url\":\"%s\",\"cat\":\"%s\"}\n",(NR>2?",":""),$1,$2,$3,$4,$5} END{print"]"}' packages.tsv >packages.json
+awk -F$'\t' 'BEGIN{print"["} NR>1{printf"%s{\"type\":\"%s\",\"name\":\"%s\",\"desc\":\"%s\",\"url\":\"%s\",\"cat\":\"%s\"}\n",(NR>2?",":""),$1,$2,$3,$4,$5} END{print"]"}' docs/packages.tsv >docs/packages.json
 
-echo "Wrote packages.json"
+echo "Wrote docs/packages.json"
 echo
 
-missing=$(awk -F'\t' '$4 == "" {print $2}' packages.tsv)
+missing=$(awk -F'\t' '$4 == "" {print $2}' docs/packages.tsv)
 if [ -n "$missing" ]; then
     count=$(printf '%s\n' "$missing" | wc -l | tr -d ' ')
     echo "$count package(s) missing categories:"
