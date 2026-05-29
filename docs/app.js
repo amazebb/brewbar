@@ -1,4 +1,4 @@
-import { fetchData, initTable, linkCell } from './amazebb-tv/index.js';
+import { fetchData, initTable, linkCell } from './abtvjs/index.js';
 
 const data = await fetchData('data/packages.json', 'data/packages.tsv');
 
