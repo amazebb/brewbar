@@ -10,8 +10,8 @@ function parseTsv(text) {
             type: parts[0],
             name: parts[1],
             desc: (parts[2] || '').trim(),
-            url:  parts[3],
-            cat:  (parts[4] || '').trim()
+            url: parts[3],
+            cat: (parts[4] || '').trim()
         });
     });
     return data;
@@ -19,16 +19,16 @@ function parseTsv(text) {
 
 function renderNameCell(item) {
     const code = document.createElement('code');
-    const a    = document.createElement('a');
+    const a = document.createElement('a');
     a.textContent = item.name;
-    a.href        = item.url;
+    a.href = item.url;
     code.appendChild(a);
     return code;
 }
 
-const statTotal   = document.getElementById('statTotal');
+const statTotal = document.getElementById('statTotal');
 const statFormula = document.getElementById('statFormula');
-const statCask    = document.getElementById('statCask');
+const statCask = document.getElementById('statCask');
 const statShowing = document.getElementById('statShowing');
 
 fetch('packages.json')
@@ -37,25 +37,25 @@ fetch('packages.json')
     .then(data => {
         const totalBrew = data.filter(d => d.type === 'brew').length;
         const totalCask = data.length - totalBrew;
-        statTotal.textContent   = `${data.length} packages`;
+        statTotal.textContent = `${data.length} packages`;
         statFormula.textContent = `${totalBrew} formulas`;
-        statCask.textContent    = `${totalCask} casks`;
+        statCask.textContent = `${totalCask} casks`;
 
         initTable(data, {
-            tableId:       'pkgTable',
+            tableId: 'pkgTable',
             searchInputId: 'nameSearch',
-            noResultsId:   'noResults',
-            searchKeys:    ['name', 'desc'],
+            noResultsId: 'noResults',
+            searchKeys: ['name', 'desc'],
             badgeAlwaysShow: true,
             columns: [
                 { key: 'name', col: 0, sortable: true, render: renderNameCell },
                 { key: 'type', col: 1 },
                 { key: 'desc', col: 2, sortable: true },
-                { key: 'cat',  col: 3 }
+                { key: 'cat', col: 3 }
             ],
             filters: [
                 { id: 'typeFilter', key: 'type', col: 1, btnId: 'typeBtnEl' },
-                { id: 'catFilter',  key: 'cat',  col: 3, btnId: 'catBtnEl' }
+                { id: 'catFilter', key: 'cat', col: 3, btnId: 'catBtnEl' }
             ],
             onFilter: visible => {
                 statShowing.textContent = `showing ${visible}`;

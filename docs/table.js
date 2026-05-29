@@ -25,10 +25,10 @@ export function initTable(data, config) {
         onFilter
     } = config;
 
-    const table       = document.getElementById(tableId);
-    const tbody       = table.querySelector('tbody');
+    const table = document.getElementById(tableId);
+    const tbody = table.querySelector('tbody');
     const searchInput = document.getElementById(searchInputId);
-    const noResults   = document.getElementById(noResultsId);
+    const noResults = document.getElementById(noResultsId);
 
     // col index → data key lookup for sorting
     const colKeys = {};
@@ -56,12 +56,12 @@ export function initTable(data, config) {
     const filters = {};
     filterDefs.forEach(def => {
         filters[def.id] = {
-            key:       def.key,
-            col:       def.col,
-            selected:  new Set(),
-            all:       [],
-            btn:       document.getElementById(def.btnId),
-            rows:      {},
+            key: def.key,
+            col: def.col,
+            selected: new Set(),
+            all: [],
+            btn: document.getElementById(def.btnId),
+            rows: {},
             checkboxes: {}
         };
     });
@@ -150,10 +150,10 @@ export function initTable(data, config) {
                 row.style.display = counts[v] === 0 ? 'none' : '';
             });
 
-            const visibleTotal    = f.all.filter(v => counts[v] > 0).length;
+            const visibleTotal = f.all.filter(v => counts[v] > 0).length;
             const visibleSelected = f.all.filter(v => counts[v] > 0 && f.selected.has(v)).length;
-            const isFiltered      = visibleSelected < visibleTotal;
-            const badgeEl         = document.querySelector(`#${id} .filter-actions-badge`);
+            const isFiltered = visibleSelected < visibleTotal;
+            const badgeEl = document.querySelector(`#${id} .filter-actions-badge`);
             f.btn.classList.toggle('active', isFiltered);
             if (isFiltered || badgeAlwaysShow) {
                 badgeEl.innerHTML = `<span class="filter-badge">${visibleSelected}/${visibleTotal}</span>`;
@@ -183,12 +183,12 @@ export function initTable(data, config) {
 
     // Dropdown positioning — portalled to <body> so table-wrap overflow never clips it
     function toggleDropdown(id) {
-        const dd     = document.getElementById(id);
+        const dd = document.getElementById(id);
         const isOpen = dd.classList.contains('show');
         closeAll();
         if (!isOpen) {
             const rect = filters[id].btn.parentElement.getBoundingClientRect();
-            dd.style.top  = `${rect.bottom + 4}px`;
+            dd.style.top = `${rect.bottom + 4}px`;
             dd.style.left = `${rect.left}px`;
             dd.classList.add('show');
             const ddRect = dd.getBoundingClientRect();
@@ -209,8 +209,8 @@ export function initTable(data, config) {
 
     const allDropdowns = [];
     Object.keys(filters).forEach(id => {
-        const f      = filters[id];
-        const dd     = document.getElementById(id);
+        const f = filters[id];
+        const dd = document.getElementById(id);
         const anchor = f.btn.parentElement;
         allDropdowns.push({ dd, wrap: anchor });
         document.body.appendChild(dd);
