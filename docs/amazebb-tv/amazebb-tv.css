@@ -4,6 +4,13 @@
    Depends on CSS custom properties defined by the host app.
    ============================================================ */
 
+  :root {
+      --sort-icon:      " ↕";
+      --sort-icon-asc:  " ↑";
+      --sort-icon-desc: " ↓";
+      --filter-icon:    " ▾";
+  }
+
   /* Toolbar — search input + export button, inserted before the table wrapper */
   .atv-toolbar {
       display: flex;
@@ -119,7 +126,7 @@
   }
 
   th.sortable::after {
-      content: " \2195";
+      content: var(--sort-icon);
       font-size: 11px;
       color: var(--text-muted);
   }
@@ -129,8 +136,8 @@
       color: var(--accent);
   }
 
-  th.sortable.asc::after  { content: " \2191"; }
-  th.sortable.desc::after { content: " \2193"; }
+  th.sortable.asc::after  { content: var(--sort-icon-asc);  }
+  th.sortable.desc::after { content: var(--sort-icon-desc); }
 
   /* Filter button in column header */
   .filter-wrap {
@@ -153,7 +160,7 @@
   }
 
   .filter-btn::after {
-      content: " \25BE";
+      content: var(--filter-icon);
       font-size: 11px;
       color: var(--text-muted);
   }

@@ -65,20 +65,22 @@ export function updateFooter(footerEl, visible, total) {
 }
 
 // Builds the thead row from column definitions.
-// Filter columns get a button + portalled dropdown; all others get a plain sortable th.
-// Returns filterDefs: [{ id, btnId, key, col }] for each filterable column.
+// 'category' columns get a button + dropdown with checkboxes.
+// 'text' columns get a button + dropdown with just a search input.
+// Others are plain sortable ths.
+// Returns { filterDefs, textDefs } — both arrays have shape [{ id, btnId, key, col }].
 export function buildHeader(thead, columns, tableId) {
-    const tr = document.createElement('tr');
+    const tr         = document.createElement('tr');
     const filterDefs = [];
+    const textDefs   = [];
 
     columns.forEach(col => {
         const th = document.createElement('th');
         th.setAttribute('data-col', col._i);
 
-        if (col.filter) {
+        if (col.filter === 'category' || col.filter === 'text') {
             const filterId = `${tableId}_filter_${col.key}`;
             const btnId    = `${tableId}_btn_${col.key}`;
-            filterDefs.push({ id: filterId, btnId, key: col.key, col: col._i });
 
             const wrap = document.createElement('span');
             wrap.className = 'filter-wrap';
@@ -90,7 +92,13 @@ export function buildHeader(thead, columns, tableId) {
             wrap.appendChild(btn);
             th.appendChild(wrap);
 
-            document.body.appendChild(buildDropdown(filterId));
+            if (col.filter === 'category') {
+                filterDefs.push({ id: filterId, btnId, key: col.key, col: col._i });
+                document.body.appendChild(buildDropdown(filterId));
+            } else {
+                textDefs.push({ id: filterId, btnId, key: col.key, col: col._i });
+                document.body.appendChild(buildTextDropdown(filterId));
+            }
         } else {
             th.className   = 'sortable';
             th.textContent = col.label;
@@ -100,7 +108,7 @@ export function buildHeader(thead, columns, tableId) {
     });
 
     thead.appendChild(tr);
-    return filterDefs;
+    return { filterDefs, textDefs };
 }
 
 function buildDropdown(id) {
@@ -136,6 +144,20 @@ function buildDropdown(id) {
     dd.appendChild(fsearch);
     dd.appendChild(foptions);
     dd.appendChild(factions);
+    return dd;
+}
+
+function buildTextDropdown(id) {
+    const dd = document.createElement('div');
+    dd.className = 'filter-dropdown';
+    dd.id        = id;
+
+    const input       = document.createElement('input');
+    input.className   = 'filter-search';
+    input.type        = 'text';
+    input.placeholder = 'Filter…';
+
+    dd.appendChild(input);
     return dd;
 }
 

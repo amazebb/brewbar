@@ -27,35 +27,41 @@ export function inferColumns(data, configCols) {
     const base = configCols || Object.keys(data[0] || {}).map(key => ({ key }));
     return base.map((col, i) => {
         const isNumeric = data.every(item => !item[col.key] || !isNaN(Number(item[col.key])));
-        return { filter: !isNumeric, label: capitalize(col.key), ...col, _i: i };
+        return { filter: isNumeric ? false : 'text', label: capitalize(col.key), ...col, _i: i };
     });
 }
 
 // Returns the subset of data items that match all active filters and the search query.
-export function getVisible(data, filterState, query, searchKeys) {
+export function getVisible(data, categoryState, textState, query, searchKeys) {
     const q = query.toLowerCase();
     return data.filter(item => {
-        const matchFilters = Object.entries(filterState)
+        const matchCategory = Object.entries(categoryState)
             .every(([key, selected]) => selected.has(item[key]));
+        const matchText = Object.entries(textState)
+            .every(([key, val]) => !val || (item[key] || '').toLowerCase().includes(val.toLowerCase()));
         const matchSearch = !q || searchKeys.some(k => (item[k] || '').toLowerCase().includes(q));
-        return matchFilters && matchSearch;
+        return matchCategory && matchText && matchSearch;
     });
 }
 
 // Returns per-filter value counts, where each filter is counted against all OTHER
-// active filters + search (so the dropdown shows how many items each option would reveal).
-export function computeCounts(data, filterState, query, searchKeys) {
+// active filters + text filters + search (so the dropdown shows how many items each option would reveal).
+export function computeCounts(data, categoryState, textState, query, searchKeys) {
     const q = query.toLowerCase();
     const counts = {};
-    Object.keys(filterState).forEach(key => { counts[key] = {}; });
+    Object.keys(categoryState).forEach(key => { counts[key] = {}; });
 
     data.forEach(item => {
-        Object.keys(filterState).forEach(key => {
-            const matchOthers = Object.entries(filterState)
+        const matchText   = Object.entries(textState)
+            .every(([key, val]) => !val || (item[key] || '').toLowerCase().includes(val.toLowerCase()));
+        const matchSearch = !q || searchKeys.some(k => (item[k] || '').toLowerCase().includes(q));
+        if (!matchText || !matchSearch) return;
+
+        Object.keys(categoryState).forEach(key => {
+            const matchOthers = Object.entries(categoryState)
                 .filter(([k]) => k !== key)
                 .every(([k, selected]) => selected.has(item[k]));
-            const matchSearch = !q || searchKeys.some(k => (item[k] || '').toLowerCase().includes(q));
-            if (matchOthers && matchSearch) {
+            if (matchOthers) {
                 const val = item[key];
                 counts[key][val] = (counts[key][val] || 0) + 1;
             }

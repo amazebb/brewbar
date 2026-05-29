@@ -9,10 +9,10 @@ initTable(data, {
     badgeAlwaysShow: true,
     exportFilename: 'packages.csv',
     columns: [
-        { key: 'name', label: 'Name', filter: false, render: linkCell('name', 'url', { wrap: 'code' }) },
-        { key: 'type', label: 'Type' },
-        { key: 'desc', label: 'Description', filter: false },
-        { key: 'cat', label: 'Category' }
+        { key: 'name', label: 'Name',        render: linkCell('name', 'url', { wrap: 'code' }) },
+        { key: 'type', label: 'Type',        filter: 'category' },
+        { key: 'desc', label: 'Description'                     },
+        { key: 'cat',  label: 'Category',    filter: 'category' }
     ]
 });
 
