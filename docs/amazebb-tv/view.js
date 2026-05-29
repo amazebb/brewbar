@@ -69,10 +69,17 @@ export function updateFooter(footerEl, visible, total) {
 // 'text' columns get a button + dropdown with just a search input.
 // Others are plain sortable ths.
 // Returns { filterDefs, textDefs } — both arrays have shape [{ id, btnId, key, col }].
-export function buildHeader(thead, columns, tableId) {
+export function buildHeader(thead, columns, tableId, { rowNumbers = false } = {}) {
     const tr         = document.createElement('tr');
     const filterDefs = [];
     const textDefs   = [];
+
+    if (rowNumbers) {
+        const th       = document.createElement('th');
+        th.className   = 'atv-row-num';
+        th.textContent = '#';
+        tr.appendChild(th);
+    }
 
     columns.forEach(col => {
         const th = document.createElement('th');
@@ -163,10 +170,15 @@ function buildTextDropdown(id) {
 
 // Builds tbody rows via DocumentFragment (single reflow).
 // Attaches item.tr to each data item for later visibility toggling.
-export function buildRows(tbody, data, columns) {
+export function buildRows(tbody, data, columns, { rowNumbers = false } = {}) {
     const fragment = document.createDocumentFragment();
     data.forEach(item => {
         const tr = document.createElement('tr');
+        if (rowNumbers) {
+            const td     = document.createElement('td');
+            td.className = 'atv-row-num';
+            tr.appendChild(td);
+        }
         columns.forEach(col => {
             const td = document.createElement('td');
             if (col.render) {
@@ -181,6 +193,8 @@ export function buildRows(tbody, data, columns) {
     });
     tbody.appendChild(fragment);
 }
+
+
 
 // Builds the checkbox option rows inside a filter dropdown.
 // onCheck(value, checked) and onOnly(value) are controller-provided callbacks.

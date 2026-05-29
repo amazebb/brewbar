@@ -12,10 +12,15 @@ export function initTable(data, config) {
         searchKeys,
         searchPlaceholder,
         badgeAlwaysShow = false,
-        exportFilename
+        exportFilename,
+        striped    = false,
+        rowNumbers = false,
+        bordered   = false
     } = config;
 
     const table     = document.getElementById(tableId);
+    if (striped)   table.classList.add('atv-striped');
+    if (bordered)  table.classList.add('atv-bordered');
     const tbody     = table.querySelector('tbody');
     const thead     = table.querySelector('thead');
     const tableWrap = table.closest('.table-wrap') || table.parentElement;
@@ -35,8 +40,8 @@ export function initTable(data, config) {
     const noResults = buildNoResults(tableWrap);
 
     // --- View: build table content ---
-    const { filterDefs, textDefs } = buildHeader(thead, columns, tableId);
-    buildRows(tbody, data, columns);
+    const { filterDefs, textDefs } = buildHeader(thead, columns, tableId, { rowNumbers });
+    buildRows(tbody, data, columns, { rowNumbers });
 
     // --- State ---
     const filterState     = {};

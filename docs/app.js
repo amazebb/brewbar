@@ -8,11 +8,14 @@ initTable(data, {
     searchPlaceholder: 'Search by name or description...',
     badgeAlwaysShow: true,
     exportFilename: 'packages.csv',
+    striped: true,
+    rowNumbers: true,
+    bordered: true,
     columns: [
-        { key: 'name', label: 'Name',        render: linkCell('name', 'url', { wrap: 'code' }) },
-        { key: 'type', label: 'Type',        filter: 'category' },
-        { key: 'desc', label: 'Description'                     },
-        { key: 'cat',  label: 'Category',    filter: 'category' }
+        { key: 'name', label: 'Name', render: linkCell('name', 'url', { wrap: 'code' }) },
+        { key: 'type', label: 'Type', filter: 'category' },
+        { key: 'desc', label: 'Description' },
+        { key: 'cat', label: 'Category', filter: 'category' }
     ]
 });
 

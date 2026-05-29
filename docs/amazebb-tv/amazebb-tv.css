@@ -9,6 +9,8 @@
       --sort-icon-asc:  " ↑";
       --sort-icon-desc: " ↓";
       --filter-icon:    " ▾";
+      --stripe-bg:      var(--bg-subtle);
+      --header-bg:      var(--bg-hover);
   }
 
   /* Toolbar — search input + export button, inserted before the table wrapper */
@@ -95,7 +97,7 @@
   }
 
   th {
-      background: var(--bg-subtle);
+      background: var(--header-bg);
       position: sticky;
       top: 0;
       z-index: 2;
@@ -107,12 +109,35 @@
       border-bottom: none;
   }
 
-  tbody tr:hover {
-      background: var(--bg-subtle);
+  tbody tr:hover > td {
+      background: var(--row-hover) !important;
   }
 
   tr.hidden {
       display: none;
+  }
+
+  table.atv-bordered th:not(:last-child),
+  table.atv-bordered td:not(:last-child) {
+      border-right: 1px solid var(--border);
+  }
+
+  table.atv-striped tbody tr:nth-child(even of :not(.hidden)) > td {
+      background: var(--stripe-bg);
+  }
+
+  /* Row number column */
+  table { counter-reset: row-num; }
+  tbody tr:not(.hidden) { counter-increment: row-num; }
+  tbody tr:not(.hidden) .atv-row-num::before { content: counter(row-num); }
+
+  .atv-row-num {
+      width: 1%;
+      white-space: nowrap;
+      text-align: right;
+      color: var(--text-muted);
+      font-size: 12px;
+      user-select: none;
   }
 
   /* Sortable column headers */
