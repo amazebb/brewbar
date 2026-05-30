@@ -1,5 +1,20 @@
 import { fetchData, initTable, linkCell } from './amazejs/index.js';
 
+function copyBrewInstall(visibleItems, btn) {
+    const formulas = [], casks = [];
+    visibleItems.forEach(item => {
+        if (item.type === 'cask') casks.push(item.name);
+        else formulas.push(item.name);
+    });
+    const parts = [];
+    if (formulas.length) parts.push(`brew install ${formulas.join(' ')}`);
+    if (casks.length) parts.push(`brew install --cask ${casks.join(' ')}`);
+    navigator.clipboard.writeText(parts.join('\n')).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy brew install'; }, 2000);
+    });
+}
+
 const data = await fetchData('data/packages.json', 'data/packages.tsv');
 
 initTable(data, {
@@ -17,21 +32,8 @@ initTable(data, {
         { key: 'type', label: 'Type', filter: 'category' },
         { key: 'desc', label: 'Description' },
         { key: 'cat', label: 'Category', filter: 'category' }
+    ],
+    buttons: [
+        { label: 'Copy brew install', onClick: copyBrewInstall }
     ]
-});
-
-document.getElementById('brewBtn').addEventListener('click', () => {
-    const formulas = [], casks = [];
-    data.forEach(item => {
-        if (item.tr.classList.contains('hidden')) return;
-        if (item.type === 'cask') casks.push(item.name); else formulas.push(item.name);
-    });
-    const parts = [];
-    if (formulas.length) parts.push(`brew install ${formulas.join(' ')}`);
-    if (casks.length) parts.push(`brew install --cask ${casks.join(' ')}`);
-    const btn = document.getElementById('brewBtn');
-    navigator.clipboard.writeText(parts.join('\n')).then(() => {
-        btn.textContent = 'Copied!';
-        setTimeout(() => { btn.textContent = 'Copy brew install'; }, 2000);
-    });
 });
