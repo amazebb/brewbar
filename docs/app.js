@@ -4,6 +4,7 @@ const data = await fetchData('data/packages.json', 'data/packages.tsv');
 
 initTable(data, {
     tableId: 'pkgTable',
+    title: 'Homebrew Packages',
     searchKeys: ['name', 'desc'],
     searchPlaceholder: 'Search by name or description...',
     badgeAlwaysShow: true,
