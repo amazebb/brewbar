@@ -1,4 +1,4 @@
-import { fetchData, initTable, linkCell } from './amazejs/index.js';
+import { initTable, linkCell } from './amazejs/index.js';
 
 function copyBrewInstall(visibleItems, btn) {
     const formulas = [], casks = [];
@@ -15,9 +15,8 @@ function copyBrewInstall(visibleItems, btn) {
     });
 }
 
-const data = await fetchData('data/packages.json', 'data/packages.tsv');
-
-initTable(data, {
+await initTable({
+    data: ['data/packages.json', 'data/packages.tsv'],
     tableId: 'pkgTable',
     title: 'Homebrew Packages',
     searchKeys: ['name', 'desc'],

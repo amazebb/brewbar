@@ -1,17 +1,22 @@
-import { fetchData, initTreeTable } from './amazejs/index.js';
+import { initTreeTable } from './amazejs/index.js';
 
-const data = await fetchData('data/c0.json');
-
-initTreeTable(data, {
+await initTreeTable({
+    data: ['data/c0.json'],
     tableId: 'worldTable',
     columns: [
-        { key: 'name',      label: 'Name'      },
-        { key: 'latitude',  label: 'Latitude'  },
-        { key: 'longitude', label: 'Longitude' }
+        { key: 'name',       label: 'Country'    },
+        { key: 'capital',    label: 'Capital'    },
+        { key: 'population', label: 'Population' },
+        { key: 'currency',   label: 'Currency'   }
     ],
     levels: [
         {
             childrenKey: 'states',
+            columns: [
+                { key: 'name',      label: 'State'     },
+                { key: 'latitude',  label: 'Latitude'  },
+                { key: 'longitude', label: 'Longitude' }
+            ],
             detail: [
                 { key: 'iso2',       label: 'ISO'        },
                 { key: 'capital',    label: 'Capital'    },
@@ -21,7 +26,12 @@ initTreeTable(data, {
             ]
         },
         {
-            childrenKey: 'cities'
+            childrenKey: 'cities',
+            columns: [
+                { key: 'name',      label: 'City'      },
+                { key: 'latitude',  label: 'Latitude'  },
+                { key: 'longitude', label: 'Longitude' }
+            ]
         }
     ]
 });
