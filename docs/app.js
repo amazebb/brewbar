@@ -27,8 +27,6 @@ initTable({
     badgeAlwaysShow: true,
     exportFilename: 'packages.csv',
     striped: true,
-    rowNumbers: true,
-    bordered: true,
     columns: [
         { key: 'name', label: 'Name', render: linkCell('name', 'url', { wrap: 'code' }) },
         { key: 'type', label: 'Type', filter: 'category' },
