@@ -64,54 +64,6 @@ h1 {
     margin-bottom: 4px;
 }
 
-.subtitle {
-    color: var(--text-muted);
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-.subtitle a {
-    color: var(--accent);
-    text-decoration: none;
-}
-
-.subtitle a:hover {
-    text-decoration: underline;
-}
-
-/* Stats bar */
-.stats {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 16px;
-    font-size: 13px;
-    color: var(--text-muted);
-}
-
-.stats span {
-    background: var(--bg-subtle);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 4px 10px;
-}
-
-/* Brew install button — app-specific action */
-#brewBtn {
-    margin-top: 12px;
-    padding: 8px 14px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    font-size: 14px;
-    background: var(--bg-subtle);
-    color: var(--text);
-    white-space: nowrap;
-}
-
-#brewBtn:hover {
-    background: var(--bg-hover);
-    border-color: var(--border-muted);
-}
-
 /* Brewbar name cell — <code><a> rendered by renderNameCell */
 code a,
 code a:visited {
