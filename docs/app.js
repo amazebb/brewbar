@@ -15,7 +15,7 @@ function copyBrewInstall(visibleItems, btn) {
     });
 }
 
-await initTable({
+initTable({
     data: ['data/packages.json', 'data/packages.tsv'],
     tableId: 'pkgTable',
     title: 'Homebrew Packages',

@@ -1,6 +1,6 @@
 import { initTreeTable } from './amazejs/index.js';
 
-await initTreeTable({
+initTreeTable({
     data: ['data/c0.json'],
     tableId: 'worldTable',
     columns: [
