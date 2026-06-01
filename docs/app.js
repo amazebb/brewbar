@@ -12,6 +12,9 @@ function copyBrewInstall(visibleItems, btn) {
     navigator.clipboard.writeText(parts.join('\n')).then(() => {
         btn.textContent = 'Copied!';
         setTimeout(() => { btn.textContent = 'Copy brew install'; }, 2000);
+    }).catch(() => {
+        btn.textContent = 'Failed!';
+        setTimeout(() => { btn.textContent = 'Copy brew install'; }, 2000);
     });
 }
 
