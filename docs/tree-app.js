@@ -1,7 +1,7 @@
 import { initTreeTable } from './amazejs/index.js';
 
 initTreeTable({
-    data: ['data/c0.json'],
+    data: ['data/c2.json'],
     tableId: 'worldTable',
     exportFilename: 'countries.csv',
     levels: [
