@@ -1,4 +1,4 @@
-import { initTable, linkCell } from './amazejs/index.js';
+import { initTable, linkCell } from 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@master/index.js';
 
 function copyBrewInstall(visibleItems, btn) {
     const formulas = [], casks = [];
