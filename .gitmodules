@@ -1,0 +1,3 @@
+[submodule "docs/amazejs"]
+	path = docs/amazejs
+	url = https://github.com/amazebb/amazejs.git
