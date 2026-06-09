@@ -1,4 +1,4 @@
-import { initTable, linkCell } from 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@master/index.js';
+import { initTable, linkCell } from './amazejs.js';
 
 function copyBrewInstall(visibleItems, btn) {
     const formulas = [], casks = [];
@@ -21,6 +21,7 @@ function copyBrewInstall(visibleItems, btn) {
 initTable({
     data: ['data/packages.json', 'data/packages.tsv'],
     tableId: 'pkgTable',
+    title: 'Homebrew Packages',
     searchKeys: ['name', 'desc'],
     searchPlaceholder: 'Search by name or description...',
     badgeAlwaysShow: true,

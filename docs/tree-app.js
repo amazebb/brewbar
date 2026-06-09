@@ -1,4 +1,4 @@
-import { initTreeTable } from 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@master/index.js';
+import { initTreeTable } from './amazejs.js';
 
 initTreeTable({
     data: ['data/c2.json'],
