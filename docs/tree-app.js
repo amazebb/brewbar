@@ -1,11 +1,7 @@
-import { initTree } from './amazejs.js';
+import { initTable } from './amazejs.js';
 
-initTree({
+initTable({
     data: ['data/countries.json'],
     tableId: 'worldTable',
     exportFilename: 'countries.csv',
-    levels: [
-        { nameKey: 'name' },
-        { nameKey: 'name' },
-    ]
 });
