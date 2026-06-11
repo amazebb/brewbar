@@ -1,8 +1,8 @@
 //CDN
-//export * from 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@master/index.js';
+export * from 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@v0.1.0/src/index.js';
 
 //local
-export * from '../../amazejs/src/index.js';
+// export * from '../../amazejs/src/index.js';
 
 // export const isLocal = location.protocol === 'file:';
 //
