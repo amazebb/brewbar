@@ -1,5 +1,5 @@
 [
-{"type":"brew","name":"basedpyright","desc":"Pyright fork with various improvements and built-in pylance features","url":"https://github.com/DetachHead/basedpyright","cat":"Language Servers & IDE Support"}
+{"type":"brew","name":"basedpyright","desc":"Pyright fork with various improvements and built-in pylance features","url":"https://docs.basedpyright.com","cat":"Language Servers & IDE Support"}
 ,{"type":"brew","name":"bash","desc":"Bourne-Again SHell, a UNIX command interpreter","url":"https://www.gnu.org/software/bash/","cat":"Shells & Terminal"}
 ,{"type":"brew","name":"bash-language-server","desc":"Language Server for Bash","url":"https://github.com/bash-lsp/bash-language-server","cat":"Language Servers & IDE Support"}
 ,{"type":"brew","name":"bat","desc":"Clone of cat(1) with syntax highlighting and Git integration","url":"https://github.com/sharkdp/bat","cat":"Shells & Terminal"}
@@ -8,30 +8,30 @@
 ,{"type":"brew","name":"cdrtools","desc":"CD/DVD/Blu-ray premastering and recording software","url":"https://cdrtools.sourceforge.net/private/cdrecord.html","cat":"File & Archive Tools"}
 ,{"type":"brew","name":"chafa","desc":"Versatile and fast Unicode/ASCII/ANSI graphics renderer","url":"https://hpjansson.org/chafa/","cat":"Media Processing"}
 ,{"type":"brew","name":"chapel","desc":"Programming language for productive parallel computing at scale","url":"https://chapel-lang.org/","cat":"Programming Languages & Runtimes"}
-,{"type":"brew","name":"cjson","desc":"Ultralightweight JSON parser in ANSI C","url":"https://github.com/DaveGamble/cJSON","cat":"Data Processing & Analysis"}
 ,{"type":"brew","name":"cmake","desc":"Cross-platform make","url":"https://www.cmake.org/","cat":"Build Systems & Compilers"}
 ,{"type":"brew","name":"coreutils","desc":"GNU File, Shell, and Text utilities","url":"https://www.gnu.org/software/coreutils/","cat":"Shells & Terminal"}
 ,{"type":"brew","name":"curl","desc":"Get a file from an HTTP, HTTPS or FTP server","url":"https://curl.se","cat":"Network Tools"}
 ,{"type":"brew","name":"djvulibre","desc":"DjVu viewer","url":"https://djvu.sourceforge.net/","cat":"Document & Text Processing"}
 ,{"type":"brew","name":"dosbox-x","desc":"DOSBox with accurate emulation and wide testing","url":"https://dosbox-x.com/","cat":"Virtualization"}
 ,{"type":"brew","name":"duckdb","desc":"Embeddable SQL OLAP Database Management System","url":"https://www.duckdb.org","cat":"Data Processing & Analysis"}
-,{"type":"brew","name":"epubcheck","desc":"Validate EPUB files, version 2.0 and later","url":"https://github.com/w3c/epubcheck","cat":"Document & Text Processing"}
+,{"type":"brew","name":"epubcheck","desc":"Validate EPUB files, version 2.0 and later","url":"https://www.w3.org/publishing/epubcheck/","cat":"Document & Text Processing"}
 ,{"type":"brew","name":"exiftool","desc":"Perl lib for reading and writing EXIF metadata","url":"https://exiftool.org","cat":"Metadata & File Information"}
 ,{"type":"brew","name":"exiv2","desc":"EXIF and IPTC metadata manipulation library and tools","url":"https://exiv2.org/","cat":"Metadata & File Information"}
-,{"type":"brew","name":"eza","desc":"Modern, maintained replacement for ls","url":"https://github.com/eza-community/eza","cat":"Shells & Terminal"}
+,{"type":"brew","name":"eza","desc":"Modern, maintained replacement for ls","url":"https://eza.rocks","cat":"Shells & Terminal"}
 ,{"type":"brew","name":"fd","desc":"Simple, fast and user-friendly alternative to find","url":"https://github.com/sharkdp/fd","cat":"Shells & Terminal"}
 ,{"type":"brew","name":"fennel","desc":"Lua Lisp Language","url":"https://fennel-lang.org","cat":"Programming Languages & Runtimes"}
 ,{"type":"brew","name":"fennel-ls","desc":"Language Server for Fennel","url":"https://git.sr.ht/~xerool/fennel-ls/","cat":"Language Servers & IDE Support"}
 ,{"type":"brew","name":"ffmpeg","desc":"Play, record, convert, and stream select audio and video codecs","url":"https://ffmpeg.org/","cat":"Media Processing"}
 ,{"type":"brew","name":"fluid-synth","desc":"Real-time software synthesizer based on the SoundFont 2 specs","url":"https://www.fluidsynth.org","cat":"Media Processing"}
-,{"type":"brew","name":"fzf","desc":"Command-line fuzzy finder written in Go","url":"https://github.com/junegunn/fzf","cat":"Shells & Terminal"}
+,{"type":"brew","name":"fzf","desc":"Command-line fuzzy finder written in Go","url":"https://junegunn.github.io/fzf/","cat":"Shells & Terminal"}
 ,{"type":"brew","name":"gawk","desc":"GNU awk utility","url":"https://www.gnu.org/software/gawk/","cat":"Search & Text Processing"}
 ,{"type":"brew","name":"gh","desc":"GitHub command-line tool","url":"https://cli.github.com/","cat":"Version Control"}
 ,{"type":"brew","name":"ghostscript","desc":"Interpreter for PostScript and PDF","url":"https://www.ghostscript.com/","cat":"Document & Text Processing"}
 ,{"type":"brew","name":"git","desc":"Distributed revision control system","url":"https://git-scm.com","cat":"Version Control"}
+,{"type":"brew","name":"git-filter-repo","desc":"Quickly rewrite git repository history","url":"https://github.com/newren/git-filter-repo","cat":"Version Control"}
 ,{"type":"brew","name":"git-svn","desc":"Bidirectional operation between a Subversion repository and Git","url":"https://git-scm.com","cat":"Version Control"}
 ,{"type":"brew","name":"gitea","desc":"Painless self-hosted all-in-one software development service","url":"https://about.gitea.com/","cat":"Version Control"}
-,{"type":"brew","name":"gperftools","desc":"Multi-threaded malloc() and performance analysis tools","url":"https://github.com/gperftools/gperftools","cat":"System Utilities"}
+,{"type":"brew","name":"gnu-sed","desc":"GNU implementation of the famous stream editor","url":"https://www.gnu.org/software/sed/","cat":"Search & Text Processing"}
 ,{"type":"brew","name":"gradle","desc":"Open-source build automation tool based on the Groovy and Kotlin DSL","url":"https://www.gradle.org/","cat":"Build Systems & Compilers"}
 ,{"type":"brew","name":"graphicsmagick","desc":"Image processing tools collection","url":"https://graphicsmagick.sourceforge.io/","cat":"Media Processing"}
 ,{"type":"brew","name":"graphviz","desc":"Graph visualization software from AT&T and Bell Labs","url":"https://graphviz.org/","cat":"Development Libraries"}
@@ -42,8 +42,6 @@
 ,{"type":"brew","name":"iso-codes","desc":"Provides lists of various ISO standards","url":"https://salsa.debian.org/iso-codes-team/iso-codes","cat":"Miscellaneous"}
 ,{"type":"brew","name":"jdtls","desc":"Java language specific implementation of the Language Server Protocol","url":"https://github.com/eclipse-jdtls/eclipse.jdt.ls","cat":"Language Servers & IDE Support"}
 ,{"type":"brew","name":"jq","desc":"Lightweight and flexible command-line JSON processor","url":"https://jqlang.github.io/jq/","cat":"Data Processing & Analysis"}
-,{"type":"brew","name":"json-glib","desc":"Library for JSON, based on GLib","url":"https://wiki.gnome.org/Projects/JsonGlib","cat":"Data Processing & Analysis"}
-,{"type":"brew","name":"libcaca","desc":"Convert pixel information into colored ASCII art","url":"http://caca.zoy.org/wiki/libcaca","cat":"Media Processing"}
 ,{"type":"brew","name":"libcerf","desc":"Numeric library for complex error functions","url":"https://jugit.fz-juelich.de/mlz/libcerf","cat":"Development Libraries"}
 ,{"type":"brew","name":"libdvdcss","desc":"Access DVDs as block devices without the decryption","url":"https://www.videolan.org/developers/libdvdcss.html","cat":"File & Archive Tools"}
 ,{"type":"brew","name":"libheif","desc":"ISO/IEC 23008-12:2017 HEIF file format decoder and encoder","url":"https://www.libde265.org/","cat":"Media Processing"}
@@ -53,7 +51,7 @@
 ,{"type":"brew","name":"little-cms2","desc":"Color management engine supporting ICC profiles","url":"https://www.littlecms.com/","cat":"Media Processing"}
 ,{"type":"brew","name":"llvm","desc":"Next-gen compiler infrastructure","url":"https://llvm.org/","cat":"Build Systems & Compilers"}
 ,{"type":"brew","name":"lua","desc":"Powerful, lightweight programming language","url":"https://www.lua.org/","cat":"Programming Languages & Runtimes"}
-,{"type":"brew","name":"lua-language-server","desc":"Language Server for the Lua language","url":"https://github.com/LuaLS/lua-language-server","cat":"Language Servers & IDE Support"}
+,{"type":"brew","name":"lua-language-server","desc":"Language Server for the Lua language","url":"https://luals.github.io","cat":"Language Servers & IDE Support"}
 ,{"type":"brew","name":"mac-cleanup-go","desc":"TUI macOS cleaner that scans caches/logs and lets you select what to delete","url":"https://github.com/2ykwang/mac-cleanup-go","cat":"System Utilities"}
 ,{"type":"brew","name":"mactop","desc":"Apple Silicon Monitor Top written in Go Lang","url":"https://github.com/metaspartan/mactop","cat":"System Utilities"}
 ,{"type":"brew","name":"make","desc":"Utility for directing compilation","url":"https://www.gnu.org/software/make/","cat":"Build Systems & Compilers"}
@@ -73,7 +71,7 @@
 ,{"type":"brew","name":"poppler","desc":"PDF rendering library (based on the xpdf-3.0 code base)","url":"https://poppler.freedesktop.org/","cat":"Document & Text Processing"}
 ,{"type":"brew","name":"portmidi","desc":"Cross-platform library for real-time MIDI I/O","url":"https://github.com/PortMidi/portmidi","cat":"Media Processing"}
 ,{"type":"brew","name":"pygments","desc":"Generic syntax highlighter","url":"https://pygments.org/","cat":"Python Tools"}
-,{"type":"brew","name":"qpdf","desc":"Tools for and transforming and inspecting PDF files","url":"https://github.com/qpdf/qpdf","cat":"Document & Text Processing"}
+,{"type":"brew","name":"qpdf","desc":"Tools for and transforming and inspecting PDF files","url":"https://qpdf.sourceforge.io/","cat":"Document & Text Processing"}
 ,{"type":"brew","name":"qsv","desc":"Ultra-fast CSV data-wrangling toolkit","url":"https://qsv.dathere.com/","cat":"Data Processing & Analysis"}
 ,{"type":"brew","name":"qt@5","desc":"Cross-platform application and UI framework","url":"https://www.qt.io/","cat":"Development Libraries"}
 ,{"type":"brew","name":"ripgrep","desc":"Search tool like grep and The Silver Searcher","url":"https://github.com/BurntSushi/ripgrep","cat":"Search & Text Processing"}
@@ -84,7 +82,6 @@
 ,{"type":"brew","name":"shellcheck","desc":"Static analysis and lint tool, for (ba)sh scripts","url":"https://www.shellcheck.net/","cat":"Code Quality & Linting"}
 ,{"type":"brew","name":"shfmt","desc":"Autoformat shell script source code","url":"https://github.com/mvdan/sh","cat":"Code Quality & Linting"}
 ,{"type":"brew","name":"smartmontools","desc":"SMART hard drive monitoring","url":"https://www.smartmontools.org/","cat":"System Utilities"}
-,{"type":"brew","name":"sniffnet","desc":"Cross-platform application to monitor your network traffic","url":"https://sniffnet.net/","cat":"Network Tools"}
 ,{"type":"brew","name":"sox","desc":"SOund eXchange: universal sound sample translator","url":"https://sox.sourceforge.net/","cat":"Media Processing"}
 ,{"type":"brew","name":"sql-language-server","desc":"Language Server for SQL","url":"https://github.com/joe-re/sql-language-server","cat":"Language Servers & IDE Support"}
 ,{"type":"brew","name":"swiftlint","desc":"Tool to enforce Swift style and conventions","url":"https://github.com/realm/SwiftLint","cat":"Code Quality & Linting"}

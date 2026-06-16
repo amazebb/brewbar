@@ -1,5 +1,5 @@
 brew	arduino-cli	Arduino command-line interface	https://arduino.github.io/arduino-cli/latest/	Hardware & Embedded
-brew	basedpyright	Pyright fork with various improvements and built-in pylance features	https://github.com/DetachHead/basedpyright	Language Servers & IDE Support
+brew	basedpyright	Pyright fork with various improvements and built-in pylance features	https://docs.basedpyright.com	Language Servers & IDE Support
 brew	bash	Bourne-Again SHell, a UNIX command interpreter	https://www.gnu.org/software/bash/	Shells & Terminal
 brew	bash-language-server	Language Server for Bash	https://github.com/bash-lsp/bash-language-server	Language Servers & IDE Support
 brew	bat	Clone of cat(1) with syntax highlighting and Git integration	https://github.com/sharkdp/bat	Shells & Terminal
@@ -8,30 +8,30 @@ brew	bun	Incredibly fast JavaScript runtime, bundler, transpiler and package man
 brew	cdrtools	CD/DVD/Blu-ray premastering and recording software	https://cdrtools.sourceforge.net/private/cdrecord.html	File & Archive Tools
 brew	chafa	Versatile and fast Unicode/ASCII/ANSI graphics renderer	https://hpjansson.org/chafa/	Media Processing
 brew	chapel	Programming language for productive parallel computing at scale	https://chapel-lang.org/	Programming Languages & Runtimes
-brew	cjson	Ultralightweight JSON parser in ANSI C	https://github.com/DaveGamble/cJSON	Data Processing & Analysis
 brew	cmake	Cross-platform make	https://www.cmake.org/	Build Systems & Compilers
 brew	coreutils	GNU File, Shell, and Text utilities	https://www.gnu.org/software/coreutils/	Shells & Terminal
 brew	curl	Get a file from an HTTP, HTTPS or FTP server	https://curl.se	Network Tools
 brew	djvulibre	DjVu viewer	https://djvu.sourceforge.net/	Document & Text Processing
 brew	dosbox-x	DOSBox with accurate emulation and wide testing	https://dosbox-x.com/	Virtualization
 brew	duckdb	Embeddable SQL OLAP Database Management System	https://www.duckdb.org	Data Processing & Analysis
-brew	epubcheck	Validate EPUB files, version 2.0 and later	https://github.com/w3c/epubcheck	Document & Text Processing
+brew	epubcheck	Validate EPUB files, version 2.0 and later	https://www.w3.org/publishing/epubcheck/	Document & Text Processing
 brew	exiftool	Perl lib for reading and writing EXIF metadata	https://exiftool.org	Metadata & File Information
 brew	exiv2	EXIF and IPTC metadata manipulation library and tools	https://exiv2.org/	Metadata & File Information
-brew	eza	Modern, maintained replacement for ls	https://github.com/eza-community/eza	Shells & Terminal
+brew	eza	Modern, maintained replacement for ls	https://eza.rocks	Shells & Terminal
 brew	fd	Simple, fast and user-friendly alternative to find	https://github.com/sharkdp/fd	Shells & Terminal
 brew	fennel	Lua Lisp Language	https://fennel-lang.org	Programming Languages & Runtimes
 brew	fennel-ls	Language Server for Fennel	https://git.sr.ht/~xerool/fennel-ls/	Language Servers & IDE Support
 brew	ffmpeg	Play, record, convert, and stream select audio and video codecs	https://ffmpeg.org/	Media Processing
 brew	fluid-synth	Real-time software synthesizer based on the SoundFont 2 specs	https://www.fluidsynth.org	Media Processing
-brew	fzf	Command-line fuzzy finder written in Go	https://github.com/junegunn/fzf	Shells & Terminal
+brew	fzf	Command-line fuzzy finder written in Go	https://junegunn.github.io/fzf/	Shells & Terminal
 brew	gawk	GNU awk utility	https://www.gnu.org/software/gawk/	Search & Text Processing
 brew	gh	GitHub command-line tool	https://cli.github.com/	Version Control
 brew	ghostscript	Interpreter for PostScript and PDF	https://www.ghostscript.com/	Document & Text Processing
 brew	git	Distributed revision control system	https://git-scm.com	Version Control
+brew	git-filter-repo	Quickly rewrite git repository history	https://github.com/newren/git-filter-repo	Version Control
 brew	git-svn	Bidirectional operation between a Subversion repository and Git	https://git-scm.com	Version Control
 brew	gitea	Painless self-hosted all-in-one software development service	https://about.gitea.com/	Version Control
-brew	gperftools	Multi-threaded malloc() and performance analysis tools	https://github.com/gperftools/gperftools	System Utilities
+brew	gnu-sed	GNU implementation of the famous stream editor	https://www.gnu.org/software/sed/	Search & Text Processing
 brew	gradle	Open-source build automation tool based on the Groovy and Kotlin DSL	https://www.gradle.org/	Build Systems & Compilers
 brew	graphicsmagick	Image processing tools collection	https://graphicsmagick.sourceforge.io/	Media Processing
 brew	graphviz	Graph visualization software from AT&T and Bell Labs	https://graphviz.org/	Development Libraries
@@ -42,8 +42,6 @@ brew	ipython	Interactive computing in Python	https://ipython.org/	Python Tools
 brew	iso-codes	Provides lists of various ISO standards	https://salsa.debian.org/iso-codes-team/iso-codes	Miscellaneous
 brew	jdtls	Java language specific implementation of the Language Server Protocol	https://github.com/eclipse-jdtls/eclipse.jdt.ls	Language Servers & IDE Support
 brew	jq	Lightweight and flexible command-line JSON processor	https://jqlang.github.io/jq/	Data Processing & Analysis
-brew	json-glib	Library for JSON, based on GLib	https://wiki.gnome.org/Projects/JsonGlib	Data Processing & Analysis
-brew	libcaca	Convert pixel information into colored ASCII art	http://caca.zoy.org/wiki/libcaca	Media Processing
 brew	libcerf	Numeric library for complex error functions	https://jugit.fz-juelich.de/mlz/libcerf	Development Libraries
 brew	libdvdcss	Access DVDs as block devices without the decryption	https://www.videolan.org/developers/libdvdcss.html	File & Archive Tools
 brew	libheif	ISO/IEC 23008-12:2017 HEIF file format decoder and encoder	https://www.libde265.org/	Media Processing
@@ -53,7 +51,7 @@ brew	librsync	Library that implements the rsync remote-delta algorithm	https://l
 brew	little-cms2	Color management engine supporting ICC profiles	https://www.littlecms.com/	Media Processing
 brew	llvm	Next-gen compiler infrastructure	https://llvm.org/	Build Systems & Compilers
 brew	lua	Powerful, lightweight programming language	https://www.lua.org/	Programming Languages & Runtimes
-brew	lua-language-server	Language Server for the Lua language	https://github.com/LuaLS/lua-language-server	Language Servers & IDE Support
+brew	lua-language-server	Language Server for the Lua language	https://luals.github.io	Language Servers & IDE Support
 brew	mac-cleanup-go	TUI macOS cleaner that scans caches/logs and lets you select what to delete	https://github.com/2ykwang/mac-cleanup-go	System Utilities
 brew	mactop	Apple Silicon Monitor Top written in Go Lang	https://github.com/metaspartan/mactop	System Utilities
 brew	make	Utility for directing compilation	https://www.gnu.org/software/make/	Build Systems & Compilers
@@ -73,7 +71,7 @@ brew	pkgconf	Package compiler and linker metadata toolkit	https://github.com/pkg
 brew	poppler	PDF rendering library (based on the xpdf-3.0 code base)	https://poppler.freedesktop.org/	Document & Text Processing
 brew	portmidi	Cross-platform library for real-time MIDI I/O	https://github.com/PortMidi/portmidi	Media Processing
 brew	pygments	Generic syntax highlighter	https://pygments.org/	Python Tools
-brew	qpdf	Tools for and transforming and inspecting PDF files	https://github.com/qpdf/qpdf	Document & Text Processing
+brew	qpdf	Tools for and transforming and inspecting PDF files	https://qpdf.sourceforge.io/	Document & Text Processing
 brew	qsv	Ultra-fast CSV data-wrangling toolkit	https://qsv.dathere.com/	Data Processing & Analysis
 brew	qt@5	Cross-platform application and UI framework	https://www.qt.io/	Development Libraries
 brew	ripgrep	Search tool like grep and The Silver Searcher	https://github.com/BurntSushi/ripgrep	Search & Text Processing
@@ -84,7 +82,6 @@ brew	sdl2	Low-level access to audio, keyboard, mouse, joystick, and graphics	htt
 brew	shellcheck	Static analysis and lint tool, for (ba)sh scripts	https://www.shellcheck.net/	Code Quality & Linting
 brew	shfmt	Autoformat shell script source code	https://github.com/mvdan/sh	Code Quality & Linting
 brew	smartmontools	SMART hard drive monitoring	https://www.smartmontools.org/	System Utilities
-brew	sniffnet	Cross-platform application to monitor your network traffic	https://sniffnet.net/	Network Tools
 brew	sox	SOund eXchange: universal sound sample translator	https://sox.sourceforge.net/	Media Processing
 brew	sql-language-server	Language Server for SQL	https://github.com/joe-re/sql-language-server	Language Servers & IDE Support
 brew	swiftlint	Tool to enforce Swift style and conventions	https://github.com/realm/SwiftLint	Code Quality & Linting
