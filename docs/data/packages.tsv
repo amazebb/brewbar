@@ -1,5 +1,4 @@
 brew	arduino-cli	Arduino command-line interface	https://arduino.github.io/arduino-cli/latest/	Hardware & Embedded
-brew	basedpyright	Pyright fork with various improvements and built-in pylance features	https://docs.basedpyright.com	Language Servers & IDE Support
 brew	bash	Bourne-Again SHell, a UNIX command interpreter	https://www.gnu.org/software/bash/	Shells & Terminal
 brew	bash-language-server	Language Server for Bash	https://github.com/bash-lsp/bash-language-server	Language Servers & IDE Support
 brew	bat	Clone of cat(1) with syntax highlighting and Git integration	https://github.com/sharkdp/bat	Shells & Terminal
@@ -7,7 +6,6 @@ brew	bear	Generate compilation database for clang tooling	https://github.com/riz
 brew	bun	Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.	https://bun.sh/	Programming Languages & Runtimes
 brew	cdrtools	CD/DVD/Blu-ray premastering and recording software	https://cdrtools.sourceforge.net/private/cdrecord.html	File & Archive Tools
 brew	chafa	Versatile and fast Unicode/ASCII/ANSI graphics renderer	https://hpjansson.org/chafa/	Media Processing
-brew	chapel	Programming language for productive parallel computing at scale	https://chapel-lang.org/	Programming Languages & Runtimes
 brew	cmake	Cross-platform make	https://www.cmake.org/	Build Systems & Compilers
 brew	coreutils	GNU File, Shell, and Text utilities	https://www.gnu.org/software/coreutils/	Shells & Terminal
 brew	curl	Get a file from an HTTP, HTTPS or FTP server	https://curl.se	Network Tools
@@ -21,7 +19,7 @@ brew	eza	Modern, maintained replacement for ls	https://eza.rocks	Shells & Termin
 brew	fd	Simple, fast and user-friendly alternative to find	https://github.com/sharkdp/fd	Shells & Terminal
 brew	fennel	Lua Lisp Language	https://fennel-lang.org	Programming Languages & Runtimes
 brew	fennel-ls	Language Server for Fennel	https://git.sr.ht/~xerool/fennel-ls/	Language Servers & IDE Support
-brew	ffmpeg	Play, record, convert, and stream select audio and video codecs	https://ffmpeg.org/	Media Processing
+brew	ffmpeg	Play, record, convert, and stream audio and video	https://ffmpeg.org/	Media Processing
 brew	fluid-synth	Real-time software synthesizer based on the SoundFont 2 specs	https://www.fluidsynth.org	Media Processing
 brew	fzf	Command-line fuzzy finder written in Go	https://junegunn.github.io/fzf/	Shells & Terminal
 brew	gawk	GNU awk utility	https://www.gnu.org/software/gawk/	Search & Text Processing
@@ -37,12 +35,13 @@ brew	graphicsmagick	Image processing tools collection	https://graphicsmagick.sou
 brew	graphviz	Graph visualization software from AT&T and Bell Labs	https://graphviz.org/	Development Libraries
 brew	gsl	Numerical library for C and C++	https://www.gnu.org/software/gsl/	Development Libraries
 brew	hyperfine	Command-line benchmarking tool	https://github.com/sharkdp/hyperfine	System Utilities
-brew	imagemagick	Tools and libraries to manipulate images in select formats	https://imagemagick.org/index.php	Media Processing
 brew	ipython	Interactive computing in Python	https://ipython.org/	Python Tools
 brew	iso-codes	Provides lists of various ISO standards	https://salsa.debian.org/iso-codes-team/iso-codes	Miscellaneous
 brew	jdtls	Java language specific implementation of the Language Server Protocol	https://github.com/eclipse-jdtls/eclipse.jdt.ls	Language Servers & IDE Support
+brew	jless	Command-line pager for JSON data	https://jless.io/	
 brew	jq	Lightweight and flexible command-line JSON processor	https://jqlang.github.io/jq/	Data Processing & Analysis
-brew	libcerf	Numeric library for complex error functions	https://jugit.fz-juelich.de/mlz/libcerf	Development Libraries
+brew	libcaca	Convert pixel information into colored ASCII art	http://caca.zoy.org/wiki/libcaca	Media Processing
+brew	libcerf	Numeric library for complex error functions	https://jugit.fz-juelich.de/mlz/lib/cerf	Development Libraries
 brew	libdvdcss	Access DVDs as block devices without the decryption	https://www.videolan.org/developers/libdvdcss.html	File & Archive Tools
 brew	libheif	ISO/IEC 23008-12:2017 HEIF file format decoder and encoder	https://www.libde265.org/	Media Processing
 brew	libomp	LLVM's OpenMP runtime library	https://openmp.llvm.org/	Development Libraries
@@ -56,12 +55,14 @@ brew	mac-cleanup-go	TUI macOS cleaner that scans caches/logs and lets you select
 brew	mactop	Apple Silicon Monitor Top written in Go Lang	https://github.com/metaspartan/mactop	System Utilities
 brew	make	Utility for directing compilation	https://www.gnu.org/software/make/	Build Systems & Compilers
 brew	media-info	Unified display of technical and tag data for audio/video	https://mediaarea.net/	Metadata & File Information
+brew	mpv	Media player based on MPlayer and mplayer2	https://mpv.io	Media Processing
 brew	mupdf-tools	Lightweight PDF and XPS viewer	https://mupdf.com/	Document & Text Processing
 brew	ncdu	NCurses Disk Usage	https://dev.yorhel.nl/ncdu	System Utilities
 brew	ninja	Small build system for use with gyp or CMake	https://ninja-build.org/	Build Systems & Compilers
 brew	node	Open-source, cross-platform JavaScript runtime environment	https://nodejs.org/	Programming Languages & Runtimes
 brew	opencode	AI coding agent, built for the terminal	https://opencode.ai	Development Tools
 brew	openjpeg	Library for JPEG-2000 image manipulation	https://www.openjpeg.org/	Media Processing
+brew	openssh	OpenBSD freely-licensed SSH connectivity tools	https://www.openssh.com/	
 brew	p7zip	7-Zip (high compression file archiver) implementation	https://github.com/p7zip-project/p7zip	File & Archive Tools
 brew	pandoc	Swiss-army knife of markup format conversion	https://pandoc.org/	Document & Text Processing
 brew	parallel	Shell command parallelization utility	https://savannah.gnu.org/projects/parallel/	System Utilities
@@ -71,6 +72,7 @@ brew	pkgconf	Package compiler and linker metadata toolkit	https://github.com/pkg
 brew	poppler	PDF rendering library (based on the xpdf-3.0 code base)	https://poppler.freedesktop.org/	Document & Text Processing
 brew	portmidi	Cross-platform library for real-time MIDI I/O	https://github.com/PortMidi/portmidi	Media Processing
 brew	pygments	Generic syntax highlighter	https://pygments.org/	Python Tools
+brew	pyrefly	Fast type checker and IDE for Python	https://pyrefly.org/	
 brew	qpdf	Tools for and transforming and inspecting PDF files	https://qpdf.sourceforge.io/	Document & Text Processing
 brew	qsv	Ultra-fast CSV data-wrangling toolkit	https://qsv.dathere.com/	Data Processing & Analysis
 brew	qt@5	Cross-platform application and UI framework	https://www.qt.io/	Development Libraries
@@ -78,7 +80,7 @@ brew	ripgrep	Search tool like grep and The Silver Searcher	https://github.com/Bu
 brew	rizin	UNIX-like reverse engineering framework and command-line toolset	https://rizin.re	Reverse Engineering
 brew	rsync	Utility that provides fast incremental file transfer	https://rsync.samba.org/	File & Archive Tools
 brew	ruff	Extremely fast Python linter, written in Rust	https://docs.astral.sh/ruff/	Code Quality & Linting
-brew	sdl2	Low-level access to audio, keyboard, mouse, joystick, and graphics	https://www.libsdl.org/	Media Processing
+brew	sdl2-compat	SDL2 compatibility layer that uses SDL3 behind the scenes	https://github.com/libsdl-org/sdl2-compat	
 brew	shellcheck	Static analysis and lint tool, for (ba)sh scripts	https://www.shellcheck.net/	Code Quality & Linting
 brew	shfmt	Autoformat shell script source code	https://github.com/mvdan/sh	Code Quality & Linting
 brew	smartmontools	SMART hard drive monitoring	https://www.smartmontools.org/	System Utilities
@@ -94,10 +96,12 @@ brew	tree-sitter-cli	Parser generator tool	https://tree-sitter.github.io	Develop
 brew	typescript-language-server	Language Server Protocol implementation for TypeScript wrapping tsserver	https://github.com/typescript-language-server/typescript-language-server	Language Servers & IDE Support
 brew	uv	Extremely fast Python package installer and resolver, written in Rust	https://docs.astral.sh/uv/	Python Tools
 brew	visidata	Terminal spreadsheet multitool for discovering and arranging data	https://www.visidata.org/	Data Processing & Analysis
-brew	vscode-langservers-extracted	Language servers for HTML, CSS, JavaScript, and JSON extracted from vscode	https://github.com/hrsh7th/vscode-langservers-extracted	Language Servers & IDE Support
+brew	viu	Simple terminal image viewer written in Rust	https://github.com/atanunq/viu	
 brew	wget	Internet file retriever	https://www.gnu.org/software/wget/	Network Tools
 brew	xan	CSV CLI magician written in Rust	https://github.com/medialab/xan	Data Processing & Analysis
+brew	xq	Command-line XML and HTML beautifier and content extractor	https://github.com/sibprogrammer/xq	
 brew	yaml-language-server	Language Server for Yaml Files	https://github.com/redhat-developer/yaml-language-server	Language Servers & IDE Support
+brew	yazi	Blazing fast terminal file manager written in Rust, based on async I/O	https://yazi-rs.github.io	
 brew	yt-dlp	Feature-rich command-line audio/video downloader	https://github.com/yt-dlp/yt-dlp	Media Processing
 brew	zoxide	Shell extension to navigate your filesystem faster	https://github.com/ajeetdsouza/zoxide	Shells & Terminal
 cask	android-platform-tools	Android SDK Platform-Tools: Android SDK component	https://developer.android.com/tools/releases/platform-tools	Development Tools
@@ -110,20 +114,22 @@ cask	blender	Blender: 3D creation suite	https://www.blender.org/	Media Players &
 cask	calibre	calibre: E-books management software	https://calibre-ebook.com/	E-book & Media Management
 cask	dbeaver-community	DBeaver Community Edition: Universal database tool and SQL client	https://dbeaver.io/	Development Tools
 cask	disk-inventory-x	Disk Inventory X: Disk usage utility	https://www.derlien.com/	System Utilities
-cask	font-fira-mono-nerd-font	FiraMono Nerd Font (Fira): 	https://github.com/ryanoasis/nerd-fonts	Fonts
-cask	font-lilex	Lilex: 	https://github.com/mishamyrt/Lilex	Fonts
+cask	font-jetbrains-mono-nerd-font	JetBrainsMono Nerd Font families (JetBrains Mono): 	https://github.com/ryanoasis/nerd-fonts	
 cask	font-lilex-nerd-font	Lilex Nerd Font (Lilex): 	https://github.com/ryanoasis/nerd-fonts	Fonts
 cask	font-symbols-only-nerd-font	Symbols Nerd Font (Symbols Only): 	https://github.com/ryanoasis/nerd-fonts	Fonts
+cask	ghostty@tip	Ghostty: Terminal emulator that uses platform-native UI and GPU acceleration	https://ghostty.org/	
 cask	gitup-app	GitUp: Git interface focused on visual interaction	https://gitup.co/	Development Tools
 cask	grandperspective	GrandPerspective: Graphically shows disk usage within a file system	https://grandperspectiv.sourceforge.net/	System Utilities
 cask	iina	IINA: Free and open-source media player	https://iina.io/	Media Players & Editors
 cask	jdk-mission-control	JDK Mission Control: Tools to manage, monitor, profile and troubleshoot Java applications	https://jdk.java.net/jmc/9/	Development Tools
 cask	keka	Keka: File archiver	https://www.keka.io/	System Utilities
 cask	kid3	Kid3: Audio tagger focusing on efficiency	https://kid3.kde.org/	E-book & Media Management
-cask	kitty	kitty: GPU-based terminal emulator	https://github.com/kovidgoyal/kitty	Development Tools
+cask	kitty@nightly	kitty-nightly: GPU-based terminal emulator	https://github.com/kovidgoyal/kitty	
 cask	makemkv	MakeMKV: Video format converter (transcoder)	https://www.makemkv.com/	Media Players & Editors
 cask	qlmarkdown	sbarex QLMarkdown: Quick Look generator for Markdown files	https://github.com/sbarex/QLMarkdown	Quick Look Plugins
 cask	stats	Stats: System monitor for the menu bar	https://github.com/exelban/stats	System Utilities
 cask	suspicious-package	Suspicious Package: Application for inspecting installer packages	https://www.mothersruin.com/software/SuspiciousPackage/	System Utilities
 cask	syntax-highlight	Syntax Highlight: Quicklook extension for source files	https://github.com/sbarex/SourceCodeSyntaxHighlight	Quick Look Plugins
+cask	temurin	Eclipse Temurin Java Development Kit: JDK from the Eclipse Foundation (Adoptium)	https://adoptium.net/	
+cask	temurin@21	Eclipse Temurin 21: JDK from the Eclipse Foundation (Adoptium)	https://adoptium.net/	
 cask	utm	UTM: Virtual machines UI using QEMU	https://mac.getutm.app/	Virtualization
