@@ -3,9 +3,9 @@
 // release a unique, immutable URL, sidestepping jsDelivr's 7-day browser cache
 // on the floating @latest URL. Bump this on every release.
 const src = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
-    ? '../dist/amazejs.js'
+    ? '../../amazejs/dist/amazejs.js'
     : 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@v0.8.1/dist/amazejs.js';
-const { initTable } = await import(src);
+const { initTable, linkCell } = await import(src);
 
 function copyBrewInstall(visibleItems, btn) {
     const formulas = [], casks = [];
