@@ -1,10 +1,10 @@
-// Use the local build when developing on localhost, an exact-pinned CDN bundle
-// in production (GitHub Pages). Pinning the version (not @latest) gives each
-// release a unique, immutable URL, sidestepping jsDelivr's 7-day browser cache
-// on the floating @latest URL. Bump this on every release.
+// Use the local build when developing on localhost, an exact-pinned CDN bundle in
+// production (GitHub Pages). The pin is what makes a release land: @latest is one
+// URL that jsDelivr lets browsers cache for 7 days, which no purge can clear, so a
+// tagged version gives each release its own immutable URL. Bump it on every release.
 const src = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
     ? '../../amazejs/dist/amazejs.js'
-    : 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@latest/dist/amazejs.js';
+    : 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@v0.14.0/dist/amazejs.js';
 const { initTable, linkCell } = await import(src);
 
 function copyBrewInstall(visibleItems, btn) {

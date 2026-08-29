@@ -27,7 +27,7 @@ brew	gawk	GNU awk utility	https://www.gnu.org/software/gawk/	Search & Text Proce
 brew	gh	GitHub command-line tool	https://cli.github.com/	Version Control
 brew	ghostscript	Interpreter for PostScript and PDF	https://www.ghostscript.com/	Document & Text Processing
 brew	git	Distributed revision control system	https://git-scm.com	Version Control
-brew	git-delta	Syntax-highlighting pager for git and diff output	https://dandavison.github.io/delta/	
+brew	git-delta	Syntax-highlighting pager for git and diff output	https://dandavison.github.io/delta/	Version Control
 brew	git-filter-repo	Quickly rewrite git repository history	https://github.com/newren/git-filter-repo	Version Control
 brew	git-svn	Bidirectional operation between a Subversion repository and Git	https://git-scm.com	Version Control
 brew	gitea	Painless self-hosted all-in-one software development service	https://about.gitea.com/	Version Control
@@ -40,9 +40,9 @@ brew	hyperfine	Command-line benchmarking tool	https://github.com/sharkdp/hyperfi
 brew	ipython	Interactive computing in Python	https://ipython.org/	Python Tools
 brew	iso-codes	Provides lists of various ISO standards	https://salsa.debian.org/iso-codes-team/iso-codes	Miscellaneous
 brew	jdtls	Java language specific implementation of the Language Server Protocol	https://github.com/eclipse-jdtls/eclipse.jdt.ls	Language Servers & IDE Support
-brew	jless	Command-line pager for JSON data	https://jless.io/	
+brew	jless	Command-line pager for JSON data	https://jless.io/	Data Processing & Analysis
 brew	jq	Lightweight and flexible command-line JSON processor	https://jqlang.github.io/jq/	Data Processing & Analysis
-brew	less	Pager program similar to more	https://www.greenwoodsoftware.com/less/index.html	
+brew	less	Pager program similar to more	https://www.greenwoodsoftware.com/less/index.html	Shells & Terminal
 brew	libcaca	Convert pixel information into colored ASCII art	http://caca.zoy.org/wiki/libcaca	Media Processing
 brew	libcerf	Numeric library for complex error functions	https://jugit.fz-juelich.de/mlz/lib/cerf	Development Libraries
 brew	libdvdcss	Access DVDs as block devices without the decryption	https://www.videolan.org/developers/libdvdcss.html	File & Archive Tools
@@ -65,7 +65,7 @@ brew	ninja	Small build system for use with gyp or CMake	https://ninja-build.org/
 brew	node	Open-source, cross-platform JavaScript runtime environment	https://nodejs.org/	Programming Languages & Runtimes
 brew	opencode	AI coding agent, built for the terminal	https://opencode.ai	Development Tools
 brew	openjpeg	Library for JPEG-2000 image manipulation	https://www.openjpeg.org/	Media Processing
-brew	openssh	OpenBSD freely-licensed SSH connectivity tools	https://www.openssh.com/	
+brew	openssh	OpenBSD freely-licensed SSH connectivity tools	https://www.openssh.com/	Network Tools
 brew	p7zip	7-Zip (high compression file archiver) implementation	https://github.com/p7zip-project/p7zip	File & Archive Tools
 brew	pandoc	Swiss-army knife of markup format conversion	https://pandoc.org/	Document & Text Processing
 brew	parallel	Shell command parallelization utility	https://savannah.gnu.org/projects/parallel/	System Utilities
@@ -75,7 +75,7 @@ brew	pkgconf	Package compiler and linker metadata toolkit	https://github.com/pkg
 brew	poppler	PDF rendering library (based on the xpdf-3.0 code base)	https://poppler.freedesktop.org/	Document & Text Processing
 brew	portmidi	Cross-platform library for real-time MIDI I/O	https://github.com/PortMidi/portmidi	Media Processing
 brew	pygments	Generic syntax highlighter	https://pygments.org/	Python Tools
-brew	pyrefly	Fast type checker and IDE for Python	https://pyrefly.org/	
+brew	pyrefly	Fast type checker and IDE for Python	https://pyrefly.org/	Code Quality & Linting
 brew	qpdf	Tools for and transforming and inspecting PDF files	https://qpdf.sourceforge.io/	Document & Text Processing
 brew	qsv	Ultra-fast CSV data-wrangling toolkit	https://qsv.dathere.com/	Data Processing & Analysis
 brew	qt@5	Cross-platform application and UI framework	https://www.qt.io/	Development Libraries
@@ -83,7 +83,7 @@ brew	ripgrep	Search tool like grep and The Silver Searcher	https://github.com/Bu
 brew	rizin	UNIX-like reverse engineering framework and command-line toolset	https://rizin.re	Reverse Engineering
 brew	rsync	Utility that provides fast incremental file transfer	https://rsync.samba.org/	File & Archive Tools
 brew	ruff	Extremely fast Python linter, written in Rust	https://docs.astral.sh/ruff/	Code Quality & Linting
-brew	sdl2-compat	SDL2 compatibility layer that uses SDL3 behind the scenes	https://github.com/libsdl-org/sdl2-compat	
+brew	sdl2-compat	SDL2 compatibility layer that uses SDL3 behind the scenes	https://github.com/libsdl-org/sdl2-compat	Media Processing
 brew	shellcheck	Static analysis and lint tool, for (ba)sh scripts	https://www.shellcheck.net/	Code Quality & Linting
 brew	shfmt	Autoformat shell script source code	https://github.com/mvdan/sh	Code Quality & Linting
 brew	smartmontools	SMART hard drive monitoring	https://www.smartmontools.org/	System Utilities
@@ -96,15 +96,15 @@ brew	tlrc	Official tldr client written in Rust	https://tldr.sh/tlrc/	System Util
 brew	tmux	Terminal multiplexer	https://tmux.github.io/	Shells & Terminal
 brew	tree	Display directories as trees (with optional color/HTML output)	https://oldmanprogrammer.net/source.php?dir=projects/tree	Shells & Terminal
 brew	tree-sitter-cli	Parser generator tool	https://tree-sitter.github.io	Development Libraries
-brew	typescript	Language for application scale JavaScript development	https://www.typescriptlang.org/	
+brew	typescript	Language for application scale JavaScript development	https://www.typescriptlang.org/	Programming Languages & Runtimes
 brew	uv	Extremely fast Python package installer and resolver, written in Rust	https://docs.astral.sh/uv/	Python Tools
 brew	visidata	Terminal spreadsheet multitool for discovering and arranging data	https://www.visidata.org/	Data Processing & Analysis
-brew	viu	Simple terminal image viewer written in Rust	https://github.com/atanunq/viu	
+brew	viu	Simple terminal image viewer written in Rust	https://github.com/atanunq/viu	Media Processing
 brew	wget	Internet file retriever	https://www.gnu.org/software/wget/	Network Tools
 brew	xan	CSV CLI magician written in Rust	https://github.com/medialab/xan	Data Processing & Analysis
-brew	xq	Command-line XML and HTML beautifier and content extractor	https://github.com/sibprogrammer/xq	
+brew	xq	Command-line XML and HTML beautifier and content extractor	https://github.com/sibprogrammer/xq	Data Processing & Analysis
 brew	yaml-language-server	Language Server for Yaml Files	https://github.com/redhat-developer/yaml-language-server	Language Servers & IDE Support
-brew	yazi	Blazing fast terminal file manager written in Rust, based on async I/O	https://yazi-rs.github.io	
+brew	yazi	Blazing fast terminal file manager written in Rust, based on async I/O	https://yazi-rs.github.io	Shells & Terminal
 brew	yt-dlp	Feature-rich command-line audio/video downloader	https://github.com/yt-dlp/yt-dlp	Media Processing
 brew	zoxide	Shell extension to navigate your filesystem faster	https://github.com/ajeetdsouza/zoxide	Shells & Terminal
 cask	android-platform-tools	Android SDK Platform-Tools: Android SDK component	https://developer.android.com/tools/releases/platform-tools	Development Tools
@@ -117,22 +117,22 @@ cask	blender	Blender: 3D creation suite	https://www.blender.org/	Media Players &
 cask	calibre	calibre: E-books management software	https://calibre-ebook.com/	E-book & Media Management
 cask	dbeaver-community	DBeaver Community Edition: Universal database tool and SQL client	https://dbeaver.io/	Development Tools
 cask	disk-inventory-x	Disk Inventory X: Disk usage utility	https://www.derlien.com/	System Utilities
-cask	font-jetbrains-mono-nerd-font	JetBrainsMono Nerd Font families (JetBrains Mono): 	https://github.com/ryanoasis/nerd-fonts	
+cask	font-jetbrains-mono-nerd-font	JetBrainsMono Nerd Font families (JetBrains Mono): 	https://github.com/ryanoasis/nerd-fonts	Fonts
 cask	font-lilex-nerd-font	Lilex Nerd Font (Lilex): 	https://github.com/ryanoasis/nerd-fonts	Fonts
 cask	font-symbols-only-nerd-font	Symbols Nerd Font (Symbols Only): 	https://github.com/ryanoasis/nerd-fonts	Fonts
-cask	ghostty@tip	Ghostty: Terminal emulator that uses platform-native UI and GPU acceleration	https://ghostty.org/	
+cask	ghostty@tip	Ghostty: Terminal emulator that uses platform-native UI and GPU acceleration	https://ghostty.org/	Shells & Terminal
 cask	gitup-app	GitUp: Git interface focused on visual interaction	https://gitup.co/	Development Tools
 cask	grandperspective	GrandPerspective: Graphically shows disk usage within a file system	https://grandperspectiv.sourceforge.net/	System Utilities
 cask	iina	IINA: Free and open-source media player	https://iina.io/	Media Players & Editors
 cask	jdk-mission-control	JDK Mission Control: Tools to manage, monitor, profile and troubleshoot Java applications	https://jdk.java.net/jmc/9/	Development Tools
 cask	keka	Keka: File archiver	https://www.keka.io/	System Utilities
 cask	kid3	Kid3: Audio tagger focusing on efficiency	https://kid3.kde.org/	E-book & Media Management
-cask	kitty@nightly	kitty-nightly: GPU-based terminal emulator	https://github.com/kovidgoyal/kitty	
+cask	kitty@nightly	kitty-nightly: GPU-based terminal emulator	https://github.com/kovidgoyal/kitty	Shells & Terminal
 cask	makemkv	MakeMKV: Video format converter (transcoder)	https://www.makemkv.com/	Media Players & Editors
 cask	qlmarkdown	sbarex QLMarkdown: Quick Look generator for Markdown files	https://github.com/sbarex/QLMarkdown	Quick Look Plugins
 cask	stats	Stats: System monitor for the menu bar	https://github.com/exelban/stats	System Utilities
 cask	suspicious-package	Suspicious Package: Application for inspecting installer packages	https://www.mothersruin.com/software/SuspiciousPackage/	System Utilities
 cask	syntax-highlight	Syntax Highlight: Quicklook extension for source files	https://github.com/sbarex/SourceCodeSyntaxHighlight	Quick Look Plugins
-cask	temurin	Eclipse Temurin Java Development Kit: JDK from the Eclipse Foundation (Adoptium)	https://adoptium.net/	
-cask	temurin@21	Eclipse Temurin 21: JDK from the Eclipse Foundation (Adoptium)	https://adoptium.net/	
+cask	temurin	Eclipse Temurin Java Development Kit: JDK from the Eclipse Foundation (Adoptium)	https://adoptium.net/	Programming Languages & Runtimes
+cask	temurin@21	Eclipse Temurin 21: JDK from the Eclipse Foundation (Adoptium)	https://adoptium.net/	Programming Languages & Runtimes
 cask	utm	UTM: Virtual machines UI using QEMU	https://mac.getutm.app/	Virtualization

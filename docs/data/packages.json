@@ -27,7 +27,7 @@
 ,{"type":"brew","name":"gh","desc":"GitHub command-line tool","url":"https://cli.github.com/","cat":"Version Control"}
 ,{"type":"brew","name":"ghostscript","desc":"Interpreter for PostScript and PDF","url":"https://www.ghostscript.com/","cat":"Document & Text Processing"}
 ,{"type":"brew","name":"git","desc":"Distributed revision control system","url":"https://git-scm.com","cat":"Version Control"}
-,{"type":"brew","name":"git-delta","desc":"Syntax-highlighting pager for git and diff output","url":"https://dandavison.github.io/delta/","cat":""}
+,{"type":"brew","name":"git-delta","desc":"Syntax-highlighting pager for git and diff output","url":"https://dandavison.github.io/delta/","cat":"Version Control"}
 ,{"type":"brew","name":"git-filter-repo","desc":"Quickly rewrite git repository history","url":"https://github.com/newren/git-filter-repo","cat":"Version Control"}
 ,{"type":"brew","name":"git-svn","desc":"Bidirectional operation between a Subversion repository and Git","url":"https://git-scm.com","cat":"Version Control"}
 ,{"type":"brew","name":"gitea","desc":"Painless self-hosted all-in-one software development service","url":"https://about.gitea.com/","cat":"Version Control"}
@@ -40,9 +40,9 @@
 ,{"type":"brew","name":"ipython","desc":"Interactive computing in Python","url":"https://ipython.org/","cat":"Python Tools"}
 ,{"type":"brew","name":"iso-codes","desc":"Provides lists of various ISO standards","url":"https://salsa.debian.org/iso-codes-team/iso-codes","cat":"Miscellaneous"}
 ,{"type":"brew","name":"jdtls","desc":"Java language specific implementation of the Language Server Protocol","url":"https://github.com/eclipse-jdtls/eclipse.jdt.ls","cat":"Language Servers & IDE Support"}
-,{"type":"brew","name":"jless","desc":"Command-line pager for JSON data","url":"https://jless.io/","cat":""}
+,{"type":"brew","name":"jless","desc":"Command-line pager for JSON data","url":"https://jless.io/","cat":"Data Processing & Analysis"}
 ,{"type":"brew","name":"jq","desc":"Lightweight and flexible command-line JSON processor","url":"https://jqlang.github.io/jq/","cat":"Data Processing & Analysis"}
-,{"type":"brew","name":"less","desc":"Pager program similar to more","url":"https://www.greenwoodsoftware.com/less/index.html","cat":""}
+,{"type":"brew","name":"less","desc":"Pager program similar to more","url":"https://www.greenwoodsoftware.com/less/index.html","cat":"Shells & Terminal"}
 ,{"type":"brew","name":"libcaca","desc":"Convert pixel information into colored ASCII art","url":"http://caca.zoy.org/wiki/libcaca","cat":"Media Processing"}
 ,{"type":"brew","name":"libcerf","desc":"Numeric library for complex error functions","url":"https://jugit.fz-juelich.de/mlz/lib/cerf","cat":"Development Libraries"}
 ,{"type":"brew","name":"libdvdcss","desc":"Access DVDs as block devices without the decryption","url":"https://www.videolan.org/developers/libdvdcss.html","cat":"File & Archive Tools"}
@@ -65,7 +65,7 @@
 ,{"type":"brew","name":"node","desc":"Open-source, cross-platform JavaScript runtime environment","url":"https://nodejs.org/","cat":"Programming Languages & Runtimes"}
 ,{"type":"brew","name":"opencode","desc":"AI coding agent, built for the terminal","url":"https://opencode.ai","cat":"Development Tools"}
 ,{"type":"brew","name":"openjpeg","desc":"Library for JPEG-2000 image manipulation","url":"https://www.openjpeg.org/","cat":"Media Processing"}
-,{"type":"brew","name":"openssh","desc":"OpenBSD freely-licensed SSH connectivity tools","url":"https://www.openssh.com/","cat":""}
+,{"type":"brew","name":"openssh","desc":"OpenBSD freely-licensed SSH connectivity tools","url":"https://www.openssh.com/","cat":"Network Tools"}
 ,{"type":"brew","name":"p7zip","desc":"7-Zip (high compression file archiver) implementation","url":"https://github.com/p7zip-project/p7zip","cat":"File & Archive Tools"}
 ,{"type":"brew","name":"pandoc","desc":"Swiss-army knife of markup format conversion","url":"https://pandoc.org/","cat":"Document & Text Processing"}
 ,{"type":"brew","name":"parallel","desc":"Shell command parallelization utility","url":"https://savannah.gnu.org/projects/parallel/","cat":"System Utilities"}
@@ -75,7 +75,7 @@
 ,{"type":"brew","name":"poppler","desc":"PDF rendering library (based on the xpdf-3.0 code base)","url":"https://poppler.freedesktop.org/","cat":"Document & Text Processing"}
 ,{"type":"brew","name":"portmidi","desc":"Cross-platform library for real-time MIDI I/O","url":"https://github.com/PortMidi/portmidi","cat":"Media Processing"}
 ,{"type":"brew","name":"pygments","desc":"Generic syntax highlighter","url":"https://pygments.org/","cat":"Python Tools"}
-,{"type":"brew","name":"pyrefly","desc":"Fast type checker and IDE for Python","url":"https://pyrefly.org/","cat":""}
+,{"type":"brew","name":"pyrefly","desc":"Fast type checker and IDE for Python","url":"https://pyrefly.org/","cat":"Code Quality & Linting"}
 ,{"type":"brew","name":"qpdf","desc":"Tools for and transforming and inspecting PDF files","url":"https://qpdf.sourceforge.io/","cat":"Document & Text Processing"}
 ,{"type":"brew","name":"qsv","desc":"Ultra-fast CSV data-wrangling toolkit","url":"https://qsv.dathere.com/","cat":"Data Processing & Analysis"}
 ,{"type":"brew","name":"qt@5","desc":"Cross-platform application and UI framework","url":"https://www.qt.io/","cat":"Development Libraries"}
@@ -83,7 +83,7 @@
 ,{"type":"brew","name":"rizin","desc":"UNIX-like reverse engineering framework and command-line toolset","url":"https://rizin.re","cat":"Reverse Engineering"}
 ,{"type":"brew","name":"rsync","desc":"Utility that provides fast incremental file transfer","url":"https://rsync.samba.org/","cat":"File & Archive Tools"}
 ,{"type":"brew","name":"ruff","desc":"Extremely fast Python linter, written in Rust","url":"https://docs.astral.sh/ruff/","cat":"Code Quality & Linting"}
-,{"type":"brew","name":"sdl2-compat","desc":"SDL2 compatibility layer that uses SDL3 behind the scenes","url":"https://github.com/libsdl-org/sdl2-compat","cat":""}
+,{"type":"brew","name":"sdl2-compat","desc":"SDL2 compatibility layer that uses SDL3 behind the scenes","url":"https://github.com/libsdl-org/sdl2-compat","cat":"Media Processing"}
 ,{"type":"brew","name":"shellcheck","desc":"Static analysis and lint tool, for (ba)sh scripts","url":"https://www.shellcheck.net/","cat":"Code Quality & Linting"}
 ,{"type":"brew","name":"shfmt","desc":"Autoformat shell script source code","url":"https://github.com/mvdan/sh","cat":"Code Quality & Linting"}
 ,{"type":"brew","name":"smartmontools","desc":"SMART hard drive monitoring","url":"https://www.smartmontools.org/","cat":"System Utilities"}
@@ -96,15 +96,15 @@
 ,{"type":"brew","name":"tmux","desc":"Terminal multiplexer","url":"https://tmux.github.io/","cat":"Shells & Terminal"}
 ,{"type":"brew","name":"tree","desc":"Display directories as trees (with optional color/HTML output)","url":"https://oldmanprogrammer.net/source.php?dir=projects/tree","cat":"Shells & Terminal"}
 ,{"type":"brew","name":"tree-sitter-cli","desc":"Parser generator tool","url":"https://tree-sitter.github.io","cat":"Development Libraries"}
-,{"type":"brew","name":"typescript","desc":"Language for application scale JavaScript development","url":"https://www.typescriptlang.org/","cat":""}
+,{"type":"brew","name":"typescript","desc":"Language for application scale JavaScript development","url":"https://www.typescriptlang.org/","cat":"Programming Languages & Runtimes"}
 ,{"type":"brew","name":"uv","desc":"Extremely fast Python package installer and resolver, written in Rust","url":"https://docs.astral.sh/uv/","cat":"Python Tools"}
 ,{"type":"brew","name":"visidata","desc":"Terminal spreadsheet multitool for discovering and arranging data","url":"https://www.visidata.org/","cat":"Data Processing & Analysis"}
-,{"type":"brew","name":"viu","desc":"Simple terminal image viewer written in Rust","url":"https://github.com/atanunq/viu","cat":""}
+,{"type":"brew","name":"viu","desc":"Simple terminal image viewer written in Rust","url":"https://github.com/atanunq/viu","cat":"Media Processing"}
 ,{"type":"brew","name":"wget","desc":"Internet file retriever","url":"https://www.gnu.org/software/wget/","cat":"Network Tools"}
 ,{"type":"brew","name":"xan","desc":"CSV CLI magician written in Rust","url":"https://github.com/medialab/xan","cat":"Data Processing & Analysis"}
-,{"type":"brew","name":"xq","desc":"Command-line XML and HTML beautifier and content extractor","url":"https://github.com/sibprogrammer/xq","cat":""}
+,{"type":"brew","name":"xq","desc":"Command-line XML and HTML beautifier and content extractor","url":"https://github.com/sibprogrammer/xq","cat":"Data Processing & Analysis"}
 ,{"type":"brew","name":"yaml-language-server","desc":"Language Server for Yaml Files","url":"https://github.com/redhat-developer/yaml-language-server","cat":"Language Servers & IDE Support"}
-,{"type":"brew","name":"yazi","desc":"Blazing fast terminal file manager written in Rust, based on async I/O","url":"https://yazi-rs.github.io","cat":""}
+,{"type":"brew","name":"yazi","desc":"Blazing fast terminal file manager written in Rust, based on async I/O","url":"https://yazi-rs.github.io","cat":"Shells & Terminal"}
 ,{"type":"brew","name":"yt-dlp","desc":"Feature-rich command-line audio/video downloader","url":"https://github.com/yt-dlp/yt-dlp","cat":"Media Processing"}
 ,{"type":"brew","name":"zoxide","desc":"Shell extension to navigate your filesystem faster","url":"https://github.com/ajeetdsouza/zoxide","cat":"Shells & Terminal"}
 ,{"type":"cask","name":"android-platform-tools","desc":"Android SDK Platform-Tools: Android SDK component","url":"https://developer.android.com/tools/releases/platform-tools","cat":"Development Tools"}
@@ -117,23 +117,23 @@
 ,{"type":"cask","name":"calibre","desc":"calibre: E-books management software","url":"https://calibre-ebook.com/","cat":"E-book & Media Management"}
 ,{"type":"cask","name":"dbeaver-community","desc":"DBeaver Community Edition: Universal database tool and SQL client","url":"https://dbeaver.io/","cat":"Development Tools"}
 ,{"type":"cask","name":"disk-inventory-x","desc":"Disk Inventory X: Disk usage utility","url":"https://www.derlien.com/","cat":"System Utilities"}
-,{"type":"cask","name":"font-jetbrains-mono-nerd-font","desc":"JetBrainsMono Nerd Font families (JetBrains Mono): ","url":"https://github.com/ryanoasis/nerd-fonts","cat":""}
+,{"type":"cask","name":"font-jetbrains-mono-nerd-font","desc":"JetBrainsMono Nerd Font families (JetBrains Mono): ","url":"https://github.com/ryanoasis/nerd-fonts","cat":"Fonts"}
 ,{"type":"cask","name":"font-lilex-nerd-font","desc":"Lilex Nerd Font (Lilex): ","url":"https://github.com/ryanoasis/nerd-fonts","cat":"Fonts"}
 ,{"type":"cask","name":"font-symbols-only-nerd-font","desc":"Symbols Nerd Font (Symbols Only): ","url":"https://github.com/ryanoasis/nerd-fonts","cat":"Fonts"}
-,{"type":"cask","name":"ghostty@tip","desc":"Ghostty: Terminal emulator that uses platform-native UI and GPU acceleration","url":"https://ghostty.org/","cat":""}
+,{"type":"cask","name":"ghostty@tip","desc":"Ghostty: Terminal emulator that uses platform-native UI and GPU acceleration","url":"https://ghostty.org/","cat":"Shells & Terminal"}
 ,{"type":"cask","name":"gitup-app","desc":"GitUp: Git interface focused on visual interaction","url":"https://gitup.co/","cat":"Development Tools"}
 ,{"type":"cask","name":"grandperspective","desc":"GrandPerspective: Graphically shows disk usage within a file system","url":"https://grandperspectiv.sourceforge.net/","cat":"System Utilities"}
 ,{"type":"cask","name":"iina","desc":"IINA: Free and open-source media player","url":"https://iina.io/","cat":"Media Players & Editors"}
 ,{"type":"cask","name":"jdk-mission-control","desc":"JDK Mission Control: Tools to manage, monitor, profile and troubleshoot Java applications","url":"https://jdk.java.net/jmc/9/","cat":"Development Tools"}
 ,{"type":"cask","name":"keka","desc":"Keka: File archiver","url":"https://www.keka.io/","cat":"System Utilities"}
 ,{"type":"cask","name":"kid3","desc":"Kid3: Audio tagger focusing on efficiency","url":"https://kid3.kde.org/","cat":"E-book & Media Management"}
-,{"type":"cask","name":"kitty@nightly","desc":"kitty-nightly: GPU-based terminal emulator","url":"https://github.com/kovidgoyal/kitty","cat":""}
+,{"type":"cask","name":"kitty@nightly","desc":"kitty-nightly: GPU-based terminal emulator","url":"https://github.com/kovidgoyal/kitty","cat":"Shells & Terminal"}
 ,{"type":"cask","name":"makemkv","desc":"MakeMKV: Video format converter (transcoder)","url":"https://www.makemkv.com/","cat":"Media Players & Editors"}
 ,{"type":"cask","name":"qlmarkdown","desc":"sbarex QLMarkdown: Quick Look generator for Markdown files","url":"https://github.com/sbarex/QLMarkdown","cat":"Quick Look Plugins"}
 ,{"type":"cask","name":"stats","desc":"Stats: System monitor for the menu bar","url":"https://github.com/exelban/stats","cat":"System Utilities"}
 ,{"type":"cask","name":"suspicious-package","desc":"Suspicious Package: Application for inspecting installer packages","url":"https://www.mothersruin.com/software/SuspiciousPackage/","cat":"System Utilities"}
 ,{"type":"cask","name":"syntax-highlight","desc":"Syntax Highlight: Quicklook extension for source files","url":"https://github.com/sbarex/SourceCodeSyntaxHighlight","cat":"Quick Look Plugins"}
-,{"type":"cask","name":"temurin","desc":"Eclipse Temurin Java Development Kit: JDK from the Eclipse Foundation (Adoptium)","url":"https://adoptium.net/","cat":""}
-,{"type":"cask","name":"temurin@21","desc":"Eclipse Temurin 21: JDK from the Eclipse Foundation (Adoptium)","url":"https://adoptium.net/","cat":""}
+,{"type":"cask","name":"temurin","desc":"Eclipse Temurin Java Development Kit: JDK from the Eclipse Foundation (Adoptium)","url":"https://adoptium.net/","cat":"Programming Languages & Runtimes"}
+,{"type":"cask","name":"temurin@21","desc":"Eclipse Temurin 21: JDK from the Eclipse Foundation (Adoptium)","url":"https://adoptium.net/","cat":"Programming Languages & Runtimes"}
 ,{"type":"cask","name":"utm","desc":"UTM: Virtual machines UI using QEMU","url":"https://mac.getutm.app/","cat":"Virtualization"}
 ]
