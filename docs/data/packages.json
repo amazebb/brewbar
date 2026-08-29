@@ -1,5 +1,6 @@
 [
-{"type":"brew","name":"bash","desc":"Bourne-Again SHell, a UNIX command interpreter","url":"https://www.gnu.org/software/bash/","cat":"Shells & Terminal"}
+{"type":"brew","name":"arduino-cli","desc":"Arduino command-line interface","url":"https://arduino.github.io/arduino-cli/latest/","cat":"Hardware & Embedded"}
+,{"type":"brew","name":"bash","desc":"Bourne-Again SHell, a UNIX command interpreter","url":"https://www.gnu.org/software/bash/","cat":"Shells & Terminal"}
 ,{"type":"brew","name":"bash-language-server","desc":"Language Server for Bash","url":"https://github.com/bash-lsp/bash-language-server","cat":"Language Servers & IDE Support"}
 ,{"type":"brew","name":"bat","desc":"Clone of cat(1) with syntax highlighting and Git integration","url":"https://github.com/sharkdp/bat","cat":"Shells & Terminal"}
 ,{"type":"brew","name":"bear","desc":"Generate compilation database for clang tooling","url":"https://github.com/rizsotto/Bear","cat":"Build Systems & Compilers"}
@@ -26,6 +27,7 @@
 ,{"type":"brew","name":"gh","desc":"GitHub command-line tool","url":"https://cli.github.com/","cat":"Version Control"}
 ,{"type":"brew","name":"ghostscript","desc":"Interpreter for PostScript and PDF","url":"https://www.ghostscript.com/","cat":"Document & Text Processing"}
 ,{"type":"brew","name":"git","desc":"Distributed revision control system","url":"https://git-scm.com","cat":"Version Control"}
+,{"type":"brew","name":"git-delta","desc":"Syntax-highlighting pager for git and diff output","url":"https://dandavison.github.io/delta/","cat":""}
 ,{"type":"brew","name":"git-filter-repo","desc":"Quickly rewrite git repository history","url":"https://github.com/newren/git-filter-repo","cat":"Version Control"}
 ,{"type":"brew","name":"git-svn","desc":"Bidirectional operation between a Subversion repository and Git","url":"https://git-scm.com","cat":"Version Control"}
 ,{"type":"brew","name":"gitea","desc":"Painless self-hosted all-in-one software development service","url":"https://about.gitea.com/","cat":"Version Control"}
@@ -40,6 +42,7 @@
 ,{"type":"brew","name":"jdtls","desc":"Java language specific implementation of the Language Server Protocol","url":"https://github.com/eclipse-jdtls/eclipse.jdt.ls","cat":"Language Servers & IDE Support"}
 ,{"type":"brew","name":"jless","desc":"Command-line pager for JSON data","url":"https://jless.io/","cat":""}
 ,{"type":"brew","name":"jq","desc":"Lightweight and flexible command-line JSON processor","url":"https://jqlang.github.io/jq/","cat":"Data Processing & Analysis"}
+,{"type":"brew","name":"less","desc":"Pager program similar to more","url":"https://www.greenwoodsoftware.com/less/index.html","cat":""}
 ,{"type":"brew","name":"libcaca","desc":"Convert pixel information into colored ASCII art","url":"http://caca.zoy.org/wiki/libcaca","cat":"Media Processing"}
 ,{"type":"brew","name":"libcerf","desc":"Numeric library for complex error functions","url":"https://jugit.fz-juelich.de/mlz/lib/cerf","cat":"Development Libraries"}
 ,{"type":"brew","name":"libdvdcss","desc":"Access DVDs as block devices without the decryption","url":"https://www.videolan.org/developers/libdvdcss.html","cat":"File & Archive Tools"}
@@ -93,7 +96,7 @@
 ,{"type":"brew","name":"tmux","desc":"Terminal multiplexer","url":"https://tmux.github.io/","cat":"Shells & Terminal"}
 ,{"type":"brew","name":"tree","desc":"Display directories as trees (with optional color/HTML output)","url":"https://oldmanprogrammer.net/source.php?dir=projects/tree","cat":"Shells & Terminal"}
 ,{"type":"brew","name":"tree-sitter-cli","desc":"Parser generator tool","url":"https://tree-sitter.github.io","cat":"Development Libraries"}
-,{"type":"brew","name":"typescript-language-server","desc":"Language Server Protocol implementation for TypeScript wrapping tsserver","url":"https://github.com/typescript-language-server/typescript-language-server","cat":"Language Servers & IDE Support"}
+,{"type":"brew","name":"typescript","desc":"Language for application scale JavaScript development","url":"https://www.typescriptlang.org/","cat":""}
 ,{"type":"brew","name":"uv","desc":"Extremely fast Python package installer and resolver, written in Rust","url":"https://docs.astral.sh/uv/","cat":"Python Tools"}
 ,{"type":"brew","name":"visidata","desc":"Terminal spreadsheet multitool for discovering and arranging data","url":"https://www.visidata.org/","cat":"Data Processing & Analysis"}
 ,{"type":"brew","name":"viu","desc":"Simple terminal image viewer written in Rust","url":"https://github.com/atanunq/viu","cat":""}

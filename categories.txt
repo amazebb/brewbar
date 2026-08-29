@@ -122,7 +122,7 @@ basictex	Development Tools
 dbeaver-community	Development Tools
 gitup-app	Development Tools
 jdk-mission-control	Development Tools
-kitty	Development Tools
+kitty	Shells & Terminal
 appcleaner	System Utilities
 disk-inventory-x	System Utilities
 grandperspective	System Utilities
@@ -146,3 +146,18 @@ opencode	Development Tools
 poppler	Document & Text Processing
 tlrc	System Utilities
 android-platform-tools	Development Tools
+git-delta	Version Control
+jless	Data Processing & Analysis
+less	Shells & Terminal
+openssh	Network Tools
+pyrefly	Code Quality & Linting
+sdl2-compat	Media Processing
+typescript	Programming Languages & Runtimes
+viu	Media Processing
+xq	Data Processing & Analysis
+yazi	Shells & Terminal
+font-jetbrains-mono-nerd-font	Fonts
+ghostty@tip	Shells & Terminal
+kitty@nightly	Shells & Terminal
+temurin	Programming Languages & Runtimes
+temurin@21	Programming Languages & Runtimes

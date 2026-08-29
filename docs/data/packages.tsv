@@ -1,3 +1,4 @@
+type	name	desc	url	cat
 brew	arduino-cli	Arduino command-line interface	https://arduino.github.io/arduino-cli/latest/	Hardware & Embedded
 brew	bash	Bourne-Again SHell, a UNIX command interpreter	https://www.gnu.org/software/bash/	Shells & Terminal
 brew	bash-language-server	Language Server for Bash	https://github.com/bash-lsp/bash-language-server	Language Servers & IDE Support
@@ -26,6 +27,7 @@ brew	gawk	GNU awk utility	https://www.gnu.org/software/gawk/	Search & Text Proce
 brew	gh	GitHub command-line tool	https://cli.github.com/	Version Control
 brew	ghostscript	Interpreter for PostScript and PDF	https://www.ghostscript.com/	Document & Text Processing
 brew	git	Distributed revision control system	https://git-scm.com	Version Control
+brew	git-delta	Syntax-highlighting pager for git and diff output	https://dandavison.github.io/delta/	
 brew	git-filter-repo	Quickly rewrite git repository history	https://github.com/newren/git-filter-repo	Version Control
 brew	git-svn	Bidirectional operation between a Subversion repository and Git	https://git-scm.com	Version Control
 brew	gitea	Painless self-hosted all-in-one software development service	https://about.gitea.com/	Version Control
@@ -40,6 +42,7 @@ brew	iso-codes	Provides lists of various ISO standards	https://salsa.debian.org/
 brew	jdtls	Java language specific implementation of the Language Server Protocol	https://github.com/eclipse-jdtls/eclipse.jdt.ls	Language Servers & IDE Support
 brew	jless	Command-line pager for JSON data	https://jless.io/	
 brew	jq	Lightweight and flexible command-line JSON processor	https://jqlang.github.io/jq/	Data Processing & Analysis
+brew	less	Pager program similar to more	https://www.greenwoodsoftware.com/less/index.html	
 brew	libcaca	Convert pixel information into colored ASCII art	http://caca.zoy.org/wiki/libcaca	Media Processing
 brew	libcerf	Numeric library for complex error functions	https://jugit.fz-juelich.de/mlz/lib/cerf	Development Libraries
 brew	libdvdcss	Access DVDs as block devices without the decryption	https://www.videolan.org/developers/libdvdcss.html	File & Archive Tools
@@ -93,7 +96,7 @@ brew	tlrc	Official tldr client written in Rust	https://tldr.sh/tlrc/	System Util
 brew	tmux	Terminal multiplexer	https://tmux.github.io/	Shells & Terminal
 brew	tree	Display directories as trees (with optional color/HTML output)	https://oldmanprogrammer.net/source.php?dir=projects/tree	Shells & Terminal
 brew	tree-sitter-cli	Parser generator tool	https://tree-sitter.github.io	Development Libraries
-brew	typescript-language-server	Language Server Protocol implementation for TypeScript wrapping tsserver	https://github.com/typescript-language-server/typescript-language-server	Language Servers & IDE Support
+brew	typescript	Language for application scale JavaScript development	https://www.typescriptlang.org/	
 brew	uv	Extremely fast Python package installer and resolver, written in Rust	https://docs.astral.sh/uv/	Python Tools
 brew	visidata	Terminal spreadsheet multitool for discovering and arranging data	https://www.visidata.org/	Data Processing & Analysis
 brew	viu	Simple terminal image viewer written in Rust	https://github.com/atanunq/viu	

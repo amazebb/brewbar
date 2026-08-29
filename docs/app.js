@@ -4,7 +4,7 @@
 // on the floating @latest URL. Bump this on every release.
 const src = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
     ? '../../amazejs/dist/amazejs.js'
-    : 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@v0.8.1/dist/amazejs.js';
+    : 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@latest/dist/amazejs.js';
 const { initTable, linkCell } = await import(src);
 
 function copyBrewInstall(visibleItems, btn) {
@@ -26,7 +26,7 @@ function copyBrewInstall(visibleItems, btn) {
 }
 
 initTable({
-    data: ['data/packages.json', 'data/packages.tsv'],
+    data: ['data/packages.tsv'],
     tableId: 'pkgTable',
     title: 'Homebrew Packages',
     badgeAlwaysShow: true,
@@ -38,6 +38,13 @@ initTable({
         { key: 'desc', label: 'Description' },
         { key: 'cat', label: 'Category', filter: 'category' }
     ],
+    // packages.tsv has no timestamps; these are for the richer files opened through
+    // File > Open (all.json), where the install time is epoch seconds under a
+    // different key per group: installed_time on casks, installed[].time on formulae.
+    formats: {
+        installed_time: 'datetime',
+        'installed[0].time': 'datetime',
+    },
     buttons: [
         { label: 'Copy brew install', onClick: copyBrewInstall }
     ]
