@@ -4,7 +4,7 @@
 // tagged version gives each release its own immutable URL. Bump it on every release.
 const src = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
     ? '../../amazejs/dist/amazejs.js'
-    : 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@v0.14.0/dist/amazejs.js';
+    : 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@v0.16.0/dist/amazejs.js';
 const { initTable, linkCell } = await import(src);
 
 function copyBrewInstall(visibleItems, btn) {
@@ -39,11 +39,11 @@ initTable({
         { key: 'cat', label: 'Category', filter: 'category' }
     ],
     // packages.tsv has no timestamps; these are for the richer files opened through
-    // File > Open (all.json), where the install time is epoch seconds under a
+    // File > Open (brew-info-installed.json), where the install time is epoch seconds under a
     // different key per group: installed_time on casks, installed[].time on formulae.
     formats: {
         installed_time: 'datetime',
-        'installed[0].time': 'datetime',
+        'installed[*].time': 'datetime',
     },
     buttons: [
         { label: 'Copy brew install', onClick: copyBrewInstall }
