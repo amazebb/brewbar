@@ -4,7 +4,7 @@
 // tagged version gives each release its own immutable URL. Bump it on every release.
 const src = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
     ? '../../amazejs/dist/amazejs.js'
-    : 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@v0.17.0/dist/amazejs.js';
+    : 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@v0.18.0/dist/amazejs.js';
 const { initTable, linkCell } = await import(src);
 
 function copyBrewInstall(visibleItems, btn) {
@@ -34,7 +34,7 @@ initTable({
     striped: true,
     columns: [
         { key: 'name', label: 'Name', render: linkCell('name', 'url', { wrap: 'code' }) },
-        { key: 'type', label: 'Type', filter: 'category' },
+        { key: 'type', label: 'Type' },
         { key: 'desc', label: 'Description' },
         { key: 'cat', label: 'Category', filter: 'category' }
     ],
