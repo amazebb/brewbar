@@ -1,8 +1,9 @@
-// Use the local build when developing on localhost, an exact-pinned CDN bundle in
-// production (GitHub Pages). The pin is what makes a release land: @latest is one
-// URL that jsDelivr lets browsers cache for 7 days, which no purge can clear, so a
-// tagged version gives each release its own immutable URL. Bump it on every release.
-const src = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+// Use the local build anywhere but GitHub Pages — so a LAN address (testing from a
+// phone or tablet against the Mac's dev server) gets the local build too — and an
+// exact-pinned CDN bundle in production. The pin is what makes a release land: @latest
+// is one URL that jsDelivr lets browsers cache for 7 days, which no purge can clear, so
+// a tagged version gives each release its own immutable URL. Bump it on every release.
+const src = !location.hostname.endsWith('github.io')
     ? '../../amazejs/dist/amazejs.js'
     : 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@v0.18.1/dist/amazejs.js';
 const { initTable, linkCell } = await import(src);
