@@ -5,7 +5,7 @@
 // a tagged version gives each release its own immutable URL. Bump it on every release.
 const src = !location.hostname.endsWith('github.io')
     ? '../../amazejs/dist/amazejs.js'
-    : 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@v0.35.4/dist/amazejs.js';
+    : 'https://cdn.jsdelivr.net/gh/amazebb/amazejs@v0.35.5/dist/amazejs.js';
 const { initTable, linkCell } = await import(src);
 
 function copyBrewInstall(visibleItems, btn) {
